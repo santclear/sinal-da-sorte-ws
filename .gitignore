@@ -1,0 +1,6 @@
+*.bk
+*.war
+*.original
+*.class
+*.jar
+target/

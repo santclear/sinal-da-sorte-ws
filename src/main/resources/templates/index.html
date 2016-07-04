@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html	lang="pt" 
+		xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>Agente da Sorte</title>
+	<link th:if="${fase == 'desenvolvimento'}" rel="stylesheet" href="../static/bootstrap.css" th:href="@{/bootstrap.css}" />
+	<link th:if="${fase == 'producao'}" rel="stylesheet" href="../static/bootstrap.css" th:href="@{/bootstrap.min.css}" />
+</head>
+<body>
+	<header>
+		<nav class="navbar navbar-default">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">Agente da Sorte</a>
+				</div>
+				<p class="navbar-text navbar-right" th:text="'Signed in as '+ ${usuario}" style="margin-right: 10px;">Logado como Anônimo</p>
+			</div>
+		</nav>
+	</header>
+	
+	<div>
+		Agente da Sorte
+	</div>
+	
+	<footer class="footer" style="position: absolute; bottom: 0; background-color: #f5f5f5;">
+		<div class="container">
+			<p th:text="${#dates.format(dataAtual, 'dd/MM/yyyy HH:mm')}" class="text-muted">Página renderizada</p>
+		</div>
+	</footer>
+</body>
+</html>
