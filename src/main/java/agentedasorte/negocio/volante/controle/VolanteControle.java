@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import agentedasorte.negocio.volante.negocio.Volante;
-import agentedasorte.negocio.volante.negocio.VolanteRepositorio;
+import agentedasorte.negocio.volante.negocio.volante.Volante;
+import agentedasorte.negocio.volante.negocio.volante.VolanteRepositorio;
 
 //URL http://localhost:8080/jsondoc-ui.html > http://localhost:8080/jsondoc
 @RestController

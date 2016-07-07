@@ -1,4 +1,4 @@
-package agentedasorte.negocio.volante.negocio;
+package agentedasorte.negocio.volante.negocio.volante;
 
 import org.springframework.data.jpa.domain.Specification;
 
