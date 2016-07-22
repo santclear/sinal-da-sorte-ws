@@ -1,4 +1,4 @@
-package agentedasorte.negocio.volante.negocio.volante;
+package agentedasorte.negocio.volante;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
