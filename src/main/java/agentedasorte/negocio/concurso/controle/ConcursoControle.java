@@ -28,11 +28,11 @@ public class ConcursoControle {
 		// this.concursoServico = concursoEspecificacao;
 	}
 
-	// URL http://localhost:8080/concursos/procure_por_id_maior_que/{id}
+	// URL http://localhost:8080/concursos/procure_por_loteria_id_igual_a_e_numero_maior_que/{loteriaId}&{numero}
 	@CrossOrigin(origins = "http://localhost:8100")
-	@RequestMapping(value = "procure_por_numero_maior_que_e_loteria_nome_como/{numero}&{loteriaNome}", method = RequestMethod.GET)
-	public List<Concurso> procurePorNumeroMaiorQueELoteriaNomeComo(@PathVariable Integer numero, @PathVariable String loteriaNome) {
-		return this.concursoRepositorio.procurePorNumeroMaiorQueELoteriaNomeComo(numero, loteriaNome);
+	@RequestMapping(value = "procure_por_loteria_id_igual_ao_e_numero_maior_que/{loteriaId}&{numero}", method = RequestMethod.GET)
+	public List<Concurso> procurePorLoteriaIdIgualAoENumeroMaiorQue(@PathVariable Long loteriaId, @PathVariable Integer numero) {
+		return this.concursoRepositorio.procurePorLoteriaIdIgualAoENumeroMaiorQue(loteriaId, numero);
 	}
 
 	// URL http://localhost:8080/concursos/procure_por/

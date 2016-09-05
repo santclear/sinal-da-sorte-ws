@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VolanteRepositorio extends JpaRepository<Volante, Long>, JpaSpecificationExecutor<Volante> {
 
-	@Query("select c from Volante c where c.nome like ?1")
+	@Query("select v from Volante v where v.dezenasMarcadas like ?1")
 	List<Volante> findByNome(String nome);
 }

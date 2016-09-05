@@ -1,6 +1,7 @@
 package agentedasorte.negocio.concurso;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import javax.persistence.TemporalType;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import agentedasorte.negocio.loteria.Loteria;
@@ -43,7 +45,8 @@ public class Concurso extends AbstractPersistable<Long> {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "data_do_sorteio", length = 10)
-	private Date dataDoSorteio;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEEE, dd/MM/yyyy", locale = "pt", timezone = "Brazil/East")
+	private Calendar dataDoSorteio;
 	
 	@Column(name = "numeros_sorteados", nullable = false, length = 199)
 	private String numerosSorteados;
@@ -74,7 +77,7 @@ public class Concurso extends AbstractPersistable<Long> {
 		this.numerosSorteados = numerosSorteados;
 	}
 
-	public Concurso(Loteria loteria, Time time, int numero, Date dataDoSorteio, String numerosSorteados, BigDecimal arrecadacaoTotal, BigDecimal estimativaDePremioParaOProximoConcurso,
+	public Concurso(Loteria loteria, Time time, int numero, Calendar dataDoSorteio, String numerosSorteados, BigDecimal arrecadacaoTotal, BigDecimal estimativaDePremioParaOProximoConcurso,
 			BigDecimal acumuladoParaOProximoConcurso, List<Rateio> rateios) {
 		this.loteria = loteria;
 		this.time = time;
@@ -192,11 +195,11 @@ public class Concurso extends AbstractPersistable<Long> {
 		this.numero = numero;
 	}
 
-	public Date getDataDoSorteio() {
+	public Calendar getDataDoSorteio() {
 		return this.dataDoSorteio;
 	}
 
-	public void setDataDoSorteio(Date dataDoSorteio) {
+	public void setDataDoSorteio(Calendar dataDoSorteio) {
 		this.dataDoSorteio = dataDoSorteio;
 	}
 
