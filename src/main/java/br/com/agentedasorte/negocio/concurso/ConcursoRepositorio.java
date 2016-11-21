@@ -10,8 +10,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ConcursoRepositorio extends JpaRepository<Concurso, Long>, JpaSpecificationExecutor<Concurso> {
 	
-	@Query("SELECT concurso, loteria FROM Concurso concurso inner join concurso.loteria loteria WHERE loteria.id = ?1 AND concurso.numero > ?2")
-	public List<Concurso> procurePorLoteriaIdIgualAoENumeroMaiorQue(Long loteriaId, Integer numero);
+	@Query(
+		"SELECT concurso "
+	  + "FROM Concurso concurso "
+	  + "INNER JOIN concurso.loteria loteria "
+	  + "LEFT JOIN concurso.sorteios sorteio "
+	  + "WHERE loteria.id = ?1 AND "
+	  + "concurso.numero > ?2")
+	public List<Concurso> procurePorLoteriaIdIgualAENumeroMaiorQue(Long loteriaId, Integer numero);
 	
 	@Query(
 		"SELECT concurso "
@@ -20,12 +26,5 @@ public interface ConcursoRepositorio extends JpaRepository<Concurso, Long>, JpaS
 	  + "LEFT JOIN concurso.sorteios sorteio "
 	  + "WHERE loteria.id = ?1 AND "
 	  + "concurso.numero < ?2")
-	public List<Concurso> procurePorLoteriaIdIgualAoENumeroMenorQue(Long loteriaId, Integer numero);
-	
-//	@Query("SELECT concurso, loteria FROM Concurso concurso inner join concurso.loteria loteria WHERE concurso.numero < ?1 AND loteria.nome like ?2")
-//	List<Concurso> procurePorNumeroMenorQueELoteriaNomeComo(Integer numero, String loteriaNome);
-//	
-//	@Query("select c, l.nome from Concurso c join fetch c.loteria l where c.numerosSorteados like ?1 and l.nome = ?2 and c.numero >= ?3 and c.numero <= ?4")
-//	List<Concurso> procurePorNumerosSorteadosComoELoteriaNomeENumeroMaiorqueENumeroMenorque(String numeroSorteado, String nomeLoteria, Integer numeroConcursoInicial, Integer numeroConcursoFinal);
-
+	public List<Concurso> procurePorLoteriaIdIgualAENumeroMenorQue(Long loteriaId, Integer numero);
 }

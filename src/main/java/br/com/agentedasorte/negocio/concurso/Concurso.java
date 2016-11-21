@@ -17,7 +17,6 @@ import javax.persistence.TemporalType;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.agentedasorte.negocio.loteria.Loteria;
 import br.com.agentedasorte.negocio.sorteio.Sorteio;
