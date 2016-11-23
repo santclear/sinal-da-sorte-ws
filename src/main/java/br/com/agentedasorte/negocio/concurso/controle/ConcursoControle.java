@@ -30,15 +30,15 @@ public class ConcursoControle {
 
 	// URL http://localhost:8080/concursos/procure_por_loteria_id_igual_a_e_numero_maior_que/{loteriaId}&{numero}
 	@CrossOrigin(origins = "http://localhost:8100")
-	@RequestMapping(value = "procure_por_loteria_id_igual_ao_e_numero_maior_que/{loteriaId}&{numero}", method = RequestMethod.GET)
-	public List<Concurso> procurePorLoteriaIdIgualAoENumeroMaiorQue(@PathVariable Long loteriaId, @PathVariable Integer numero) {
-		return this.concursoRepositorio.procurePorLoteriaIdIgualAoENumeroMaiorQue(loteriaId, numero);
+	@RequestMapping(value = "procure_por_loteria_id_igual_a_e_numero_maior_que/{loteriaId}&{numero}", method = RequestMethod.GET)
+	public List<Concurso> procurePorLoteriaIdIgualAENumeroMaiorQue(@PathVariable Long loteriaId, @PathVariable Integer numero) {
+		return this.concursoRepositorio.procurePorLoteriaIdIgualAENumeroMaiorQue(loteriaId, numero);
 	}
 	
 	@CrossOrigin(origins = "http://localhost:8100")
-	@RequestMapping(value = "procure_por_loteria_id_igual_ao_e_numero_menor_que/{loteriaId}&{numero}", method = RequestMethod.GET)
-	public List<Concurso> procurePorLoteriaIdIgualAoENumeroMenorQue(@PathVariable Long loteriaId, @PathVariable Integer numero) {
-		return this.concursoRepositorio.procurePorLoteriaIdIgualAoENumeroMenorQue(loteriaId, numero);
+	@RequestMapping(value = "procure_por_loteria_id_igual_a_e_numero_menor_que/{loteriaId}&{numero}", method = RequestMethod.GET)
+	public List<Concurso> procurePorLoteriaIdIgualAENumeroMenorQue(@PathVariable Long loteriaId, @PathVariable Integer numero) {
+		return this.concursoRepositorio.procurePorLoteriaIdIgualAENumeroMenorQue(loteriaId, numero);
 	}
 
 	// URL http://localhost:8080/concursos/procure_por/
