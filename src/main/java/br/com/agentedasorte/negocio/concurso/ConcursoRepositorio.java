@@ -14,10 +14,9 @@ public interface ConcursoRepositorio extends JpaRepository<Concurso, Long>, JpaS
 		"SELECT concurso "
 	  + "FROM Concurso concurso "
 	  + "INNER JOIN concurso.loteria loteria "
-	  + "LEFT JOIN concurso.sorteios sorteio "
 	  + "WHERE loteria.id = ?1 AND "
-	  + "concurso.numero > ?2")
-	public List<Concurso> procurePorLoteriaIdIgualAENumeroMaiorQue(Long loteriaId, Integer numero);
+	  + "concurso.numero > ?2 ")
+	public List<Concurso> procurePorLoteriaIdIgualAENumeroMaiorQueESorteioNumeroIgualA(Long loteriaId, Integer numero);
 	
 	@Query(
 		"SELECT concurso "
