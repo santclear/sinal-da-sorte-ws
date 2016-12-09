@@ -5,8 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.agentedasorte.negocio.concurso.Concurso;
 import br.com.agentedasorte.negocio.concurso.ConcursoRepositorio;
 import br.com.agentedasorte.negocio.concurso.ConcursoServico;
+import br.com.agentedasorte.negocio.dto.EstatisticaDTO;
 
 //URL http://localhost:8080/jsondoc-ui.html > http://localhost:8080/jsondoc
 @RestController
@@ -43,7 +42,7 @@ public class ConcursoControle {
 	
 	@CrossOrigin(origins = "http://localhost:8100")
 	@RequestMapping(value = "calcule_frequencias_totais_das_dezenas/{loteriaId}&{numeroConcursoInicial}&{numeroConcursoFinal}", method = RequestMethod.GET)
-	public List<Object[]> calculeFrequenciasTotaisDasDezenas(@PathVariable Long loteriaId, @PathVariable Integer numeroConcursoInicial, @PathVariable Integer numeroConcursoFinal) {
+	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(@PathVariable Long loteriaId, @PathVariable Integer numeroConcursoInicial, @PathVariable Integer numeroConcursoFinal) {		
 		return this.concursoRepositorio.calculeFrequenciasTotaisDasDezenas(loteriaId, numeroConcursoInicial, numeroConcursoFinal);
 	}
 	// URL http://localhost:8080/concursos/procure_por/

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import br.com.agentedasorte.negocio.dto.EstatisticaDTO;
+
 @Repository
 public interface ConcursoRepositorio extends JpaRepository<Concurso, Long>, JpaSpecificationExecutor<Concurso> {
 	
@@ -27,7 +29,7 @@ public interface ConcursoRepositorio extends JpaRepository<Concurso, Long>, JpaS
 	public List<Concurso> procurePorLoteriaIdIgualAENumeroMenorQueESorteioNumeroIgualA(Long loteriaId, Integer numero);
 	
 	@Query(
-	    "SELECT "
+	    "SELECT new br.com.agentedasorte.negocio.dto.EstatisticaDTO("
 	  + "	c.numero AS dezena, "
 	  + "	("
 	  + "		SELECT COUNT(*) "
@@ -43,7 +45,7 @@ public interface ConcursoRepositorio extends JpaRepository<Concurso, Long>, JpaS
 	  + "			'%')"
 	  + "	) AS frequencia, "
 	  + "	("
-	  + "		SELECT (COUNT(*) * 100) / max(conc.numero) "
+	  + "		SELECT (COUNT(*) * 1.0 * 100) / max(conc.numero) "
 	  + "		FROM Sorteio sort "
 	  + "		JOIN sort.concurso conc "
 	  + "		JOIN conc.loteria lot "
@@ -54,13 +56,13 @@ public interface ConcursoRepositorio extends JpaRepository<Concurso, Long>, JpaS
 	  + "					ELSE c.numero "
 	  + "				END ,"
 	  + "			'%')"
-	  + "	) AS frequenciaPorCento "
+	  + "	) AS frequenciaPorCento) "
 	  + "FROM Concurso c "
 	  + "JOIN c.loteria l "
 	  + "WHERE l.id = ?1 "
 	  + "AND c.numero >= ?2 "
 	  + "AND c.numero <= ?3 "
 	  + "ORDER BY frequencia DESC")
-	public List<Object[]> calculeFrequenciasTotaisDasDezenas(Long loteriaId, Integer numeroConcursoInicial, Integer numeroConcursoFinal);
+	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(Long loteriaId, Integer numeroConcursoInicial, Integer numeroConcursoFinal);
 	
 }
