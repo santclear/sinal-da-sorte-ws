@@ -41,9 +41,9 @@ public class ConcursoControle {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:8100")
-	@RequestMapping(value = "calcule_frequencias_totais_das_dezenas/{loteriaId}&{numeroConcursoInicial}&{numeroConcursoFinal}", method = RequestMethod.GET)
-	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(@PathVariable Long loteriaId, @PathVariable Integer numeroConcursoInicial, @PathVariable Integer numeroConcursoFinal) {		
-		return this.concursoRepositorio.calculeFrequenciasTotaisDasDezenas(loteriaId, numeroConcursoInicial, numeroConcursoFinal);
+	@RequestMapping(value = "calcule_frequencias_totais_das_dezenas/{loteriaId}", method = RequestMethod.GET)
+	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(@PathVariable Long loteriaId) {		
+		return this.concursoRepositorio.calculeFrequenciasTotaisDasDezenas(loteriaId);
 	}
 	// URL http://localhost:8080/concursos/procure_por/
 	// @CrossOrigin(origins = "http://localhost:8100")

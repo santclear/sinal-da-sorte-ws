@@ -1,20 +1,20 @@
 package br.com.agentedasorte.negocio.dto;
 
 public class EstatisticaDTO {
-	private Integer dezena;
+	private String dezena;
 	private Long frequencia;
 	private Double frequenciaPorCento;
 
 	public EstatisticaDTO() {
 	}
 
-	public EstatisticaDTO(Integer dezena, Long frequencia, Double frequenciaPorCento) {
+	public EstatisticaDTO(String dezena, Long frequencia, Double frequenciaPorCento) {
 		this.dezena = dezena;
 		this.frequencia = frequencia;
 		this.frequenciaPorCento = frequenciaPorCento;
 	}
 
-	public Integer getDezena() {
+	public String getDezena() {
 		return dezena;
 	}
 

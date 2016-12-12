@@ -30,19 +30,14 @@ public interface ConcursoRepositorio extends JpaRepository<Concurso, Long>, JpaS
 	
 	@Query(
 	    "SELECT new br.com.agentedasorte.negocio.dto.EstatisticaDTO("
-	  + "	c.numero AS dezena, "
+	  + "	dez.numero AS dezena, "
 	  + "	("
 	  + "		SELECT COUNT(*) "
 	  + "		FROM Sorteio sort "
 	  + "		JOIN sort.concurso conc "
 	  + "		JOIN conc.loteria lot "
 	  + "		WHERE lot.id = ?1 "
-	  + "		AND sort.numerosSorteados LIKE concat('%', "
-	  + "				CASE WHEN c.numero >= 1 AND c.numero <= 9 "
-	  + "					THEN concat('0', c.numero) "
-	  + "					ELSE c.numero "
-	  + "				END ,"
-	  + "			'%')"
+	  + "		AND sort.numerosSorteados LIKE concat('%',dez.numero,'%')"
 	  + "	) AS frequencia, "
 	  + "	("
 	  + "		SELECT (COUNT(*) * 1.0 * 100) / max(conc.numero) "
@@ -50,19 +45,12 @@ public interface ConcursoRepositorio extends JpaRepository<Concurso, Long>, JpaS
 	  + "		JOIN sort.concurso conc "
 	  + "		JOIN conc.loteria lot "
 	  + "		WHERE lot.id = ?1 "
-	  + "		AND sort.numerosSorteados LIKE concat('%', "
-	  + "				CASE WHEN c.numero >= 1 AND c.numero <= 9 "
-	  + "					THEN concat('0', c.numero) "
-	  + "					ELSE c.numero "
-	  + "				END ,"
-	  + "			'%')"
+	  + "		AND sort.numerosSorteados LIKE concat('%',dez.numero,'%')"
 	  + "	) AS frequenciaPorCento) "
-	  + "FROM Concurso c "
-	  + "JOIN c.loteria l "
+	  + "FROM Dezena dez "
+	  + "JOIN dez.loteria l "
 	  + "WHERE l.id = ?1 "
-	  + "AND c.numero >= ?2 "
-	  + "AND c.numero <= ?3 "
 	  + "ORDER BY frequencia DESC")
-	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(Long loteriaId, Integer numeroConcursoInicial, Integer numeroConcursoFinal);
+	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(Long loteriaId);
 	
 }
