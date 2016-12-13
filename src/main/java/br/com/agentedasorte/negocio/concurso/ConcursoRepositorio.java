@@ -37,6 +37,7 @@ public interface ConcursoRepositorio extends JpaRepository<Concurso, Long>, JpaS
 	  + "		JOIN sort.concurso conc "
 	  + "		JOIN conc.loteria lot "
 	  + "		WHERE lot.id = ?1 "
+	  + "		AND sort.numero = ?2 "
 	  + "		AND sort.numerosSorteados LIKE concat('%',dez.numero,'%')"
 	  + "	) AS frequencia, "
 	  + "	("
@@ -45,12 +46,13 @@ public interface ConcursoRepositorio extends JpaRepository<Concurso, Long>, JpaS
 	  + "		JOIN sort.concurso conc "
 	  + "		JOIN conc.loteria lot "
 	  + "		WHERE lot.id = ?1 "
+	  + "		AND sort.numero = ?2 "
 	  + "		AND sort.numerosSorteados LIKE concat('%',dez.numero,'%')"
 	  + "	) AS frequenciaPorCento) "
 	  + "FROM Dezena dez "
 	  + "JOIN dez.loteria l "
 	  + "WHERE l.id = ?1 "
 	  + "ORDER BY frequencia DESC")
-	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(Long loteriaId);
+	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(Long loteriaId, Integer numeroDoSorteio);
 	
 }
