@@ -4,17 +4,17 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.com.agentedasorte</groupId>
-	<artifactId>agente-da-sorte-servico</artifactId>
+	<artifactId>sinal-da-sorte-ws</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
-	<name>agente-da-sorte-servico</name>
+	<name>sinal-da-sorte-ws</name>
 	<description>Camada de negócio do sistema Agente da Sorte</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.3.5.RELEASE</version>
+		<version>1.5.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -70,7 +70,7 @@
 	</dependencies>
 	
 	<build>
-		<finalName>agente-da-sorte-servico</finalName>
+		<finalName>sinal-da-sorte-ws</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
