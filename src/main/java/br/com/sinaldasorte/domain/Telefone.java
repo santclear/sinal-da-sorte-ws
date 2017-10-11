@@ -4,67 +4,29 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name = "telefone", catalog = "bdagente")
 public class Telefone extends AbstractPersistable<Long> {
-
-	private static final long serialVersionUID = -8048277201963548820L;
+	
+	private static final long serialVersionUID = 1L;
 
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(name = "usuario_id", nullable = false)
+	@JoinColumn(nullable = false)
 	private Usuario usuario;
 
-	@Column(name = "telefone", length = 20)
+	@Column(length = 20)
 	private String telefone;
 
-	public Telefone() {
-	}
-
-	public Telefone(Usuario usuario) {
-		this.usuario = usuario;
-	}
+	public Telefone() {}
 
 	public Telefone(Usuario usuario, String telefone) {
 		this.usuario = usuario;
 		this.telefone = telefone;
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + ((telefone == null) ? 0 : telefone.hashCode());
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (!(obj instanceof Telefone))
-			return false;
-		Telefone other = (Telefone) obj;
-		if (telefone == null) {
-			if (other.telefone != null)
-				return false;
-		} else if (!telefone.equals(other.telefone))
-			return false;
-		if (usuario == null) {
-			if (other.usuario != null)
-				return false;
-		} else if (!usuario.equals(other.usuario))
-			return false;
-		return true;
 	}
 
 	@Override

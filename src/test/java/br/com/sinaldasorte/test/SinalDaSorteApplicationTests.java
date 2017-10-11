@@ -1,4 +1,4 @@
-package agentedasorte;
+package br.com.sinaldasorte.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -7,7 +7,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-public class AgenteDaSorteServiceApplicationTests {
+public class SinalDaSorteApplicationTests {
 
 	@Test
 	public void contextLoads() {
