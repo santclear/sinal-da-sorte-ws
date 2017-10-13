@@ -12,5 +12,5 @@ import br.com.sinaldasorte.domain.Volante;
 public interface VolanteRepository extends JpaRepository<Volante, Long>, JpaSpecificationExecutor<Volante> {
 
 	@Query("select v from Volante v where v.dezenasMarcadas like ?1")
-	List<Volante> findByNome(String nome);
+	public List<Volante> findByNome(String nome);
 }

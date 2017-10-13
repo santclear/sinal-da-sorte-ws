@@ -1,4 +1,4 @@
-package br.com.sinaldasorte.resource;
+package br.com.sinaldasorte.controller;
 
 import java.util.Date;
 
@@ -9,11 +9,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class VisaoResource {
+public class VisaoController {
 	private String faseProduto;
 	
 	@Autowired
-	public VisaoResource(Environment environment) {
+	public VisaoController(Environment environment) {
 		this.faseProduto = environment.getProperty("fase-produto");
 	}
 
