@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>br.com.agentedasorte</groupId>
+	<groupId>br.com.sinaldasorte</groupId>
 	<artifactId>sinal-da-sorte-ws</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>sinal-da-sorte-ws</name>
-	<description>Camada de negócio do sistema Agente da Sorte</description>
+	<description>Web Services do sistema Sinal da Sorte</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -21,7 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
-		<start-class>br.com.agentedasorte.AgenteDaSorteServiceApplication</start-class>
+		<start-class>br.com.sinaldasorte.SinalDaSorteWSApplication</start-class>
 	</properties>
 
 	<dependencies>
