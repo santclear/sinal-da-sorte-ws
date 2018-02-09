@@ -24,21 +24,21 @@ public class ConcursoResource {
 	// URL http://localhost:8080/concursos/procure_por_loteria_id_igual_a_e_numero_maior_que/{loteriaId}&{numero}
 //	@CrossOrigin(origins = "http://localhost:8100")
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "procure_por_loteria_id_igual_a_e_numero_maior_que_e_sorteio_numero_igual_a/{loteriaId}&{numero}", method = RequestMethod.GET)
-	public List<Concurso> procurePorLoteriaIdIgualAENumeroMaiorQueESorteioNumeroIgualA(@PathVariable Long loteriaId, @PathVariable Integer numero) {
-		return this.service.procurePorLoteriaIdIgualAENumeroMaiorQueESorteioNumeroIgualA(loteriaId, numero);
+	@RequestMapping(value = "procureConcursosComNumeroMaiorQue/numero={numero}&idLoteria={idLoteria}", method = RequestMethod.GET)
+	public List<Concurso> procureConcursosComNumeroMaiorQue(@PathVariable Integer numero, @PathVariable Long idLoteria) {
+		return this.service.procureConcursosComNumeroMaiorQue(numero, idLoteria);
 	}
 //	@CrossOrigin(origins = "http://localhost:8100")
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "procure_por_loteria_id_igual_a_e_numero_menor_que_e_sorteio_numero_igual_a/{loteriaId}&{numero}", method = RequestMethod.GET)
-	public List<Concurso> procurePorLoteriaIdIgualAENumeroMenorQueESorteioNumeroIgualA(@PathVariable Long loteriaId, @PathVariable Integer numero) {
-		return this.service.procurePorLoteriaIdIgualAENumeroMenorQueESorteioNumeroIgualA(loteriaId, numero);
+	@RequestMapping(value = "procureConcursosComNumeroMenorQue/numero={numero}&idLoteria={idLoteria}", method = RequestMethod.GET)
+	public List<Concurso> procureConcursosComNumeroMenorQue(@PathVariable Integer numero, @PathVariable Long idLoteria) {
+		return this.service.procureConcursosComNumeroMenorQue(numero, idLoteria);
 	}
 //	@CrossOrigin(origins = "http://localhost:8100")
 	@CrossOrigin(origins = "*")
-	@RequestMapping(value = "calcule_frequencias_totais_das_dezenas/{loteriaId}&{numeroDoSorteio}", method = RequestMethod.GET)
-	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(@PathVariable Long loteriaId, @PathVariable Integer numeroDoSorteio) {		
-		return this.service.calculeFrequenciasTotaisDasDezenas(loteriaId, numeroDoSorteio);
+	@RequestMapping(value = "calculeFrequenciasTotaisDasDezenas/idLoteria={idLoteria}&numeroSorteio={numeroDoSorteio}", method = RequestMethod.GET)
+	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(@PathVariable Long idLoteria, @PathVariable Integer numeroDoSorteio) {		
+		return this.service.calculeFrequenciasTotaisDasDezenas(idLoteria, numeroDoSorteio);
 	}
 	// URL http://localhost:8080/concursos/procure_por/
 	// @CrossOrigin(origins = "http://localhost:8100")

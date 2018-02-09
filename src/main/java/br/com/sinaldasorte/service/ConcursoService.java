@@ -15,15 +15,15 @@ public class ConcursoService {
 	@Autowired
 	private ConcursoRepository repo;
 
-	public List<Concurso> procurePorLoteriaIdIgualAENumeroMaiorQueESorteioNumeroIgualA(Long loteriaId, Integer numero) {
-		return this.repo.procurePorLoteriaIdIgualAENumeroMaiorQueESorteioNumeroIgualA(loteriaId, numero);
+	public List<Concurso> procureConcursosComNumeroMaiorQue(Integer numero, Long idLoteria) {
+		return this.repo.procureConcursosComNumeroMaiorQue(numero, idLoteria);
 	}
 	
-	public List<Concurso> procurePorLoteriaIdIgualAENumeroMenorQueESorteioNumeroIgualA(Long loteriaId, Integer numero) {
-		return this.repo.procurePorLoteriaIdIgualAENumeroMenorQueESorteioNumeroIgualA(loteriaId, numero);
+	public List<Concurso> procureConcursosComNumeroMenorQue(Integer numero, Long idLoteria) {
+		return this.repo.procureConcursosComNumeroMenorQue(numero, idLoteria);
 	}
 	
-	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(Long loteriaId, Integer numeroDoSorteio) {
-		return this.repo.calculeFrequenciasTotaisDasDezenas(loteriaId, numeroDoSorteio);
+	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(Long idLoteria, Integer numeroDoSorteio) {
+		return this.repo.calculeFrequenciasTotaisDasDezenas(idLoteria, numeroDoSorteio);
 	}
 }
