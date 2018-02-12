@@ -35,9 +35,6 @@ public class Usuario extends AbstractPersistable<Long> {
 	@Column(nullable = false, length = 11)
 	private String cpf;
 
-	@Column(nullable = false, length = 60)
-	private String emailRecupercao;
-
 	@Column(length = 200)
 	private String logradouro;
 
@@ -57,14 +54,13 @@ public class Usuario extends AbstractPersistable<Long> {
 
 	public Usuario() {}
 
-	public Usuario(String nome, String sobrenome, char sexo, Date dataDeNascimento, String cpf, String emailRecupercao, String logradouro,
+	public Usuario(String nome, String sobrenome, char sexo, Date dataDeNascimento, String cpf, String logradouro,
 			String cidade, String uf) {
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.sexo = sexo;
 		this.dataDeNascimento = dataDeNascimento;
 		this.cpf = cpf;
-		this.emailRecupercao = emailRecupercao;
 		this.logradouro = logradouro;
 		this.cidade = cidade;
 		this.uf = uf;
@@ -113,14 +109,6 @@ public class Usuario extends AbstractPersistable<Long> {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public String getEmailRecupercao() {
-		return this.emailRecupercao;
-	}
-
-	public void setEmailRecupercao(String emailRecupercao) {
-		this.emailRecupercao = emailRecupercao;
 	}
 
 	public String getLogradouro() {

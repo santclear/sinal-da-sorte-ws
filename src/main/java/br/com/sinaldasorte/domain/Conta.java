@@ -1,57 +1,64 @@
 package br.com.sinaldasorte.domain;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Conta implements Serializable {
+public class Conta extends AbstractPersistable<Long> {
 	
 	private static final long serialVersionUID = 1L;
-
-	@Id
+	
 	@Column(unique = true, nullable = false, length = 60)
 	private String email;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	//FIXME permitido null temporariamente para testes. O correto é nullable = false
+	@JoinColumn(nullable = true)
 	private Acesso acesso;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	//FIXME permitido null temporariamente para testes. O correto é nullable = false
+	@JoinColumn(nullable = true)
 	private Situacao situacao;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	//FIXME permitido null temporariamente para testes. O correto é nullable = false
+	@JoinColumn(nullable = true)
 	private Usuario usuario;
 	
 	@Column(nullable = false, length = 2048)
 	private String senha;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "conta")
 	private List<Volante> volantes = new LinkedList<>();
 
 	public Conta() {}
 	
-	public Conta(String email, Acesso acesso, Situacao situacao, Usuario usuario, String senha) {
+	public Conta(Long id, String email, Acesso acesso, Situacao situacao, Usuario usuario, String senha) {
+		super.setId(id);
 		this.email = email;
 		this.acesso = acesso;
 		this.situacao = situacao;
 		this.usuario = usuario;
 		this.senha = senha;
+	}
+	
+	@Override
+	public void setId(Long id) {
+		super.setId(id);
 	}
 
 	public String getEmail() {

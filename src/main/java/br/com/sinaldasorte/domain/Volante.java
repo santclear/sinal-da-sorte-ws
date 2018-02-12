@@ -52,6 +52,11 @@ public class Volante extends AbstractPersistable<Long> {
 		this.teimosinha = teimosinha;
 		this.dataDaAposta = dataDaAposta;
 	}
+	
+	@Override
+	public void setId(Long id) {
+		super.setId(id);
+	}
 
 	public Conta getConta() {
 		return conta;
