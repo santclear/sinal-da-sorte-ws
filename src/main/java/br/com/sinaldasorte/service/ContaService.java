@@ -10,9 +10,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.sinaldasorte.domain.Conta;
+import br.com.sinaldasorte.domain.enums.Perfil;
 import br.com.sinaldasorte.dto.ContaDTO;
 import br.com.sinaldasorte.dto.ContaNewDTO;
 import br.com.sinaldasorte.repository.ContaRepository;
+import br.com.sinaldasorte.security.ContaAuth;
+import br.com.sinaldasorte.service.exceptions.AuthorizationException;
 import br.com.sinaldasorte.service.exceptions.ObjectNotFoundException;
 
 @Service
@@ -25,6 +28,14 @@ public class ContaService {
 	private ContaRepository repo;
 	
 	public Conta find(Long id) {
+		ContaAuth conta = UserService.authenticated();
+		// O usuário logado procurar por ele mesmo, a não ser que ele tenha perfil de ADMIN
+		// Se o usuário não estiver logado, ou o perfil não for de ADMIN e não for o id 
+		// passado por parâmetro não for dele mesmo então o acesso será negado
+		if (conta == null || !conta.hasRole(Perfil.ADMIN) && !id.equals(conta.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Conta obj = repo.findOne(id);
 		if(obj == null) {
 			throw new ObjectNotFoundException("Objeto não encontrado Id: "+ id +", Tipo: "+ Conta.class.getName());
