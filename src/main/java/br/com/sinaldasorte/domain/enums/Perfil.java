@@ -3,7 +3,9 @@ package br.com.sinaldasorte.domain.enums;
 public enum Perfil {
 	
 	ADMIN(1, "ROLE_ADMIN"),
-	CLIENTE(2, "ROLE_CLIENTE");
+	GRATUITO(2, "ROLE_GRATUITO"),
+	ASSINANTE(3, "ROLE_ASSINANTE");
+	
 	
 	private int cod;
 	private String descricao;

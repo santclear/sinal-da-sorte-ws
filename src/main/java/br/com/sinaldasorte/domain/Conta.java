@@ -57,7 +57,7 @@ public class Conta extends AbstractPersistable<Long> {
 	private List<Volante> volantes = new LinkedList<>();
 
 	public Conta() {
-		addPerfil(Perfil.CLIENTE);
+		addPerfil(Perfil.GRATUITO);
 	}
 	
 	public Conta(Long id, String email, Acesso acesso, Situacao situacao, Usuario usuario, String senha) {
@@ -68,7 +68,7 @@ public class Conta extends AbstractPersistable<Long> {
 		this.situacao = situacao;
 		this.usuario = usuario;
 		this.senha = senha;
-		addPerfil(Perfil.CLIENTE);
+		addPerfil(Perfil.GRATUITO);
 	}
 	
 	@Override
