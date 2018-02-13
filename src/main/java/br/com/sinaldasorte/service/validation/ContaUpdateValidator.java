@@ -32,7 +32,7 @@ public class ContaUpdateValidator implements ConstraintValidator<ContaUpdate, Co
 		
 		@SuppressWarnings("unchecked")
 		Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-		Integer uriId = Integer.parseInt(map.get("id")); // Obtém o Id a partir da URL
+		Long uriId = Long.parseLong(map.get("id")); // Obtém o Id a partir da URL
 		
 		List<FieldMessage> list = new ArrayList<>();
 		

@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -49,7 +50,8 @@ public class Concurso extends AbstractPersistable<Long> {
 	@Column(precision = 15, scale = 2)
 	private BigDecimal acumuladoEspecial;
 	
-	@OneToMany(mappedBy = "concurso")
+	// Se excluir um concurso excluirá os sorteios relacionados
+	@OneToMany(mappedBy = "concurso", cascade=CascadeType.ALL)
 	private List<Sorteio> sorteios = new LinkedList<>();
 	
 	public Concurso() {}

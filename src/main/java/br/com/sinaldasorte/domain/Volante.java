@@ -20,12 +20,12 @@ public class Volante extends AbstractPersistable<Long> {
 
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn(name="conta_id", nullable = false)
 	private Conta conta;
 	
 	@JsonIgnore
 	@ManyToOne
-	@JoinColumn(nullable = false)
+	@JoinColumn(name="loteria_id", nullable = false)
 	private Loteria loteria;
 
 	@Column(nullable = false, length = 99)
@@ -43,8 +43,9 @@ public class Volante extends AbstractPersistable<Long> {
 
 	public Volante() {}
 
-	public Volante(Conta conta, Loteria loteria, String dezenasMarcadas, int quantidadeDeDezenasNoVolante,
+	public Volante(Long id, Conta conta, Loteria loteria, String dezenasMarcadas, int quantidadeDeDezenasNoVolante,
 			Integer teimosinha, Date dataDaAposta) {
+		super.setId(id);
 		this.conta = conta;
 		this.loteria = loteria;
 		this.dezenasMarcadas = dezenasMarcadas;

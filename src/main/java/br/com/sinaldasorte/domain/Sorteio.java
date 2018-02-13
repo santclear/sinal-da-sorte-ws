@@ -3,6 +3,7 @@ package br.com.sinaldasorte.domain;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -28,7 +29,8 @@ public class Sorteio extends AbstractPersistable<Long> {
 	@Column(nullable = false, length = 199)
 	private String numerosSorteados;
 	
-	@OneToMany(mappedBy = "sorteio")
+	// Se excluir um sorteio excluirá os rateios relacionados
+	@OneToMany(mappedBy = "sorteio", cascade=CascadeType.ALL)
 	private List<Rateio> rateios = new LinkedList<>();
 	
 	public Sorteio() {}
