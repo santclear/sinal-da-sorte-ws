@@ -36,6 +36,12 @@ public class ContaResource {
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@RequestMapping(value="/email", method=RequestMethod.GET)
+	public ResponseEntity<ContaDTO> find(@RequestParam(value="value") String email) {
+		Conta obj = service.findByEmail(email);
+		return ResponseEntity.ok().body(new ContaDTO(obj));
+	}
+	
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody ContaNewDTO objDTO) {
 		Conta obj = service.fromDTO(objDTO);

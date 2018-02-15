@@ -24,7 +24,7 @@ public class ContaDTO implements Serializable {
 	public ContaDTO() {}
 
 	public ContaDTO(Conta obj) {
-//		this.id = obj.getId();
+		this.id = obj.getId();
 //		this.nome = obj.getNome();
 		this.email = obj.getEmail();
 	}

@@ -70,6 +70,20 @@ public class ContaService {
 		return repo.findAll();
 	}
 	
+	public Conta findByEmail(String email) {
+		
+		ContaAuth conta = UserService.authenticated();
+		if (conta==null || !conta.hasRole(Perfil.ADMIN) && !email.equals(conta.getUsername())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		Conta obj = repo.findOne(conta.getId());
+		if (obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado! Id: "+ conta.getId() +", Tipo: " + Conta.class.getName());
+		}
+		return obj;
+	}
+	
 	// Page encapsula paginação. A contagem de página inicia em zero. O atributo direction é o tipo de ordenação descentende ou ascendente
 	public Page<Conta> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
