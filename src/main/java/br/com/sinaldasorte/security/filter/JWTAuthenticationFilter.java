@@ -1,4 +1,4 @@
-package br.com.sinaldasorte.security;
+package br.com.sinaldasorte.security.filter;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,6 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.sinaldasorte.dto.CredenciaisDTO;
+import br.com.sinaldasorte.security.ContaAuth;
+import br.com.sinaldasorte.security.JWTUtil;
 
 // Interceptador das requisições de login
 // /login é um endpoint reservado pelo Spring Security

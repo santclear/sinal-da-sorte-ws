@@ -19,9 +19,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import br.com.sinaldasorte.security.JWTAuthenticationFilter;
-import br.com.sinaldasorte.security.JWTAuthorizationFilter;
 import br.com.sinaldasorte.security.JWTUtil;
+import br.com.sinaldasorte.security.filter.JWTAuthenticationFilter;
+import br.com.sinaldasorte.security.filter.JWTAuthorizationFilter;
 
 @Configuration
 @EnableWebSecurity
