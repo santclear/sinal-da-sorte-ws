@@ -37,9 +37,10 @@ public class ContaResource {
 	}
 	
 	@RequestMapping(value="/email", method=RequestMethod.GET)
-	public ResponseEntity<ContaDTO> find(@RequestParam(value="value") String email) {
+	public ResponseEntity<Conta> find(@RequestParam(value="value") String email) {
+		// Entidade Conta ao invés da ContaDTO para que seja carregado todos os dados da Conta
 		Conta obj = service.findByEmail(email);
-		return ResponseEntity.ok().body(new ContaDTO(obj));
+		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
