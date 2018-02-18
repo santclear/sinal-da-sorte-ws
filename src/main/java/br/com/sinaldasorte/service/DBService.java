@@ -31,5 +31,10 @@ public class DBService {
 		
 		Conta conta3 = new Conta(null, "caurlson@gmail.com", null, null, null, encriptadorDeSenha.encode("123"));
 		contaService.insert(conta3);
+		
+		Conta conta4 = new Conta(null, "1", null, null, null, encriptadorDeSenha.encode("1"));
+		conta4.addPerfil(Perfil.ADMIN);
+		conta4.addPerfil(Perfil.ASSINANTE);
+		contaService.insert(conta4);
 	}
 }
