@@ -1,38 +1,42 @@
 package br.com.sinaldasorte.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Dezena implements Serializable {
+public class Cidade implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
+	private String nome;
+	
 	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Loteria loteria;
+	@JoinColumn(name="estado_id")
+	private Estado estado;
+	
+	@OneToMany(mappedBy="cidade")
+	private List<Usuario> usuarios = new ArrayList<>();
 
-	@Column(length = 4)
-	private String numero;
+	public Cidade() {}
 
-	public Dezena() {}
-
-	public Dezena(Long id, Loteria loteria, String numero) {
+	public Cidade(Long id, String nome, Estado estado) {
 		super();
 		this.id = id;
-		this.loteria = loteria;
-		this.numero = numero;
+		this.nome = nome;
+		this.estado = estado;
 	}
 
 	public Long getId() {
@@ -43,20 +47,28 @@ public class Dezena implements Serializable {
 		this.id = id;
 	}
 
-	public Loteria getLoteria() {
-		return loteria;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setLoteria(Loteria loteria) {
-		this.loteria = loteria;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public String getNumero() {
-		return numero;
+	public Estado getEstado() {
+		return estado;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setEstado(Estado estado) {
+		this.estado = estado;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
 	}
 
 	@Override
@@ -75,7 +87,7 @@ public class Dezena implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Dezena other = (Dezena) obj;
+		Cidade other = (Cidade) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

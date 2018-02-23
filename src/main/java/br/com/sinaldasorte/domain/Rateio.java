@@ -1,20 +1,26 @@
 package br.com.sinaldasorte.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Rateio extends AbstractPersistable<Long> {
+public class Rateio implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
 	@JsonIgnore
 	@ManyToOne
@@ -35,7 +41,9 @@ public class Rateio extends AbstractPersistable<Long> {
 	
 	public Rateio() {}
 
-	public Rateio(Sorteio sorteio, BigDecimal rateio, int numeroDeGanhadores, BigDecimal acumuladoParaOProximoConcurso, String tipoDePremio) {
+	public Rateio(Long id, Sorteio sorteio, BigDecimal rateio, int numeroDeGanhadores, BigDecimal acumuladoParaOProximoConcurso, String tipoDePremio) {
+		super();
+		this.id = id;
 		this.sorteio = sorteio;
 		this.rateio = rateio;
 		this.numeroDeGanhadores = numeroDeGanhadores;
@@ -43,9 +51,12 @@ public class Rateio extends AbstractPersistable<Long> {
 		this.tipoDePremio = tipoDePremio;
 	}
 
-	@Override
+	public Long getId() {
+		return id;
+	}
+
 	public void setId(Long id) {
-		super.setId(id);
+		this.id = id;
 	}
 
 	public Sorteio getSorteio() {
@@ -86,5 +97,30 @@ public class Rateio extends AbstractPersistable<Long> {
 
 	public void setTipoDePremio(String tipoDePremio) {
 		this.tipoDePremio = tipoDePremio;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Rateio other = (Rateio) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }

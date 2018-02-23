@@ -91,11 +91,11 @@ public class ContaService {
 	}
 	
 	public Conta fromDTO(ContaDTO objDTO) {
-		return new Conta(objDTO.getId(), objDTO.getEmail(), null, null, null, null);
+		return new Conta(objDTO.getId(), objDTO.getEmail(), null, null, null);
 	}
 	
 	public Conta fromDTO(ContaNewDTO objDTO) {
-		Conta conta = new Conta(null, objDTO.getEmail(), null, null, null, encriptadorDeSenha.encode(objDTO.getSenha()));
+		Conta conta = new Conta(null, objDTO.getEmail(), null, null, encriptadorDeSenha.encode(objDTO.getSenha()));
 		
 		return conta;
 	}

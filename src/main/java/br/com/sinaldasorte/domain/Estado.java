@@ -1,38 +1,38 @@
 package br.com.sinaldasorte.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Dezena implements Serializable {
+public class Estado implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private Loteria loteria;
+	private String nome;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="estado")// Qual foi o atributo que realizou o mapeamento, nesse caso o atributo estado
+	private List<Cidade> cidades = new ArrayList<>();
 
-	@Column(length = 4)
-	private String numero;
+	public Estado() {}
 
-	public Dezena() {}
-
-	public Dezena(Long id, Loteria loteria, String numero) {
+	public Estado(Long id, String nome) {
 		super();
 		this.id = id;
-		this.loteria = loteria;
-		this.numero = numero;
+		this.nome = nome;
 	}
 
 	public Long getId() {
@@ -43,20 +43,20 @@ public class Dezena implements Serializable {
 		this.id = id;
 	}
 
-	public Loteria getLoteria() {
-		return loteria;
+	public String getNome() {
+		return nome;
 	}
 
-	public void setLoteria(Loteria loteria) {
-		this.loteria = loteria;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
-	public String getNumero() {
-		return numero;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class Dezena implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Dezena other = (Dezena) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

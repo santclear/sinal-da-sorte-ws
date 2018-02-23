@@ -1,5 +1,6 @@
 package br.com.sinaldasorte.domain;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -8,21 +9,26 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.springframework.data.jpa.domain.AbstractPersistable;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class Concurso extends AbstractPersistable<Long> {
+public class Concurso implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+	
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Loteria loteria;
@@ -56,8 +62,10 @@ public class Concurso extends AbstractPersistable<Long> {
 	
 	public Concurso() {}
 	
-	public Concurso(Loteria loteria, int numero, Calendar dataDoSorteio, BigDecimal arrecadacaoTotal, String cidade, String uf,
+	public Concurso(Long id, Loteria loteria, int numero, Calendar dataDoSorteio, BigDecimal arrecadacaoTotal, String cidade, String uf,
 		BigDecimal estimativaDePremioParaOProximoConcurso, BigDecimal acumuladoEspecial) {
+		super();
+		this.id = id;
 		this.loteria = loteria;
 		this.numero = numero;
 		this.dataDoSorteio = dataDoSorteio;
@@ -67,12 +75,15 @@ public class Concurso extends AbstractPersistable<Long> {
 		this.estimativaDePremioParaOProximoConcurso = estimativaDePremioParaOProximoConcurso;
 		this.acumuladoEspecial = acumuladoEspecial;
 	}
-
-	@Override
-	public void setId(Long id) {
-		super.setId(id);
-	}
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Loteria getLoteria() {
 		return loteria;
 	}
@@ -148,5 +159,30 @@ public class Concurso extends AbstractPersistable<Long> {
 	public void addSorteio(Sorteio sorteio) {
 		sorteio.setConcurso(this);
 		this.sorteios.add(sorteio);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Concurso other = (Concurso) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }
