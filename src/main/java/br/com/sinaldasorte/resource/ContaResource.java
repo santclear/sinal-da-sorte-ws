@@ -1,6 +1,7 @@
 package br.com.sinaldasorte.resource;
 
 import java.net.URI;
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,7 +45,7 @@ public class ContaResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ContaNewDTO objDTO) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ContaNewDTO objDTO) throws ParseException {
 		Conta obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();

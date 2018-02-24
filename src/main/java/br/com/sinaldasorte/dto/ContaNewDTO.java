@@ -16,9 +16,8 @@ public class ContaNewDTO implements Serializable {
 	@Email(message="Email inválido")
 	private String email;
 	@NotEmpty(message="Preenchimento obrigatório")
-	private String situacao;
-	@NotEmpty(message="Preenchimento obrigatório")
 	private String senha;
+	private UsuarioDTO usuario;
 	
 	public String getEmail() {
 		return email;
@@ -26,16 +25,16 @@ public class ContaNewDTO implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getSituacao() {
-		return situacao;
-	}
-	public void setSituacao(String situacao) {
-		this.situacao = situacao;
-	}
 	public String getSenha() {
-		return senha;
+		return senha; 
 	}
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	public UsuarioDTO getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(UsuarioDTO usuario) {
+		this.usuario = usuario;
 	}
 }

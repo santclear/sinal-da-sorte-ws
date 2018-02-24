@@ -70,24 +70,26 @@ public class DBService {
 		
 		c1.getUsuarios().addAll(Arrays.asList(usu1,usu2,usu3,usu4,usu5,usu6));
 		
-		Conta conta1 = new Conta(null, "f", Situacoes.ATIVO, usu1, encriptadorDeSenha.encode("f"));
+		Conta conta1 = new Conta(null, "f", usu1, encriptadorDeSenha.encode("f"));
 		conta1.addPerfil(Perfil.ADMIN);
 		conta1.addPerfil(Perfil.ASSINANTE);
 				
-		Conta conta2 = new Conta(null, "santclear@gmail.com", Situacoes.ATIVO, usu2, encriptadorDeSenha.encode("123"));
+		Conta conta2 = new Conta(null, "santclear@gmail.com", usu2, encriptadorDeSenha.encode("123"));
 		conta2.addPerfil(Perfil.ADMIN);
 		conta2.addPerfil(Perfil.ASSINANTE);
 		
-		Conta conta3 = new Conta(null, "bruna@gmail.com", Situacoes.ATIVO, usu3, encriptadorDeSenha.encode("111"));
+		Conta conta3 = new Conta(null, "bruna@gmail.com", usu3, encriptadorDeSenha.encode("111"));
 		conta3.addPerfil(Perfil.ASSINANTE);
 		
-		Conta conta4 = new Conta(null, "savinni@gmail.com", Situacoes.ATIVO, usu4, encriptadorDeSenha.encode("222"));
+		Conta conta4 = new Conta(null, "savinni@gmail.com", usu4, encriptadorDeSenha.encode("222"));
 		conta4.addPerfil(Perfil.GRATUITO);
 		
-		Conta conta5 = new Conta(null, "yuri@gmail.com", Situacoes.INATIVO, usu5, encriptadorDeSenha.encode("333"));
+		Conta conta5 = new Conta(null, "yuri@gmail.com", usu5, encriptadorDeSenha.encode("333"));
+		conta5.setSituacao(Situacoes.INATIVO);
 		conta5.addPerfil(Perfil.GRATUITO);
 		
-		Conta conta6 = new Conta(null, "jarvis@iron.com", Situacoes.INADIMPLENTE, usu6, encriptadorDeSenha.encode("777"));
+		Conta conta6 = new Conta(null, "jarvis@iron.com", usu6, encriptadorDeSenha.encode("777"));
+		conta6.setSituacao(Situacoes.INADIMPLENTE);
 		conta6.addPerfil(Perfil.GRATUITO);
 		
 		contaRepository.save(Arrays.asList(conta1,conta2,conta3,conta4,conta5,conta6));

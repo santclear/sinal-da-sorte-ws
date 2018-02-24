@@ -1,5 +1,7 @@
 package br.com.sinaldasorte.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +11,15 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.sinaldasorte.domain.Cidade;
 import br.com.sinaldasorte.domain.Conta;
+import br.com.sinaldasorte.domain.Usuario;
+import br.com.sinaldasorte.domain.enums.Generos;
 import br.com.sinaldasorte.domain.enums.Perfil;
 import br.com.sinaldasorte.dto.ContaDTO;
 import br.com.sinaldasorte.dto.ContaNewDTO;
+import br.com.sinaldasorte.dto.UsuarioDTO;
+import br.com.sinaldasorte.repository.CidadeRepository;
 import br.com.sinaldasorte.repository.ContaRepository;
 import br.com.sinaldasorte.security.ContaAuth;
 import br.com.sinaldasorte.service.exceptions.AuthorizationException;
@@ -26,6 +33,9 @@ public class ContaService {
 	
 	@Autowired
 	private ContaRepository repo;
+	
+	@Autowired
+	private CidadeRepository cidadeRepo;
 	
 	public Conta find(Long id) {
 		ContaAuth conta = UserService.authenticated();
@@ -91,11 +101,27 @@ public class ContaService {
 	}
 	
 	public Conta fromDTO(ContaDTO objDTO) {
-		return new Conta(objDTO.getId(), objDTO.getEmail(), null, null, null);
+		return new Conta(objDTO.getId(), objDTO.getEmail(), null, null);
 	}
 	
-	public Conta fromDTO(ContaNewDTO objDTO) {
-		Conta conta = new Conta(null, objDTO.getEmail(), null, null, encriptadorDeSenha.encode(objDTO.getSenha()));
+	public Conta fromDTO(ContaNewDTO objDTO) throws ParseException {
+		UsuarioDTO usuariDto = objDTO.getUsuario();
+		Cidade cidade = cidadeRepo.findOne(usuariDto.getCidadeId());
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		Usuario usuario = new Usuario(
+				null,
+				usuariDto.getNome(),
+				usuariDto.getSobrenome(),
+				Generos.toEnum(usuariDto.getGenero()),
+				sdf.parse(usuariDto.getDataDeNascimento()),
+				usuariDto.getCpf(),
+				usuariDto.getLogradouro(),
+				usuariDto.getComplemento(),
+				usuariDto.getCep(),
+				usuariDto.getBairro(),
+				cidade);
+//		new Conta(id, email, usuario, senha);
+		Conta conta = new Conta(null, objDTO.getEmail(), usuario, encriptadorDeSenha.encode(objDTO.getSenha()));
 		
 		return conta;
 	}

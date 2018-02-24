@@ -57,25 +57,18 @@ public class Conta implements Serializable {
 	private List<Volante> volantes = new LinkedList<>();
 
 	public Conta() {
+		this.setSituacao(Situacoes.ATIVO);
 		addPerfil(Perfil.GRATUITO);
 	}
 	
-	public Conta(Long id, String email, Situacoes situacao, Usuario usuario, String senha) {
+	public Conta(Long id, String email, Usuario usuario, String senha) {
 		super();
 		this.id = id;
 		this.email = email;
-		this.situacao = (situacao == null) ? null : situacao.getCod();
+//		this.situacao = (situacao == null) ? null : situacao.getCod();
 		this.usuario = usuario;
 		this.senha = senha;
-		addPerfil(Perfil.GRATUITO);
-	}
-	
-	public Conta(Long id, String email, Situacoes situacao, String senha) {
-		super();
-		this.id = id;
-		this.email = email;
-		this.situacao = (situacao == null) ? null : situacao.getCod();
-		this.senha = senha;
+		this.setSituacao(Situacoes.ATIVO);
 		addPerfil(Perfil.GRATUITO);
 	}
 
