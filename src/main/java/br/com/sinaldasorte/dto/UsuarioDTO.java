@@ -1,5 +1,7 @@
 package br.com.sinaldasorte.dto;
 
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -7,29 +9,37 @@ public class UsuarioDTO {
 
     private Long id;
     @NotEmpty(message="Preenchimento obrigatório")
-	@Length(min=3, max=120, message="O tamanho de ser entre 5 e 120 caracteres")
+	@Length(min=3, max=130, message="O tamanho de ser entre 3 e 130 caracteres")
 	private String nome;
     @NotEmpty(message="Preenchimento obrigatório")
+    @Length(min=3, max=130, message="O tamanho de ser entre 3 e 130 caracteres")
 	private String sobrenome;
     @NotEmpty(message="Preenchimento obrigatório")
 	private Integer genero;
     @NotEmpty(message="Preenchimento obrigatório")
+    @Pattern(regexp="dd/dd/dddd", message="A data de nascimento deve ter o formato dd/dd/dddd, onde \"d\" são dígitos")
 	private String dataDeNascimento;
     @NotEmpty(message="Preenchimento obrigatório")
+    @Pattern(regexp="ddd.ddd.ddd-ddd", message="O cpf deve ter o formato ddd.ddd.ddd-ddd, onde \"d\" são dígitos")
 	private String cpf;
     @NotEmpty(message="Preenchimento obrigatório")
 	private String logradouro;
 	private String complemento;
 	@NotEmpty(message="Preenchimento obrigatório")
+	@Pattern(regexp="ddddd-ddd", message="O cep deve ter o formato ddddd-ddd, onde \"d\" são dígitos")
 	private String cep;
 	@NotEmpty(message="Preenchimento obrigatório")
 	private String bairro;
 	
+	@NotEmpty(message="Preenchimento obrigatório")
 	private Long cidadeId;
 	
 	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=11, max=30, message="O tamanho de ser entre 11 e 30 caracteres")
 	private String telefone1;
+	@Length(min=11, max=30, message="O tamanho de ser entre 11 e 30 caracteres")
 	private String telefone2;
+	@Length(min=11, max=130, message="O tamanho de ser entre 11 e 30 caracteres")
 	private String telefone3;
 	
 	public Long getId() {

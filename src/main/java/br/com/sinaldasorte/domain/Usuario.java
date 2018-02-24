@@ -32,7 +32,7 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, length = 130)
 	private String nome;
 
 	@Column(nullable = false, length = 130)
@@ -45,16 +45,15 @@ public class Usuario implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", locale = "pt", timezone = "Brazil/East")
 	private Date dataDeNascimento;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 15)
 	private String cpf;
 
-	@Column(length = 200, nullable = false)
+	@Column(nullable = false)
 	private String logradouro;
 	
-	@Column(length = 200)
 	private String complemento;
 	
-	@Column(nullable = false)
+	@Column(nullable = false, length = 10)
 	private String cep;
 	
 	@Column(length = 200, nullable = false)

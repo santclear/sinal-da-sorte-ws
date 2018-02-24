@@ -34,7 +34,7 @@ public class Conta implements Serializable {
 	@Id
 	private Long id;
 	
-	@Column(unique = true, nullable = false, length = 60)
+	@Column(unique = true, nullable = false)
 	private String email;
 	
 	private Integer situacao;
@@ -46,7 +46,7 @@ public class Conta implements Serializable {
     private Usuario usuario;
 	
 	@JsonIgnore
-	@Column(nullable = false, length = 2048)
+	@Column(nullable = false)
 	private String senha;
 	
 	@ElementCollection(fetch=FetchType.EAGER)
