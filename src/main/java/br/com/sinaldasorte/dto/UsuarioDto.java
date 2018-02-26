@@ -1,11 +1,9 @@
 package br.com.sinaldasorte.dto;
 
-import javax.validation.constraints.Pattern;
-
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class UsuarioDTO {
+public class UsuarioDto {
 
     private Long id;
     @NotEmpty(message="Preenchimento obrigatório")

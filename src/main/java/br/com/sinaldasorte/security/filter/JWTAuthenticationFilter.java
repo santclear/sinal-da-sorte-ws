@@ -16,7 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.com.sinaldasorte.dto.CredenciaisDTO;
+import br.com.sinaldasorte.dto.CredenciaisDto;
 import br.com.sinaldasorte.security.ContaAuth;
 import br.com.sinaldasorte.security.JWTUtil;
 
@@ -39,7 +39,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		try {
 			// getInputStream() pega os dados que estão na requisição (no body do POST http) e converte para CredenciaisDTO
-			CredenciaisDTO creds = new ObjectMapper().readValue(req.getInputStream(), CredenciaisDTO.class);
+			CredenciaisDto creds = new ObjectMapper().readValue(req.getInputStream(), CredenciaisDto.class);
 	
 	        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getSenha(), new ArrayList<>());
 	        

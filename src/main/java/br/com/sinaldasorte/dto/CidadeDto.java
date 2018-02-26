@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 import br.com.sinaldasorte.domain.Cidade;
 
-public class CidadeDTO implements Serializable {
+public class CidadeDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	private String nome;
 	
-	public CidadeDTO() {
+	public CidadeDto() {
 	}
 
-	public CidadeDTO(Cidade obj) {
+	public CidadeDto(Cidade obj) {
 		id = obj.getId();
 		nome = obj.getNome();
 	}

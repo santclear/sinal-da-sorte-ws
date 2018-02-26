@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.sinaldasorte.domain.Concurso;
-import br.com.sinaldasorte.dto.EstatisticaDTO;
+import br.com.sinaldasorte.dto.EstatisticaDto;
 
 @Repository
 public interface ConcursoRepository extends JpaRepository<Concurso, Long>, JpaSpecificationExecutor<Concurso> {
@@ -30,7 +30,7 @@ public interface ConcursoRepository extends JpaRepository<Concurso, Long>, JpaSp
 	List<Concurso> procureConcursosComNumeroMenorQue(Integer numero, Long idLoteria);
 	
 	@Query(
-	    "SELECT new br.com.sinaldasorte.dto.EstatisticaDTO("
+	    "SELECT new br.com.sinaldasorte.dto.EstatisticaDto("
 	  + "	dez.numero AS dezena, "
 	  + "	("
 	  + "		SELECT COUNT(*) "
@@ -54,6 +54,6 @@ public interface ConcursoRepository extends JpaRepository<Concurso, Long>, JpaSp
 	  + "JOIN dez.loteria l "
 	  + "WHERE l.id = ?1 "
 	  + "ORDER BY frequencia DESC")
-	List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(Long idLoteria, Integer numeroDoSorteio);
+	List<EstatisticaDto> calculeFrequenciasTotaisDasDezenas(Long idLoteria, Integer numeroDoSorteio);
 	
 }

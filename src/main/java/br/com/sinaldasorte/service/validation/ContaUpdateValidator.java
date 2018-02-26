@@ -12,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
 import br.com.sinaldasorte.domain.Conta;
-import br.com.sinaldasorte.dto.ContaDTO;
+import br.com.sinaldasorte.dto.ContaDto;
 import br.com.sinaldasorte.repository.ContaRepository;
 import br.com.sinaldasorte.resource.exception.FieldMessage;
 
-public class ContaUpdateValidator implements ConstraintValidator<ContaUpdate, ContaDTO> {
+public class ContaUpdateValidator implements ConstraintValidator<ContaUpdate, ContaDto> {
 	
 	@Autowired
 	private HttpServletRequest request;
@@ -28,7 +28,7 @@ public class ContaUpdateValidator implements ConstraintValidator<ContaUpdate, Co
 	public void initialize(ContaUpdate ann) {}
 
 	@Override
-	public boolean isValid(ContaDTO objDTO, ConstraintValidatorContext context) {
+	public boolean isValid(ContaDto objDTO, ConstraintValidatorContext context) {
 		
 		@SuppressWarnings("unchecked")
 		Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);

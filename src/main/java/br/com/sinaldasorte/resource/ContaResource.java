@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.sinaldasorte.domain.Conta;
-import br.com.sinaldasorte.dto.ContaDTO;
-import br.com.sinaldasorte.dto.ContaNewDTO;
+import br.com.sinaldasorte.dto.ContaDto;
+import br.com.sinaldasorte.dto.ContaNewDto;
 import br.com.sinaldasorte.service.ContaService;
 
 @RestController
@@ -45,7 +45,7 @@ public class ContaResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody ContaNewDTO objDTO) throws ParseException {
+	public ResponseEntity<Void> insert(@Valid @RequestBody ContaNewDto objDTO) throws ParseException {
 		Conta obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
@@ -53,7 +53,7 @@ public class ContaResource {
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
-	public  ResponseEntity<Void> update(@Valid @RequestBody ContaDTO objDTO, @PathVariable Long id) {
+	public  ResponseEntity<Void> update(@Valid @RequestBody ContaDto objDTO, @PathVariable Long id) {
 		Conta obj = service.fromDTO(objDTO);
 		obj.setId(id);
 		obj = service.update(obj);
@@ -69,22 +69,22 @@ public class ContaResource {
 	// Somente perfil ADMIN pode listar todas as contas
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ContaDTO>> findAll() {
+	public ResponseEntity<List<ContaDto>> findAll() {
 		List<Conta> list = service.findAll();
-		List<ContaDTO> listDTO = list.stream().map(obj -> new ContaDTO(obj)).collect(Collectors.toList());
+		List<ContaDto> listDTO = list.stream().map(obj -> new ContaDto(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
 	}
 	
 	// Somente perfil ADMIN pode paginar paginar as contas 
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@RequestMapping(value="/page", method=RequestMethod.GET)
-	public ResponseEntity<Page<ContaDTO>> findPage(
+	public ResponseEntity<Page<ContaDto>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page, 
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
 			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
 			@RequestParam(value="direction", defaultValue="DESC") String direction) {
 		Page<Conta> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<ContaDTO> listDTO = list.map(obj -> new ContaDTO(obj));
+		Page<ContaDto> listDTO = list.map(obj -> new ContaDto(obj));
 		return ResponseEntity.ok().body(listDTO);
 	}
 }

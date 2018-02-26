@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class EmailDTO implements Serializable {
+public class EmailDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -13,7 +13,7 @@ public class EmailDTO implements Serializable {
 	@Email(message="Email inválido")
 	private String email;
 	
-	public EmailDTO() {}
+	public EmailDto() {}
 
 	public String getEmail() {
 		return email;

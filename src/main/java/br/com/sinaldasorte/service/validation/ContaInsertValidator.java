@@ -9,11 +9,11 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.sinaldasorte.domain.Conta;
-import br.com.sinaldasorte.dto.ContaNewDTO;
+import br.com.sinaldasorte.dto.ContaNewDto;
 import br.com.sinaldasorte.repository.ContaRepository;
 import br.com.sinaldasorte.resource.exception.FieldMessage;
 
-public class ContaInsertValidator implements ConstraintValidator<ContaInsert, ContaNewDTO> {
+public class ContaInsertValidator implements ConstraintValidator<ContaInsert, ContaNewDto> {
 	
 	@Autowired
 	private ContaRepository repo;
@@ -22,7 +22,7 @@ public class ContaInsertValidator implements ConstraintValidator<ContaInsert, Co
 	public void initialize(ContaInsert ann) {}
 
 	@Override
-	public boolean isValid(ContaNewDTO objDTO, ConstraintValidatorContext context) {
+	public boolean isValid(ContaNewDto objDTO, ConstraintValidatorContext context) {
 		List<FieldMessage> list = new ArrayList<>();
 		
 		Conta aux = repo.findByEmail(objDTO.getEmail());

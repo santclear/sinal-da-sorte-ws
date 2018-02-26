@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.sinaldasorte.domain.Concurso;
-import br.com.sinaldasorte.dto.EstatisticaDTO;
+import br.com.sinaldasorte.dto.EstatisticaDto;
 import br.com.sinaldasorte.repository.ConcursoRepository;
 
 @Service
@@ -23,7 +23,7 @@ public class ConcursoService {
 		return this.repo.procureConcursosComNumeroMenorQue(numero, idLoteria);
 	}
 	
-	public List<EstatisticaDTO> calculeFrequenciasTotaisDasDezenas(Long idLoteria, Integer numeroDoSorteio) {
+	public List<EstatisticaDto> calculeFrequenciasTotaisDasDezenas(Long idLoteria, Integer numeroDoSorteio) {
 		return this.repo.calculeFrequenciasTotaisDasDezenas(idLoteria, numeroDoSorteio);
 	}
 }

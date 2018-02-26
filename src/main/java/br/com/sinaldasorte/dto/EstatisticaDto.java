@@ -1,14 +1,14 @@
 package br.com.sinaldasorte.dto;
 
-public class EstatisticaDTO {
+public class EstatisticaDto {
 	private String dezena;
 	private Long frequencia;
 	private Double frequenciaPorCento;
 
-	public EstatisticaDTO() {
+	public EstatisticaDto() {
 	}
 
-	public EstatisticaDTO(String dezena, Long frequencia, Double frequenciaPorCento) {
+	public EstatisticaDto(String dezena, Long frequencia, Double frequenciaPorCento) {
 		this.dezena = dezena;
 		this.frequencia = frequencia;
 		this.frequenciaPorCento = frequenciaPorCento;

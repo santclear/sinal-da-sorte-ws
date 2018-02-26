@@ -16,9 +16,9 @@ import br.com.sinaldasorte.domain.Conta;
 import br.com.sinaldasorte.domain.Usuario;
 import br.com.sinaldasorte.domain.enums.Generos;
 import br.com.sinaldasorte.domain.enums.Perfil;
-import br.com.sinaldasorte.dto.ContaDTO;
-import br.com.sinaldasorte.dto.ContaNewDTO;
-import br.com.sinaldasorte.dto.UsuarioDTO;
+import br.com.sinaldasorte.dto.ContaDto;
+import br.com.sinaldasorte.dto.ContaNewDto;
+import br.com.sinaldasorte.dto.UsuarioDto;
 import br.com.sinaldasorte.repository.CidadeRepository;
 import br.com.sinaldasorte.repository.ContaRepository;
 import br.com.sinaldasorte.security.ContaAuth;
@@ -100,12 +100,12 @@ public class ContaService {
 		return repo.findAll(pageRequest);
 	}
 	
-	public Conta fromDTO(ContaDTO objDTO) {
+	public Conta fromDTO(ContaDto objDTO) {
 		return new Conta(objDTO.getId(), objDTO.getEmail(), null, null);
 	}
 	
-	public Conta fromDTO(ContaNewDTO objDTO) throws ParseException {
-		UsuarioDTO usuariDto = objDTO.getUsuario();
+	public Conta fromDTO(ContaNewDto objDTO) throws ParseException {
+		UsuarioDto usuariDto = objDTO.getUsuario();
 		Cidade cidade = cidadeRepo.findOne(usuariDto.getCidadeId());
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Usuario usuario = new Usuario(

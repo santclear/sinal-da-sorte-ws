@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.sinaldasorte.dto.EmailDTO;
+import br.com.sinaldasorte.dto.EmailDto;
 import br.com.sinaldasorte.security.ContaAuth;
 import br.com.sinaldasorte.security.JWTUtil;
 import br.com.sinaldasorte.service.AuthService;
@@ -40,7 +40,7 @@ public class AuthResource {
 	}
 	
 	@RequestMapping(value = "/forgot", method = RequestMethod.POST)
-	public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDTO objDto) {
+	public ResponseEntity<Void> forgot(@Valid @RequestBody EmailDto objDto) {
 		service.sendNewPassword(objDto.getEmail());
 		return ResponseEntity.noContent().build();
 	}

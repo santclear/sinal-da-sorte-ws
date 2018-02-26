@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import br.com.sinaldasorte.service.validation.ContaInsert;
 
 @ContaInsert
-public class ContaNewDTO implements Serializable {
+public class ContaNewDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -17,7 +17,7 @@ public class ContaNewDTO implements Serializable {
 	private String email;
 	@NotEmpty(message="Preenchimento obrigatório")
 	private String senha;
-	private UsuarioDTO usuario;
+	private UsuarioDto usuario;
 	
 	public String getEmail() {
 		return email;
@@ -31,10 +31,10 @@ public class ContaNewDTO implements Serializable {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	public UsuarioDTO getUsuario() {
+	public UsuarioDto getUsuario() {
 		return usuario;
 	}
-	public void setUsuario(UsuarioDTO usuario) {
+	public void setUsuario(UsuarioDto usuario) {
 		this.usuario = usuario;
 	}
 }

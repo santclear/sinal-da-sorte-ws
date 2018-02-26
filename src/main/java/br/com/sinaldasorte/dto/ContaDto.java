@@ -9,7 +9,7 @@ import br.com.sinaldasorte.domain.Conta;
 import br.com.sinaldasorte.service.validation.ContaUpdate;
 
 @ContaUpdate
-public class ContaDTO implements Serializable {
+public class ContaDto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -21,9 +21,9 @@ public class ContaDTO implements Serializable {
 	@Email(message="Email inválido")
 	private String email;
 	
-	public ContaDTO() {}
+	public ContaDto() {}
 
-	public ContaDTO(Conta obj) {
+	public ContaDto(Conta obj) {
 		this.id = obj.getId();
 //		this.nome = obj.getNome();
 		this.email = obj.getEmail();

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sinaldasorte.domain.Cidade;
 import br.com.sinaldasorte.domain.Estado;
-import br.com.sinaldasorte.dto.CidadeDTO;
-import br.com.sinaldasorte.dto.EstadoDTO;
+import br.com.sinaldasorte.dto.CidadeDto;
+import br.com.sinaldasorte.dto.EstadoDto;
 import br.com.sinaldasorte.service.CidadeService;
 import br.com.sinaldasorte.service.EstadoService;
 
@@ -28,16 +28,16 @@ public class EstadoResource {
 	private CidadeService cidadeService;
 	
 	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<EstadoDTO>> findAll() {
+	public ResponseEntity<List<EstadoDto>> findAll() {
 		List<Estado> list = service.findAll();
-		List<EstadoDTO> listDto = list.stream().map(obj -> new EstadoDTO(obj)).collect(Collectors.toList());  
+		List<EstadoDto> listDto = list.stream().map(obj -> new EstadoDto(obj)).collect(Collectors.toList());  
 		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@RequestMapping(value="/{estadoId}/cidades", method=RequestMethod.GET)
-	public ResponseEntity<List<CidadeDTO>> findCidades(@PathVariable Long estadoId) {
+	public ResponseEntity<List<CidadeDto>> findCidades(@PathVariable Long estadoId) {
 		List<Cidade> list = cidadeService.findByEstado(estadoId);
-		List<CidadeDTO> listDto = list.stream().map(obj -> new CidadeDTO(obj)).collect(Collectors.toList());  
+		List<CidadeDto> listDto = list.stream().map(obj -> new CidadeDto(obj)).collect(Collectors.toList());  
 		return ResponseEntity.ok().body(listDto);
 	}
 }
