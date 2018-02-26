@@ -17,16 +17,13 @@ public class UsuarioDTO {
     @NotEmpty(message="Preenchimento obrigatório")
 	private Integer genero;
     @NotEmpty(message="Preenchimento obrigatório")
-    @Pattern(regexp="dd/dd/dddd", message="A data de nascimento deve ter o formato dd/dd/dddd, onde \"d\" são dígitos")
 	private String dataDeNascimento;
     @NotEmpty(message="Preenchimento obrigatório")
-    @Pattern(regexp="ddd.ddd.ddd-ddd", message="O cpf deve ter o formato ddd.ddd.ddd-ddd, onde \"d\" são dígitos")
 	private String cpf;
     @NotEmpty(message="Preenchimento obrigatório")
 	private String logradouro;
 	private String complemento;
 	@NotEmpty(message="Preenchimento obrigatório")
-	@Pattern(regexp="ddddd-ddd", message="O cep deve ter o formato ddddd-ddd, onde \"d\" são dígitos")
 	private String cep;
 	@NotEmpty(message="Preenchimento obrigatório")
 	private String bairro;
