@@ -1,6 +1,9 @@
 package br.com.sinaldasorte.config;
 
+import java.rmi.RemoteException;
 import java.text.ParseException;
+
+import javax.xml.rpc.ServiceException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +22,7 @@ public class TestConfig {
 	private DBService dbService;
 	
 	@Bean
-	public boolean instantiateDatabase() throws ParseException {
+	public boolean instantiateDatabase() throws ParseException, RemoteException, ServiceException {
 		dbService.instantiateTestDatabase();
 		return true;
 	}

@@ -1,38 +1,43 @@
 package br.com.sinaldasorte.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-public class Estado implements Serializable {
+public class Bairro implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	private Long id;
 	
 	private String nome;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy="estado")// Qual foi o atributo que realizou o mapeamento, nesse caso o atributo estado
-	private List<Cidade> cidades = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name="cidade_id")
+	private Cidade cidade;
+	
+	@OneToMany(mappedBy="bairro", cascade=CascadeType.ALL)
+	private List<Logradouro> logradouros = new LinkedList<>();
 
-	public Estado() {}
+	public Bairro() {}
 
-	public Estado(Long id, String nome) {
+	public Bairro(Long id, String nome, Cidade cidade) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.cidade = cidade;
 	}
 
 	public Long getId() {
@@ -51,12 +56,20 @@ public class Estado implements Serializable {
 		this.nome = nome;
 	}
 
-	public List<Cidade> getCidades() {
-		return cidades;
+	public Cidade getCidade() {
+		return cidade;
 	}
 
-	public void setCidades(List<Cidade> cidades) {
-		this.cidades = cidades;
+	public void setCidade(Cidade cidade) {
+		this.cidade = cidade;
+	}
+
+	public List<Logradouro> getLogradouros() {
+		return logradouros;
+	}
+
+	public void setLogradouros(List<Logradouro> logradouros) {
+		this.logradouros = logradouros;
 	}
 
 	@Override
@@ -75,7 +88,7 @@ public class Estado implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Estado other = (Estado) obj;
+		Bairro other = (Bairro) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

@@ -2,21 +2,21 @@ package br.com.sinaldasorte.dto;
 
 import java.io.Serializable;
 
-public class CidadeDto implements Serializable {
+import org.hibernate.validator.constraints.NotEmpty;
+
+public class UFDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
+	
 	private Long id;
+	@NotEmpty(message="Preenchimento obrigatório")
 	private String nome;
-	private Long ufId;
-	
-	public CidadeDto() {
-	}
-	
-	public CidadeDto(Long id, String nome, Long ufId) {
+
+	public UFDto() {}
+
+	public UFDto(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;
-		this.ufId = ufId;
 	}
 
 	public Long getId() {
@@ -33,13 +33,5 @@ public class CidadeDto implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public Long getUfId() {
-		return ufId;
-	}
-
-	public void setUfId(Long ufId) {
-		this.ufId = ufId;
 	}
 }

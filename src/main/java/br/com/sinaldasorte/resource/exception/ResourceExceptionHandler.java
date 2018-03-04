@@ -9,15 +9,16 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import br.com.sinaldasorte.service.exceptions.AuthorizationException;
+import br.com.sinaldasorte.service.exceptions.AutorizacaoException;
 import br.com.sinaldasorte.service.exceptions.DataIntegrityException;
-import br.com.sinaldasorte.service.exceptions.ObjectNotFoundException;
+import br.com.sinaldasorte.service.exceptions.ObjetoNaoEncontradoException;
+import br.com.sinaldasorte.service.exceptions.ProcessamentoInternoException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
 	
-	@ExceptionHandler(ObjectNotFoundException.class)
-	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request) {
+	@ExceptionHandler(ObjetoNaoEncontradoException.class)
+	public ResponseEntity<StandardError> objectNotFound(ObjetoNaoEncontradoException e, HttpServletRequest request) {
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.NOT_FOUND.value(), "Não encontrado", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
 	}
@@ -39,9 +40,15 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(err);
 	}
 
-	@ExceptionHandler(AuthorizationException.class)
-	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
+	@ExceptionHandler(AutorizacaoException.class)
+	public ResponseEntity<StandardError> authorization(AutorizacaoException e, HttpServletRequest request) {
 		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.FORBIDDEN.value(), "Acesso negado", e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+	}
+	
+	@ExceptionHandler(ProcessamentoInternoException.class)
+	public ResponseEntity<StandardError> internalServerError(ProcessamentoInternoException e, HttpServletRequest request) {
+		StandardError err = new StandardError(System.currentTimeMillis(), HttpStatus.INTERNAL_SERVER_ERROR.value(), "Erro ao enviar dados para processamento", e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(err);
 	}
 }

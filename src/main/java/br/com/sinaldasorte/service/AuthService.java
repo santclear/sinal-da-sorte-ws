@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.sinaldasorte.domain.Conta;
 import br.com.sinaldasorte.repository.ContaRepository;
-import br.com.sinaldasorte.service.exceptions.ObjectNotFoundException;
+import br.com.sinaldasorte.service.exceptions.ObjetoNaoEncontradoException;
 
 @Service
 public class AuthService {
@@ -28,7 +28,7 @@ public class AuthService {
 		
 		Conta conta = repo.findByEmail(email);
 		if (conta == null) {
-			throw new ObjectNotFoundException("Email não encontrado");
+			throw new ObjetoNaoEncontradoException("Email não encontrado");
 		}
 		
 		String newPass = newPassword();

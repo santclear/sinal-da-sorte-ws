@@ -6,12 +6,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.sinaldasorte.domain.Cidade;
+import br.com.sinaldasorte.domain.Bairro;
 
 @Repository
-public interface CidadeRepository extends JpaRepository<Cidade, Long> {
+public interface BairroRepository extends JpaRepository<Bairro, Long> {
 
 	@Transactional(readOnly=true) // Define que não haverá transação com o banco de dados
-	@Query("SELECT c FROM Cidade c LEFT JOIN c.uf u WHERE c.nome = :nome")
-	Cidade procureCidade(@Param("nome") String nome);
+	@Query("SELECT b FROM Bairro b "
+			+ "LEFT JOIN b.cidade c "
+			+ "LEFT JOIN c.uf u "
+			+ "WHERE b.nome = :nome")
+	Bairro procureBairro(@Param("nome") String nome);
 }

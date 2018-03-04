@@ -19,6 +19,13 @@ public class ContaNewDto implements Serializable {
 	private String senha;
 	private UsuarioDto usuario;
 	
+	public ContaNewDto() {}
+	
+	public ContaNewDto(String email, String senha, UsuarioDto usuario) {
+		this.email = email;
+		this.senha = senha;
+		this.usuario = usuario;
+	}
 	public String getEmail() {
 		return email;
 	}

@@ -1,123 +1,126 @@
 package br.com.sinaldasorte.dto;
 
-import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class UsuarioDto {
 
     private Long id;
     @NotEmpty(message="Preenchimento obrigatório")
-	@Length(min=3, max=130, message="O tamanho de ser entre 3 e 130 caracteres")
 	private String nome;
+    
     @NotEmpty(message="Preenchimento obrigatório")
-    @Length(min=3, max=130, message="O tamanho de ser entre 3 e 130 caracteres")
 	private String sobrenome;
+    
+    @NotEmpty(message="Preenchimento obrigatório")
+    private String cpf;
+    
+    @NotEmpty(message="Preenchimento obrigatório")
+    private String dataDeNascimento;
+    
     @NotEmpty(message="Preenchimento obrigatório")
 	private Integer genero;
-    @NotEmpty(message="Preenchimento obrigatório")
-	private String dataDeNascimento;
-    @NotEmpty(message="Preenchimento obrigatório")
-	private String cpf;
-    @NotEmpty(message="Preenchimento obrigatório")
-	private String logradouro;
-	private String complemento;
+    
+    private EnderecoDto endereco;
+
 	@NotEmpty(message="Preenchimento obrigatório")
-	private String cep;
-	@NotEmpty(message="Preenchimento obrigatório")
-	private String bairro;
-	
-	@NotEmpty(message="Preenchimento obrigatório")
-	private Long cidadeId;
-	
-	@NotEmpty(message="Preenchimento obrigatório")
-	@Length(min=11, max=30, message="O tamanho de ser entre 11 e 30 caracteres")
 	private String telefone1;
-	@Length(min=11, max=30, message="O tamanho de ser entre 11 e 30 caracteres")
+	
 	private String telefone2;
-	@Length(min=11, max=130, message="O tamanho de ser entre 11 e 30 caracteres")
+	
 	private String telefone3;
 	
+	public UsuarioDto() {}
+
+	public UsuarioDto(Long id, String nome, String sobrenome, String cpf, String dataDeNascimento, Integer genero,
+			EnderecoDto endereco, String telefone1, String telefone2, String telefone3) {
+		this.id = id;
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.cpf = cpf;
+		this.dataDeNascimento = dataDeNascimento;
+		this.genero = genero;
+		this.endereco = endereco;
+		this.telefone1 = telefone1;
+		this.telefone2 = telefone2;
+		this.telefone3 = telefone3;
+	}
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getSobrenome() {
 		return sobrenome;
 	}
+
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}
-	public Integer getGenero() {
-		return genero;
-	}
-	public void setGenero(Integer genero) {
-		this.genero = genero;
-	}
-	public String getDataDeNascimento() {
-		return dataDeNascimento;
-	}
-	public void setDataDeNascimento(String dataDeNascimento) {
-		this.dataDeNascimento = dataDeNascimento;
-	}
+
 	public String getCpf() {
 		return cpf;
 	}
+
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public String getLogradouro() {
-		return logradouro;
+
+	public String getDataDeNascimento() {
+		return dataDeNascimento;
 	}
-	public void setLogradouro(String logradouro) {
-		this.logradouro = logradouro;
+
+	public void setDataDeNascimento(String dataDeNascimento) {
+		this.dataDeNascimento = dataDeNascimento;
 	}
-	public String getComplemento() {
-		return complemento;
+
+	public Integer getGenero() {
+		return genero;
 	}
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
+
+	public void setGenero(Integer genero) {
+		this.genero = genero;
 	}
-	public String getCep() {
-		return cep;
+
+	public EnderecoDto getEndereco() {
+		return endereco;
 	}
-	public void setCep(String cep) {
-		this.cep = cep;
+
+	public void setEndereco(EnderecoDto endereco) {
+		this.endereco = endereco;
 	}
-	public String getBairro() {
-		return bairro;
-	}
-	public void setBairro(String bairro) {
-		this.bairro = bairro;
-	}
-	public Long getCidadeId() {
-		return cidadeId;
-	}
-	public void setCidadeId(Long cidadeId) {
-		this.cidadeId = cidadeId;
-	}
+
 	public String getTelefone1() {
 		return telefone1;
 	}
+
 	public void setTelefone1(String telefone1) {
 		this.telefone1 = telefone1;
 	}
+
 	public String getTelefone2() {
 		return telefone2;
 	}
+
 	public void setTelefone2(String telefone2) {
 		this.telefone2 = telefone2;
 	}
+
 	public String getTelefone3() {
 		return telefone3;
 	}
+
 	public void setTelefone3(String telefone3) {
 		this.telefone3 = telefone3;
 	}

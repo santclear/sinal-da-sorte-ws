@@ -30,7 +30,7 @@ public class AuthResource {
 	// num momento em que o token está perto de expirar
 	@RequestMapping(value = "/refresh_token", method = RequestMethod.POST)
 	public ResponseEntity<Void> refreshToken(HttpServletResponse response) {
-		ContaAuth conta = UserService.authenticated();
+		ContaAuth conta = UserService.autenticado();
 		String token = jwtUtil.generateToken(conta.getUsername());
 		response.addHeader("Authorization", "Bearer " + token);
         // Por padrão, o mecanismo de cors não expõe cabeçalhos personalizados (Exemplo: Authorization),

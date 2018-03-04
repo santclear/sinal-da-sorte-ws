@@ -6,7 +6,7 @@ import br.com.sinaldasorte.security.ContaAuth;
 
 public class UserService {
 	
-	public static ContaAuth authenticated() {
+	public static ContaAuth autenticado() {
 		try {
 			// Retorna o usuário logado
 			return (ContaAuth) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

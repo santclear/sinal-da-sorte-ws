@@ -65,7 +65,6 @@ public class Conta implements Serializable {
 		super();
 		this.id = id;
 		this.email = email;
-//		this.situacao = (situacao == null) ? null : situacao.getCod();
 		this.usuario = usuario;
 		this.senha = senha;
 		this.setSituacao(Situacoes.ATIVO);

@@ -4,17 +4,16 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class Cidade implements Serializable {
+public class UF implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -24,20 +23,16 @@ public class Cidade implements Serializable {
 	
 	private String nome;
 	
-	@ManyToOne
-	@JoinColumn(name="uf_id")
-	private UF uf;
-	
-	@OneToMany(mappedBy="cidade", cascade=CascadeType.ALL)
-	private List<Bairro> bairros = new LinkedList<>();
+	@JsonIgnore
+	@OneToMany(mappedBy="uf")// Qual foi o atributo que realizou o mapeamento, nesse caso o atributo estado
+	private List<Cidade> cidades = new LinkedList<>();
 
-	public Cidade() {}
+	public UF() {}
 
-	public Cidade(Long id, String nome, UF uf) {
+	public UF(Long id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.uf = uf;
 	}
 
 	public Long getId() {
@@ -56,20 +51,12 @@ public class Cidade implements Serializable {
 		this.nome = nome;
 	}
 
-	public UF getUf() {
-		return uf;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setUf(UF uf) {
-		this.uf = uf;
-	}
-
-	public List<Bairro> getBairros() {
-		return bairros;
-	}
-
-	public void setBairros(List<Bairro> bairros) {
-		this.bairros = bairros;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
@@ -88,7 +75,7 @@ public class Cidade implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
+		UF other = (UF) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
