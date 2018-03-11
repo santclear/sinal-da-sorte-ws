@@ -46,7 +46,7 @@ public class LogradouroResource {
 	}
 	
 	@RequestMapping(value = "/cep/{cep}", method = RequestMethod.GET)
-	public ResponseEntity<EnderecoCorreiosDto> procureCepCorreios(@PathVariable String cep) throws ServiceException, RemoteException {
+	public ResponseEntity<EnderecoCorreiosDto> procureCepCorreios(@PathVariable String cep) {
 		return ResponseEntity.ok().body(service.procureCepCorreios(cep));
 	}
 }

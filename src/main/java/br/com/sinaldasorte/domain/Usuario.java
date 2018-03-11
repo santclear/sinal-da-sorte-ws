@@ -47,7 +47,7 @@ public class Usuario implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", locale = "pt", timezone = "Brazil/East")
 	private Date dataDeNascimento;
 
-	@Column(unique = true, nullable = false)
+	@Column(nullable = false)
 	private String cpf;
 	
 	private String complemento;
