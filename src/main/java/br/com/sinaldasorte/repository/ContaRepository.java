@@ -11,4 +11,7 @@ public interface ContaRepository extends JpaRepository<Conta, Long> {
 	
 	@Transactional(readOnly=true) // Define que não haverá transação com o banco de dados
 	Conta findByEmail(String email);
+	
+	@Transactional(readOnly=true)
+	Conta findByHashConfirmacao(String hash);
 }

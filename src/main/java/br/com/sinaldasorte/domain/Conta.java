@@ -49,6 +49,10 @@ public class Conta implements Serializable {
 	@Column(nullable = false)
 	private String senha;
 	
+	@JsonIgnore
+	@Column(unique = true)
+	private String hashConfirmacao;
+	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="PERFIS")
 	private Set<Integer> perfis = new HashSet<>();
@@ -57,7 +61,6 @@ public class Conta implements Serializable {
 	private List<Volante> volantes = new LinkedList<>();
 
 	public Conta() {
-		this.setSituacao(Situacoes.ATIVO);
 		addPerfil(Perfil.GRATUITO);
 	}
 	
@@ -67,7 +70,6 @@ public class Conta implements Serializable {
 		this.email = email;
 		this.usuario = usuario;
 		this.senha = senha;
-		this.setSituacao(Situacoes.ATIVO);
 		addPerfil(Perfil.GRATUITO);
 	}
 
@@ -110,6 +112,14 @@ public class Conta implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getHashConfirmacao() {
+		return hashConfirmacao;
+	}
+
+	public void setHashConfirmacao(String hashConfirmacao) {
+		this.hashConfirmacao = hashConfirmacao;
 	}
 
 	public Set<Perfil> getPerfis() {

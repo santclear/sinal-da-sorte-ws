@@ -19,6 +19,7 @@ import br.com.sinaldasorte.domain.UF;
 import br.com.sinaldasorte.domain.Usuario;
 import br.com.sinaldasorte.domain.enums.Generos;
 import br.com.sinaldasorte.domain.enums.Perfil;
+import br.com.sinaldasorte.domain.enums.Situacoes;
 import br.com.sinaldasorte.dto.ContaDto;
 import br.com.sinaldasorte.dto.ContaNewDto;
 import br.com.sinaldasorte.dto.UsuarioDto;
@@ -26,6 +27,7 @@ import br.com.sinaldasorte.repository.ContaRepository;
 import br.com.sinaldasorte.security.ContaAuth;
 import br.com.sinaldasorte.service.exceptions.AutorizacaoException;
 import br.com.sinaldasorte.service.exceptions.ObjetoNaoEncontradoException;
+import br.com.sinaldasorte.util.Util;
 
 @Service
 public class ContaService {
@@ -47,6 +49,9 @@ public class ContaService {
 	
 	@Autowired
 	private LogradouroService logradouroService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	public Conta procure(Long id) {
 		ContaAuth conta = UserService.autenticado();
@@ -77,6 +82,14 @@ public class ContaService {
 		return repo.save(newObj);
 	}
 	
+	public Conta atualizePorHashConfirmacao(Conta obj) {
+		Conta newObj = procurePorHashConfirmacao(obj.getHashConfirmacao());
+		newObj.setHashConfirmacao("CONFIRMADO");
+		atualizeDados(newObj, obj);
+		// O método save do Spring Data realiza operações de save e update. Se o id for nulo ele salva e se não for atualiza.
+		return repo.save(newObj);
+	}
+	
 	//FIXME Essa operação deve atualizar a 'situacao' para 'INATIVO'
 	public void delete(Long id) {
 //		find(id);
@@ -91,7 +104,7 @@ public class ContaService {
 		return repo.findAll();
 	}
 	
-	public Conta procurePeloEmail(String email) {
+	public Conta procurePorEmail(String email) {
 		
 		ContaAuth conta = UserService.autenticado();
 		if (conta==null || !conta.hasRole(Perfil.ADMIN) && !email.equals(conta.getUsername())) {
@@ -102,6 +115,16 @@ public class ContaService {
 		if (obj == null) {
 			throw new ObjetoNaoEncontradoException("Objeto não encontrado! Id: "+ conta.getId() +", Tipo: " + Conta.class.getName());
 		}
+		return obj;
+	}
+	
+	public Conta procurePorHashConfirmacao(String hash) {
+		
+		Conta obj = repo.findByHashConfirmacao(hash);
+		if(obj == null) {
+			throw new ObjetoNaoEncontradoException("Objeto não encontrado Hash: "+ hash +", Tipo: "+ Conta.class.getName());
+		}
+		
 		return obj;
 	}
 	
@@ -144,6 +167,10 @@ public class ContaService {
 		usuario.addTelefone(usuariDto.getTelefone2());
 		usuario.addTelefone(usuariDto.getTelefone3());
 		Conta conta = new Conta(null, objDTO.getEmail(), usuario, encriptadorDeSenha.encode(objDTO.getSenha()));
+		conta.setSituacao(Situacoes.INATIVO);
+		conta.setHashConfirmacao(Util.novaHash());
+		
+		this.emailService.envieLinkConfirmacaoCadastroConta(conta);
 		
 		return conta;
 	}

@@ -8,4 +8,5 @@ public interface EmailService {
 
 	void sendEmail(SimpleMailMessage msg);
 	void sendNewPasswordEmail(Conta conta, String newPass);
+	void envieLinkConfirmacaoCadastroConta(Conta conta);
 }

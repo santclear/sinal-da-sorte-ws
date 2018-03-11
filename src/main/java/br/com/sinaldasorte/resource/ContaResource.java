@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.sinaldasorte.domain.Conta;
+import br.com.sinaldasorte.domain.enums.Situacoes;
 import br.com.sinaldasorte.dto.ContaDto;
 import br.com.sinaldasorte.dto.ContaNewDto;
 import br.com.sinaldasorte.service.ContaService;
@@ -40,7 +41,7 @@ public class ContaResource {
 	@RequestMapping(value="/email", method=RequestMethod.GET)
 	public ResponseEntity<Conta> procure(@RequestParam(value="value") String email) {
 		// Entidade Conta ao invés da ContaDTO para que seja carregado todos os dados da Conta
-		Conta obj = service.procurePeloEmail(email);
+		Conta obj = service.procurePorEmail(email);
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -58,6 +59,28 @@ public class ContaResource {
 		obj.setId(id);
 		obj = service.atualize(obj);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value="/cadastro/confirme", method=RequestMethod.GET)
+	public  ResponseEntity<String> atualize(@RequestParam(value="value") String hash) {
+		Conta obj = service.procurePorHashConfirmacao(hash);
+		obj.setSituacao(Situacoes.ATIVO);
+		obj = service.atualizePorHashConfirmacao(obj);
+		
+		StringBuilder documento = new StringBuilder();
+		documento.append("<!DOCTYPE html>\n<html lang=\"pt-BR\">");
+		documento.append("<head><title>Sinal da Sorte</title>");
+		documento.append("<meta charset=\"utf-8\"><meta http-equiv=\"X-UA-Compatible\" content=\"IE=Edge,chrome=1\">");
+		documento.append("<meta name=\"viewport\" content=\"maximum-scale=1.0,width=device-width,initial-scale=1.0,user-scalable=0\">");
+		documento.append("</head>");
+		documento.append("<body>");
+		documento.append("<h1>E-mail confirmado com sucesso!</h1>");
+		documento.append("Busque a sorte clicando no link: <a href=\"http://localhost:8100/\">Sinal da Sorte</a>");
+		documento.append("</body>");
+		documento.append("</html>");
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/").buildAndExpand().toUri();
+		return ResponseEntity.created(uri).body(documento.toString());
 	}
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
