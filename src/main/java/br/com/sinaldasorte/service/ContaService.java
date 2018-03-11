@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -84,7 +85,7 @@ public class ContaService {
 	
 	public Conta atualizePorHashConfirmacao(Conta obj) {
 		Conta newObj = procurePorHashConfirmacao(obj.getHashConfirmacao());
-		newObj.setHashConfirmacao("CONFIRMADO");
+		newObj.setHashConfirmacao(Util.novoHash() + Util.novoHash());
 		atualizeDados(newObj, obj);
 		// O método save do Spring Data realiza operações de save e update. Se o id for nulo ele salva e se não for atualiza.
 		return repo.save(newObj);
@@ -122,7 +123,8 @@ public class ContaService {
 		
 		Conta obj = repo.findByHashConfirmacao(hash);
 		if(obj == null) {
-			throw new ObjetoNaoEncontradoException("Objeto não encontrado Hash: "+ hash +", Tipo: "+ Conta.class.getName());
+			Logger.getInstance(ContaService.class).info("Objeto não encontrado Hash: "+ hash +", Tipo: "+ Conta.class.getName());
+			throw new ObjetoNaoEncontradoException("Objeto não encontrado Hash: "+ hash);
 		}
 		
 		return obj;
@@ -168,7 +170,7 @@ public class ContaService {
 		usuario.addTelefone(usuariDto.getTelefone3());
 		Conta conta = new Conta(null, objDTO.getEmail(), usuario, encriptadorDeSenha.encode(objDTO.getSenha()));
 		conta.setSituacao(Situacoes.INATIVO);
-		conta.setHashConfirmacao(Util.novaHash());
+		conta.setHashConfirmacao(Util.novoHash());
 		
 		this.emailService.envieLinkConfirmacaoCadastroConta(conta);
 		

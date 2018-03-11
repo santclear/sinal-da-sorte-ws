@@ -7,7 +7,7 @@ public class Util {
 	
 	private static Random rand = new Random();
 	
-	public static String novaHash() {
+	public static String novoHash() {
 		String hash = newPassword();
 		Calendar date = Calendar.getInstance();
 		char timeMillisArray[] =  String.valueOf(date.getTimeInMillis()).toCharArray();
