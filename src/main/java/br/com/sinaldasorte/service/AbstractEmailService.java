@@ -59,7 +59,7 @@ public abstract class AbstractEmailService implements EmailService {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Olá prezado "+ conta.getUsuario().getNome() +",\n");
 		sb.append("estamos felizes por tê-lo conosco.");
-		sb.append("Para confirmar o seu cadastro clique no link: http://localhost:8080/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
+		sb.append("Para confirmar o seu cadastro clique no link: http://localhost:8080/ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
 		sb.append("\n\n");
 		sb.append("É o nosso desejo sincero que você alcance a sorte grande");
 		sb.append(", e que todos os seus sonhos se realizem!");

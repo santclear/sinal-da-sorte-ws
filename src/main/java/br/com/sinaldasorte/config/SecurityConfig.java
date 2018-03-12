@@ -45,9 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	};
 
 	private static final String[] PUBLIC_MATCHERS_GET = {
-		"/logradouros/**",
-		"/contas/cadastro/confirme**"
-		
+		"/logradouros/**"
+		,"/ctrl/contas/cadastro/confirme**"
 	};
 	
 	private static final String[] PUBLIC_MATCHERS_POST = {
@@ -68,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		// csrf() desabilitado, pois o sistema é stateless, não mantém sessão
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
+			.antMatchers("/bootstrap/**", "/jquery/**", "/popper/**", "/favicon.ico").permitAll()
 			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()/* permite somente recuperar os dados (HttpMethod.GET), não podendo inserir, deletar, etc. */
 			.antMatchers(PUBLIC_MATCHERS).permitAll() /* efetiva o item 1 */
