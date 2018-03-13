@@ -24,6 +24,8 @@ public class ContaController {
 		obj.setSituacao(Situacoes.ATIVO);
 		obj = service.atualizePorHashConfirmacao(obj);
 		
+		modelo.addAttribute("nomeUsuario", obj.getUsuario().getNome());
+		
 		return "confirmacao-cadastro-conta";
 		
 	}

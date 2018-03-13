@@ -1,17 +1,85 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8"></meta>
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"></meta>
-	<meta name="viewport" content="maximum-scale=1.0,width=device-width,initial-scale=1.0,user-scalable=0"></meta>
-	<link rel="stylesheet" href="../static/bootstrap/4.0.0/css/bootstrap.min.css" th:href="@{/bootstrap/4.0.0/css/bootstrap.min.css}"></link>
+	
+	<meta charset="UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+	<link rel="stylesheet" href="../static/bootstrap/4.0.0/css/bootstrap.min.css" th:href="@{/bootstrap/4.0.0/css/bootstrap.min.css}"/>
+	<link rel="shortcut icon" href="../static/favicon.ico" th:href="@{/favicon.ico}"/>
+	
+	<title>Cadastro confirmado - Sinal da Sorte</title>
+	
+	<style>
+		.row {
+			margin-top: 30px;
+		}
+		
+		p {
+			margin-bottom: 3px;
+		}
+		
+		html {
+			position: relative;
+			min-height: 100%;
+		}
+		
+		body {
+			margin-bottom: 60px;
+		}
+		
+		.footer {
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			height: 60px;
+			line-height: 60px;
+			background-color: #1b5e20;
+		}
+		
+		.container {
+			width: auto;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="container">
+		
+		<div class="row">
+			<div class="col-1 col-sm-1 col-md-3 col-lg-4 col-xl-4"></div>
+			<div class="col-10 col-sm-10 col-md-6 col-lg-4 col-xl-4 text-center"><img class="mr-3" src="../static/img/logo.png" th:src="@{/img/logo.png}" alt="Generic placeholder image" /></div>
+			<div class="col-1 col-sm-1 col-md-3 col-lg-4 col-xl-4"></div>
+		</div>
+		
+		<div class="row">
+			<div class="col-1 col-sm-1 col-md-3 col-lg-4 col-xl-4"></div>
+			
+			<div class="col-10 col-sm-10 col-md-6 col-lg-4 col-xl-4">
+				<p>Excelente <span th:text="${nomeUsuario}"></span>,</p>
+				<p>seu e-mail foi confirmado com sucesso!</p>
+			</div>
+			
+			<div class="col-1 col-sm-1 col-md-3 col-lg-4 col-xl-4"></div>
+		</div>
+		
+		<div class="row">
+			<div class="col-1 col-sm-1 col-md-3 col-lg-4 col-xl-4"></div>
+			<div class="col-10 col-sm-10 col-md-6 col-lg-4 col-xl-4">
+				<p>Desejamos a você sucesso. Você já pode começar a apostar com estratégia clicando nesse link <a href="http://localhost:8100/">Sinal da Sorte</a></p>
+			</div>
+			<div class="col-1 col-sm-1 col-md-3 col-lg-4 col-xl-4"></div>
+		</div>
+	</div>
+
+	<footer class="footer">
+		<div class="container">
+			<span class="text-muted"></span>
+		</div>
+	</footer>
+
 	<script src="../static/jquery/3.3.1/jquery-3.3.1.min.js" th:src="@{/jquery/3.3.1/jquery-3.3.1.min.js}"></script>
 	<script src="../static/popper/popper.min.js" th:src="@{/popper/popper.min.js}"></script>
 	<script src="../static/bootstrap/4.0.0/js/bootstrap.min.js" th:src="@{/bootstrap/4.0.0/js/bootstrap.min.js}"></script>
-	<title>Cadastro confirmado - Sinal da Sorte</title>
-</head>
-<body>
-	<h1>E-mail confirmado com sucesso!</h1>
-	Busque a sorte clicando no link: <a href="http://localhost:8100/">Sinal da Sorte</a>
 </body>
 </html>
