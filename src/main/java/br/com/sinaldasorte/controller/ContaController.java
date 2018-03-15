@@ -1,6 +1,7 @@
 package br.com.sinaldasorte.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,9 @@ public class ContaController {
 	@Autowired
 	private ContaService service;
 	
+	@Value("${sinaldasorte.front.url}")
+	private String sinalDaSorteFrontUrl;
+	
 	@RequestMapping(value="/cadastro/confirme", method=RequestMethod.GET)
 	public  String atualize(@RequestParam(value="value") String hash, Model modelo) {
 		Conta obj = service.procurePorHashConfirmacao(hash);
@@ -25,6 +29,7 @@ public class ContaController {
 		obj = service.atualizePorHashConfirmacao(obj);
 		
 		modelo.addAttribute("nomeUsuario", obj.getUsuario().getNome());
+		modelo.addAttribute("sinalDaSorteFrontUrl", sinalDaSorteFrontUrl);
 		
 		return "confirmacao-cadastro-conta";
 		

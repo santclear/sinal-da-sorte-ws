@@ -6,11 +6,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 
 import br.com.sinaldasorte.domain.Conta;
+import br.com.sinaldasorte.service.util.MensagemEmail;
 
-public abstract class AbstractEmailService implements EmailService {
+public abstract class AbstractEmailService extends MensagemEmail implements EmailService {
 	
 	@Value("${default.sender}")
 	private String sender;
+	
+	@Value("${sinaldasorte.front.url}")
+	private String sinalDaSorteFrontUrl;
+	
+	@Value("${sinaldasorte.ws.url}")
+	private String sinalDaSorteWsUrl;
 	
 	@Override
 	public void sendNewPasswordEmail(Conta conta, String newPass) {
@@ -18,29 +25,14 @@ public abstract class AbstractEmailService implements EmailService {
 		sendEmail(sm);
 	}
 	
-	protected SimpleMailMessage prepareNewPasswordEmail(Conta conta, String newPass) {
+	protected SimpleMailMessage prepareNewPasswordEmail(Conta conta, String novaSenha) {
 		SimpleMailMessage sm = new SimpleMailMessage();
 		sm.setTo(conta.getEmail());
 		sm.setFrom(sender);
 		sm.setSubject("Solicitação de nova senha - Sinal da Sorte");
 		sm.setSentDate(new Date(System.currentTimeMillis()));
-		StringBuilder sb = new StringBuilder();
-		sb.append("Olá prezado "+ conta.getUsuario().getNome() +",\n");
-		sb.append("segue sua nova senha, conforme solicitado: "+ newPass);
-		sb.append("\n\n");
-		sb.append("Caso deseje trocar essa senha, siga os passos abaixo:");
-		sb.append("1. Acesse o sistema Sinal da Sorte pelo aplicativo de celular ou pela URL www.sinaldasorte.com");
-		sb.append("2. Digite seu email e a nova senha");
-		sb.append("3. No menu lateral escolha a opção: Minha conta");
-		sb.append("4. Digite uma nova senha nos campos: Senha e Confirme a Senha");
-		sb.append("5. Clique no botão: Submeter cadastro");
-		sb.append("\n\n\n");
-		sb.append("Atenciosamente,\n");
-		sb.append("Sant'Clear Ali Costa\n");
-		sb.append("santclearsolucoes@gmail.com");
-		sb.append("www.sinaldasorte.com");
-		sb.append("Você também pode ser um milionário! Aposte com estratégia.");
-		sm.setText(sb.toString());
+		
+		sm.setText(novaSenha(conta, novaSenha));
 		return sm;
 	}
 	
@@ -56,20 +48,7 @@ public abstract class AbstractEmailService implements EmailService {
 		sm.setFrom(sender);
 		sm.setSubject("Link para confirmação de cadastro - Sinal da Sorte");
 		sm.setSentDate(new Date(System.currentTimeMillis()));
-		StringBuilder sb = new StringBuilder();
-		sb.append("Olá prezado "+ conta.getUsuario().getNome() +",\n");
-		sb.append("estamos felizes por tê-lo conosco.");
-		sb.append("Para confirmar o seu cadastro clique no link: http://localhost:8080/ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
-		sb.append("\n\n");
-		sb.append("É o nosso desejo sincero que você alcance a sorte grande");
-		sb.append(", e que todos os seus sonhos se realizem!");
-		sb.append("\n\n\n");
-		sb.append("Atenciosamente,\n");
-		sb.append("Sant'Clear Ali Costa\n");
-		sb.append("santclearsolucoes@gmail.com");
-		sb.append("www.sinaldasorte.com");
-		sb.append("Você também pode ser um milionário! Aposte com estratégia.");
-		sm.setText(sb.toString());
+		sm.setText(linkConfirmacaoCadastroConta(conta));
 		return sm;
 	}
 }

@@ -6,7 +6,7 @@ import br.com.sinaldasorte.domain.Conta;
 
 public interface EmailService {
 
-	void sendEmail(SimpleMailMessage msg);
-	void sendNewPasswordEmail(Conta conta, String newPass);
+	void sendEmail(SimpleMailMessage mensagem);
+	void sendNewPasswordEmail(Conta conta, String novaSenha);
 	void envieLinkConfirmacaoCadastroConta(Conta conta);
 }
