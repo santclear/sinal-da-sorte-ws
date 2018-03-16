@@ -21,7 +21,6 @@ public class SmtpEmailService extends AbstractEmailService {
 	@Override
 	public void sendEmail(SimpleMailMessage simpleMailMessage) {
 		MimeMessage message = javaMailSender.createMimeMessage();
-
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
@@ -35,12 +34,13 @@ public class SmtpEmailService extends AbstractEmailService {
 			
 			helper.setText(String.format(texto), html);
 			
-
+			LOG.info("Enviando email...");
+			javaMailSender.send(message);
+			LOG.info(texto);
+			LOG.info(html);
+			LOG.info("Email enviado");
 		} catch (MessagingException e) {
 			throw new MailParseException("Ocorreu um erro ao tentar preparar o e-mail para envio: "+ e.getMessage());
 		}
-		LOG.info("Enviando email...");
-		javaMailSender.send(message);
-		LOG.info("Email enviado");
 	}
 }

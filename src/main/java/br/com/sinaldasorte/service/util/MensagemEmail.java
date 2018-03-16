@@ -59,9 +59,10 @@ public abstract class MensagemEmail {
 	
 	private String novaSenhaTexto(Conta conta, String novaSenha) {
 		StringBuilder sb = new StringBuilder();
-		if(conta.getUsuario().getGenero() == 1) sb.append("Olá prezado "+ conta.getUsuario().getNome() +",\n");
-		else if(conta.getUsuario().getGenero() == 2) sb.append("Olá prezada "+ conta.getUsuario().getNome() +",\n");
-		else sb.append("Olá "+ conta.getUsuario().getNome() +",\n");
+		sb.append("Olá "+ conta.getUsuario().getNome() +",\n");
+//		if(conta.getUsuario().getGenero() == 1) sb.append("Olá prezado "+ conta.getUsuario().getNome() +",\n");
+//		else if(conta.getUsuario().getGenero() == 2) sb.append("Olá prezada "+ conta.getUsuario().getNome() +",\n");
+//		else sb.append("Olá "+ conta.getUsuario().getNome() +",\n");
 		sb.append("segue sua nova senha, conforme solicitado: "+ novaSenha);
 		sb.append("\n\n");
 		sb.append("Caso deseje trocar essa senha, siga os passos abaixo:");
@@ -75,14 +76,13 @@ public abstract class MensagemEmail {
 	
 	private String linkConfirmacaoCadastroContaTexto(Conta conta) {
 		StringBuilder sb = new StringBuilder();
-		if(conta.getUsuario().getGenero() == 1) sb.append("Olá prezado "+ conta.getUsuario().getNome() +",\n");
-		else if(conta.getUsuario().getGenero() == 2) sb.append("Olá prezada "+ conta.getUsuario().getNome() +",\n");
-		else sb.append("Olá "+ conta.getUsuario().getNome() +",\n");
-		sb.append("estamos felizes por estares conosco. ");
-		sb.append("Para confirmar o seu cadastro execute no seu navegador esse link: "+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
+		sb.append("Olá "+ conta.getUsuario().getNome() +",\n\n");
+//		if(conta.getUsuario().getGenero() == 1) sb.append("Olá prezado "+ conta.getUsuario().getNome() +",\n");
+//		else if(conta.getUsuario().getGenero() == 2) sb.append("Olá prezada "+ conta.getUsuario().getNome() +",\n");
+//		else sb.append("Olá "+ conta.getUsuario().getNome() +",\n");
+		sb.append("confirme o seu cadastro abrindo esse link no seu navegador: "+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
 		sb.append("\n\n");
-		sb.append("É o nosso desejo sincero que você alcance a sorte grande");
-		sb.append(", e que todos os seus sonhos se realizem!");
+		sb.append("Estamos felizes por estares conosco. É o nosso desejo sincero que você alcance a sorte grande e que todos os seus sonhos se realizem!");
 		return sb.toString();
 	}
 	
@@ -90,9 +90,10 @@ public abstract class MensagemEmail {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<ss-split-texto-html>");
 		sb.append("<div style='margin: 0 auto; width: 500px; margin-bottom: 60px;'>\n");
-		if(conta.getUsuario().getGenero() == 1) sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá prezado "+ conta.getUsuario().getNome() +",</p>\n");
-		else if(conta.getUsuario().getGenero() == 2) sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá prezada "+ conta.getUsuario().getNome() +",</p>\n");
-		else sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>\n");
+		sb.append("<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>\n");
+//		if(conta.getUsuario().getGenero() == 1) sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá prezado "+ conta.getUsuario().getNome() +",</p>\n");
+//		else if(conta.getUsuario().getGenero() == 2) sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá prezada "+ conta.getUsuario().getNome() +",</p>\n");
+//		else sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>\n");
 		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>segue sua nova senha, conforme solicitado: <span style='font-size: 11pt;font-weight: bold'>"+ novaSenha +"</span></p>\n");
 		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Caso deseje trocar essa senha, siga os passos abaixo:</p>\n");
 		sb.append("		<ol>\n");
@@ -109,60 +110,61 @@ public abstract class MensagemEmail {
 	private String linkConfirmacaoCadastroContaHtml(Conta conta) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("	<div style='margin: 0 auto; width: 500px; margin-bottom: 60px;'>\n");
-		if(conta.getUsuario().getGenero() == 1) sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá prezado "+ conta.getUsuario().getNome() +",</p>\n");
-		else if(conta.getUsuario().getGenero() == 2) sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá prezada "+ conta.getUsuario().getNome() +",</p>\n");
-		else sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>\n");
-		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>estamos felizes por estares conosco.</p>\n");
-		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Para confirmar o seu cadastro clique nesse link: <span style='font-size: 11pt;font-weight: bold'><a style='color: #1b5e20;text-decoration: none;' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirma cadastro de conta Sinal da Sorte'>[Sinal da Sorte Link]</a></span></p>\n");
-		sb.append("		<p></p>\n");
-		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>É o nosso desejo sincero que você alcance a sorte grande, e que todos os seus sonhos se realizem!</p>\n");
+		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>\n");
+//		if(conta.getUsuario().getGenero() == 1) sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá prezado "+ conta.getUsuario().getNome() +",</p>\n");
+//		else if(conta.getUsuario().getGenero() == 2) sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá prezada "+ conta.getUsuario().getNome() +",</p>\n");
+//		else sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>\n");
+		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>confirme o seu cadastro: <span style='font-size: 11pt;font-weight: bold'><a style='color: #1b5e20;text-decoration: none;' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirma cadastro de conta Sinal da Sorte'>[Confirmar]</a></span></p>\n");
+		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Estamos felizes por estares conosco. É o nosso desejo sincero que você alcance a sorte grande e que todos os seus sonhos se realizem!</p>\n");
 		sb.append("	</div>");
 		return sb.toString();
 	}
 	
 	private String assinaturaTexto() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\n\n\n");
+		sb.append("\n\n");
 		sb.append("--\n");
-		sb.append(adverbio +",\n");
-		sb.append(responsavel +"\n");
+		sb.append(adverbio +",\n\n");
+		sb.append(responsavel +"\n\n");
 		sb.append(email +"\n");
-		sb.append(www +"\n");
-		sb.append(slogan +"\n\n");
+		sb.append(www +"\n\n");
+		sb.append("Você também pode ser um milionário! "+ slogan +"\n\n");
 		return sb.toString();
 	}
 	
 	private String assinaturaHtml(Conta conta) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("	<div style='margin: 0 auto; width: 500px; margin-bottom: 20px;'>\n");
-		sb.append("	<hr>\n");
-		sb.append("	<p style='color: #424242; font-size: 11pt'><span style='font-size: 11pt;font-weight: bold'>"+ adverbio +"</span>,</p>\n");
-		sb.append("	<p style='color: #424242; font-size: 11pt'><span style='font-size: 11pt;font-weight: bold'>"+ responsavel +"</span></p>\n");
-		sb.append("	<p>\n");
-		sb.append("		<span style='font-size: 11pt'>\n");
-		sb.append("			<a style='color: #1b5e20;text-decoration: none;' href='mailto:"+ email +"?Subject=Contato via app&From="+ conta.getEmail() +"' target='_top' title='"+ email +"'>\n");
-		sb.append("				"+ email +"\n");
-		sb.append("			</a>\n");
-		sb.append("		</span>\n");
-		sb.append("	</p>\n");
-		sb.append("	<p>\n");
-		sb.append("		<span style='font-size: 11pt;'>\n");
-		sb.append("			<a style='color: #1b5e20;text-decoration: none;' href='"+ sinalDaSorteFrontUrl +"' target=\"_blank\" title='"+ www +"'>\n");
-		sb.append("				"+ www +"\n");
-		sb.append("			</a>\n");
-		sb.append("		</span>\n");
-		sb.append("	</p>\n");
-		sb.append("	<p style='font-size: 12pt;font-weight: bold; color: #1b5e20;'>\n");
-		sb.append("			"+ slogan +"\n");
-		sb.append("	</p>\n");
-		sb.append("	<p><img src='http://www.sinaldasorte.com/img/logo.png' alt='Logo Sinal da Sorte' height='150' width='150'></img></p>\n");
-		sb.append(" </div>");
+		sb.append("	<div style='margin: 0 auto; width: 500px; margin-bottom: 20px;'>");
+		sb.append("	<hr>");
+		sb.append("<p>");
+		sb.append("	<span style='color: #424242; font-size: 11pt;font-weight: bold'>"+ adverbio +"</span>,");
+		sb.append("</p>");
+		sb.append("<p>");
+		sb.append("	<span style='color: #424242; font-size: 11pt;font-weight: bold'>"+ responsavel +"</span>");
+		sb.append("</p>");
+		sb.append("<p>");
+		sb.append("	<span style='font-size: 11pt'>");
+		sb.append("		<a style='color: #1b5e20;text-decoration: none;' href='mailto:"+ email +"?Subject=Contato via app&From="+ conta.getEmail() +"' target='_top' title='"+ email +"'>");
+		sb.append("			"+ email +"");
+		sb.append("		</a>");
+		sb.append("	</span><br/>");
+		sb.append("	<span style='font-size: 11pt;'>");
+		sb.append("		<a style='color: #1b5e20;text-decoration: none;' href='"+ sinalDaSorteFrontUrl +"' target=\"_blank\" title='"+ www +"'>");
+		sb.append("			"+ www +"");
+		sb.append("		</a>");
+		sb.append("	</span>");
+		sb.append("</p>");
+		sb.append("	<span style='font-size: 12pt;font-weight: bold; color: #1b5e20;'>");
+		sb.append("			"+ slogan +"");
+		sb.append("	</span><br/>");
+		sb.append("	<img src='http://www.sinaldasorte.com/img/logo.png' alt='Logo Sinal da Sorte' height='150' width='150'></img>");
+		sb.append(" </div><br/>");
 		return sb.toString();
 	}
 	
 	private String copyrightTexto() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("\n\n");
+		sb.append("\n");
 		sb.append(copyright +" | de "+ organizacao);
 		return sb.toString();
 	}
