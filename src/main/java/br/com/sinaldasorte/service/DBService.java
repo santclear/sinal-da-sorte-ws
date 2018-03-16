@@ -33,7 +33,7 @@ public class DBService {
 				"Sant'Clear","Costa","27716419250",
 				"13/01/1983",1,end2,
 				"48977337733", "", null);
-		ContaNewDto cdto2 = new ContaNewDto("s@s.com","123", usu2);
+		ContaNewDto cdto2 = new ContaNewDto("santclear@gmail.com","123", usu2);
 		Conta con2 = contaService.dtoParaEntidade(cdto2);
 		con2.addPerfil(Perfil.ADMIN);
 		con2.addPerfil(Perfil.ASSINANTE);

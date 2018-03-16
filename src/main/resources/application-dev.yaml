@@ -28,24 +28,6 @@ spring:
     properties:
       hibernate:
         format_sql: true #mostra as execuções de queries de forma amigável
-
-
-  mail:
-    host: smtp.gmail.com
-    username: 
-    password: 
-    properties:
-      mail:
-        smtp:
-          auth: true
-          socketFactory:
-            port: 465
-            class: javax.net.ssl.SSLSocketFactory
-            fallback: false
-          starttls:
-            enable: true
-          ssl:
-            enable: true
             
 # PORTA DO SERVIDOR EMBUTIDO
 server:
@@ -63,4 +45,4 @@ sinaldasorte:
   responsavel: Ali
   copyright: Copyright Sinal da Sorte - 2018
   organizacao: Sant'Clear Soluções
-  slogan: Você também pode ser um milionário! Aposte com estratégia.
+  slogan: Aposte com estratégia.
