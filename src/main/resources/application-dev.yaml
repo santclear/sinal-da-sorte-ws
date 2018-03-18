@@ -16,7 +16,7 @@ spring:
 #      ddl-auto: create
       ddl-auto: none
     
-# h2
+## h2
 #spring:
 #  datasource:
 #    url: jdbc:h2:mem:testdb
@@ -43,6 +43,14 @@ sinaldasorte:
   email: sinaldasorteweb@gmail.com
   adverbio: Atenciosamente
   responsavel: Ali
-  copyright: Copyright Sinal da Sorte - 2018
+  copyright: Copyright Sinal da Sorte 2018
   organizacao: Sant'Clear Soluções
   slogan: Aposte com estratégia.
+  
+  google:
+    tokenUrl: 
+    oauthClientId: 
+    oauthSecret: 
+    refreshToken: 
+    accessToken: 
+    tokenExpires: 

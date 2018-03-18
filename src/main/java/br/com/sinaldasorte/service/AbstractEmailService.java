@@ -29,7 +29,7 @@ public abstract class AbstractEmailService extends MensagemEmail implements Emai
 		SimpleMailMessage sm = new SimpleMailMessage();
 		sm.setTo(conta.getEmail());
 		sm.setFrom(sender);
-		sm.setSubject("Solicitação de nova senha - Sinal da Sorte");
+		sm.setSubject("Sua solicitação de recuperação de senha do Sinal da Sorte");
 		sm.setSentDate(new Date(System.currentTimeMillis()));
 		
 		sm.setText(novaSenha(conta, novaSenha));
@@ -46,7 +46,7 @@ public abstract class AbstractEmailService extends MensagemEmail implements Emai
 		SimpleMailMessage sm = new SimpleMailMessage();
 		sm.setTo(conta.getEmail());
 		sm.setFrom(sender);
-		sm.setSubject("Link para confirmação de cadastro - Sinal da Sorte");
+		sm.setSubject("Sua confirmação de cadastro de conta do Sinal da Sorte");
 		sm.setSentDate(new Date(System.currentTimeMillis()));
 		sm.setText(linkConfirmacaoCadastroConta(conta));
 		return sm;

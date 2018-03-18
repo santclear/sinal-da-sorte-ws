@@ -51,7 +51,7 @@ public class DevConfig {
 	    mailSender.setHost("smtp.gmail.com");
 	    mailSender.setPort(587);
 	     
-	    mailSender.setUsername("santclearsolucoes@gmail.com");
+	    mailSender.setUsername("sinaldasorteweb@gmail.com");
 	     
 	    Properties props = mailSender.getJavaMailProperties();
 	    props.put("mail.smtp.starttls.enable", "true");
