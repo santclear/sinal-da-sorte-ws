@@ -88,7 +88,14 @@
 
 	<footer class="footer">
 		<div class="container">
-			<span class="text-muted"></span>
+			<div style='margin: 0 auto;width: 500px;overflow: hidden;'>
+				<div style='width: 50%;float: left;background-color: #1b5e20;height: 50px;line-height: 50px;text-align: center;color: white;'>
+					<span th:text="${copyright}"></span>
+				</div>
+				<div style='margin-left: 50%;background-color: #1b5e20;height: 50px;line-height: 50px;text-align: center;color: white;'>
+					de <span th:text="${organizacao}"></span>
+				</div>
+			</div>
 		</div>
 	</footer>
 

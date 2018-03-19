@@ -22,6 +22,12 @@ public class ContaController {
 	@Value("${sinaldasorte.front.url}")
 	private String sinalDaSorteFrontUrl;
 	
+	@Value("${sinaldasorte.copyright}")
+	private String copyright;
+	
+	@Value("${sinaldasorte.organizacao}")
+	private String organizacao;
+	
 	@RequestMapping(value="/cadastro/confirme", method=RequestMethod.GET)
 	public  String atualize(@RequestParam(value="value") String hash, Model modelo) {
 		Conta obj = service.procurePorHashConfirmacao(hash);
@@ -30,6 +36,8 @@ public class ContaController {
 		
 		modelo.addAttribute("nomeUsuario", obj.getUsuario().getNome());
 		modelo.addAttribute("sinalDaSorteFrontUrl", sinalDaSorteFrontUrl);
+		modelo.addAttribute("copyright", copyright);
+		modelo.addAttribute("organizacao", organizacao);
 		
 		return "confirmacao-cadastro-conta";
 		
