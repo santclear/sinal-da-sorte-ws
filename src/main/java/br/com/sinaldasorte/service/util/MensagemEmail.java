@@ -67,14 +67,14 @@ public abstract class MensagemEmail {
 		sb.append("2. Digite seu email e a nova senha");
 		sb.append("3. No menu lateral escolha a opção: Minha conta");
 		sb.append("4. Digite uma nova senha nos campos: Senha e Confirme a Senha");
-		sb.append("5. Clique no botão: Submeter cadastro");
+		sb.append("5. Clique no botão: Atualizar");
 		return sb.toString();
 	}
 	
 	private String linkConfirmacaoCadastroContaTexto(Conta conta) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Olá "+ conta.getUsuario().getNome() +",\n\n");
-		sb.append("para concluir o seu cadastro, cole esse link no seu navegador e tecle \"Enter:\" "+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
+		sb.append("para concluir o seu cadastro, cole esse link no seu navegador e tecle \"Enter\": "+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
 		sb.append("\n\n");
 		sb.append("Estamos felizes por estares conosco. É o nosso desejo sincero que você alcance a sorte grande e que todos os seus sonhos se realizem!");
 		return sb.toString();
@@ -92,7 +92,7 @@ public abstract class MensagemEmail {
 		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Digite seu email e a nova senha</li>\n");
 		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>No menu lateral escolha a opção: Minha conta</li>\n");
 		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Digite uma nova senha no campos: Senha e Confirme a senha</li>\n");
-		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Clique no botão: Submeter cadastro</li>\n");
+		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Clique no botão: Atualizar</li>\n");
 		sb.append("		</ol>\n");
 		sb.append("	</div>");
 		return sb.toString();
