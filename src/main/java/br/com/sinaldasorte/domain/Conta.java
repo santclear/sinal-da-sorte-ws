@@ -40,7 +40,7 @@ public class Conta implements Serializable {
 	private Integer situacao;
 	
 	@JsonIgnore
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="usuario_id")
 	@MapsId
     private Usuario usuario;
