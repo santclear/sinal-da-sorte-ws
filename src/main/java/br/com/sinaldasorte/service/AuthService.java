@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import br.com.sinaldasorte.domain.Conta;
+import br.com.sinaldasorte.domain.enums.Situacoes;
 import br.com.sinaldasorte.repository.ContaRepository;
 import br.com.sinaldasorte.service.exceptions.ObjetoNaoEncontradoException;
 import br.com.sinaldasorte.util.Util;
@@ -27,11 +28,11 @@ public class AuthService {
 		if (conta == null) {
 			throw new ObjetoNaoEncontradoException("Email não encontrado");
 		}
-		
-		String newPass = Util.newPassword();
-		conta.setSenha(pe.encode(newPass));
-		
-		repo.save(conta);
-		service.sendNewPasswordEmail(conta, newPass);
+		if(conta.getSituacao() == Situacoes.ATIVO) {
+			String newPass = Util.newPassword();
+			conta.setSenha(pe.encode(newPass));
+			repo.save(conta);
+			service.sendNewPasswordEmail(conta, newPass);
+		} else if(conta.getSituacao() == Situacoes.INATIVO) service.envieLinkConfirmacaoCadastroConta(conta);
 	}
 }

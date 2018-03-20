@@ -3,6 +3,7 @@ package br.com.sinaldasorte.service.util;
 import org.springframework.beans.factory.annotation.Value;
 
 import br.com.sinaldasorte.domain.Conta;
+import br.com.sinaldasorte.domain.enums.Situacoes;
 
 public abstract class MensagemEmail {
 	
@@ -63,18 +64,25 @@ public abstract class MensagemEmail {
 		sb.append("segue sua nova senha, conforme solicitado: "+ novaSenha);
 		sb.append("\n\n");
 		sb.append("Caso deseje trocar essa senha, siga os passos abaixo:");
-		sb.append("1. Acesse o sistema Sinal da Sorte pelo aplicativo de celular ou pela URL "+ www);
-		sb.append("2. Digite seu email e a nova senha");
-		sb.append("3. No menu lateral escolha a opção: Minha conta");
-		sb.append("4. Digite uma nova senha nos campos: Senha e Confirme a Senha");
-		sb.append("5. Clique no botão: Atualizar");
+		sb.append("\n1. Acesse o sistema Sinal da Sorte pelo aplicativo de celular ou pela URL "+ www);
+		sb.append("\n2. Digite seu email e a nova senha");
+		sb.append("\n3. No menu lateral escolha a opção: Minha conta");
+		sb.append("\n4. Digite uma nova senha nos campos: Senha e Confirme a Senha");
+		sb.append("\n5. Clique no botão: Atualizar");
 		return sb.toString();
 	}
 	
 	private String linkConfirmacaoCadastroContaTexto(Conta conta) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Olá "+ conta.getUsuario().getNome() +",\n\n");
-		sb.append("para concluir o seu cadastro, cole esse link no seu navegador e tecle \"Enter\": "+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
+		if(conta.getSituacao() == Situacoes.ATIVO) {
+			sb.append("para concluir o seu cadastro, cole esse link no seu navegador e tecle \"Enter\": "+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
+		} else if(conta.getSituacao() == Situacoes.INATIVO) {
+			sb.append("você solicitou uma nova senha, mas sua conta está inativa, para ativá-la ");
+			sb.append("cole esse link no seu navegador e tecle \"Enter\": "+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +". ");
+			sb.append("Após a confirmação de cadastro solicite uma nova senha clicando \"ESQUECI MINHA SENHA\" na tela inicial do Sinal da Sorte.");
+		}
+		
 		sb.append("\n\n");
 		sb.append("Estamos felizes por estares conosco. É o nosso desejo sincero que você alcance a sorte grande e que todos os seus sonhos se realizem!");
 		return sb.toString();
@@ -83,27 +91,32 @@ public abstract class MensagemEmail {
 	private String novaSenhaHtml(Conta conta, String novaSenha) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<ss-split-texto-html>");
-		sb.append("<div style='margin: 0 auto; width: 500px; margin-bottom: 60px;'>\n");
-		sb.append("<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>\n");
-		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>segue sua nova senha, conforme solicitado: <span style='font-size: 11pt;font-weight: bold'>"+ novaSenha +"</span></p>\n");
-		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Caso deseje trocar essa senha, siga os passos abaixo:</p>\n");
-		sb.append("		<ol>\n");
-		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Acesse o sistema Sinal da Sorte pelo aplicativo de celular ou pela URL <span style='font-size: 11pt;font-weight: bold'><a style='color: #1b5e20;text-decoration: none;' href='"+ sinalDaSorteFrontUrl +"' title='"+ www +"'>"+ www +"</a></span></li>\n");
-		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Digite seu email e a nova senha</li>\n");
-		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>No menu lateral escolha a opção: Minha conta</li>\n");
-		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Digite uma nova senha no campos: Senha e Confirme a senha</li>\n");
-		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Clique no botão: Atualizar</li>\n");
-		sb.append("		</ol>\n");
+		sb.append("<div style='margin: 0 auto; width: 500px; margin-bottom: 60px;'>");
+		sb.append("<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>");
+		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>segue sua nova senha, conforme solicitado: <span style='font-size: 11pt;font-weight: bold'>"+ novaSenha +"</span></p>");
+		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Caso deseje trocar essa senha, siga os passos abaixo:</p>");
+		sb.append("		<ol>");
+		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Acesse o sistema Sinal da Sorte pelo aplicativo de celular ou pela URL <span style='font-size: 11pt;font-weight: bold'><a style='color: #1b5e20;text-decoration: none;' href='"+ sinalDaSorteFrontUrl +"' title='"+ www +"'>"+ www +"</a></span></li>");
+		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Digite seu email e a nova senha</li>");
+		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>No menu lateral escolha a opção: Minha conta</li>");
+		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Digite uma nova senha no campos: Senha e Confirme a senha</li>");
+		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Clique no botão: Atualizar</li>");
+		sb.append("		</ol>");
 		sb.append("	</div>");
 		return sb.toString();
 	}
 	
 	private String linkConfirmacaoCadastroContaHtml(Conta conta) {
 		StringBuilder sb = new StringBuilder();
-		sb.append("	<div style='margin: 0 auto; width: 500px; margin-bottom: 60px;'>\n");
-		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>\n");
-		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>para concluir o seu cadastro clique: <span style='font-size: 11pt;font-weight: bold'><a style='color: #1b5e20;text-decoration: none;' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></span></p>\n");
-		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Estamos felizes por estares conosco. É o nosso desejo sincero que você alcance a sorte grande e que todos os seus sonhos se realizem!</p>\n");
+		sb.append("	<div style='margin: 0 auto; width: 500px; margin-bottom: 60px;'>");
+		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>");
+		if(conta.getSituacao() == Situacoes.ATIVO) {
+			sb.append("<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>para concluir o seu cadastro clique: <a style='color: #1b5e20;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
+		} else if(conta.getSituacao() == Situacoes.INATIVO) {
+			sb.append("<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>você solicitou uma nova senha, mas sua conta está inativa, para ativá-la clique: <a style='color: #1b5e20;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
+			sb.append("<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Após a confirmação de cadastro tente solicitar novamente uma nova senha clicando \"ESQUECI MINHA SENHA\" na tela inicial do Sinal da Sorte.</p>");
+		}
+		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Estamos felizes por estares conosco. É o nosso desejo sincero que você alcance a sorte grande e que todos os seus sonhos se realizem!</p>");
 		sb.append("	</div>");
 		return sb.toString();
 	}
@@ -159,14 +172,14 @@ public abstract class MensagemEmail {
 	
 	private String copyrightHtml() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div style='margin: 0 auto;width: 500px;overflow: hidden;'>\n" + 
-				"		<div style='width: 50%;float: left;background-color: #1b5e20;height: 50px;line-height: 50px;text-align: center;color: white;'>\n" + 
-				"			"+ copyright +"\n" + 
-				"		</div>\n" + 
-				"		<div style='margin-left: 50%;background-color: #1b5e20;height: 50px;line-height: 50px;text-align: center;color: white;'>\n" + 
-				"			de "+ organizacao +"\n" + 
-				"		</div>\n" + 
-				"	</div>\n");
+		sb.append("<div style='margin: 0 auto;width: 500px;overflow: hidden;'>" + 
+				"		<div style='width: 50%;float: left;background-color: #1b5e20;height: 50px;line-height: 50px;text-align: center;color: white;'>" + 
+				"			"+ copyright +"" + 
+				"		</div>" + 
+				"		<div style='margin-left: 50%;background-color: #1b5e20;height: 50px;line-height: 50px;text-align: center;color: white;'>" + 
+				"			de "+ organizacao + 
+				"		</div>" + 
+				"	</div>");
 		return sb.toString();
 	}
 }
