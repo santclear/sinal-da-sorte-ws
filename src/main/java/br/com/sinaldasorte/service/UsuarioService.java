@@ -123,9 +123,9 @@ public class UsuarioService {
 				Generos.toEnum(Integer.parseInt(dto.getGenero())), dataNascimento, dto.getCpf(), 
 				logradouro, dto.getEndereco().getNumero(), dto.getEndereco().getComplemento());
 		List<String> telefones = new LinkedList<>();
-		telefones.add(Objects.isNull(dto.getTelefone1()) || "".equals(dto.getTelefone1())?null:"telefone1"+dto.getTelefone1());
-		telefones.add(Objects.isNull(dto.getTelefone2()) || "".equals(dto.getTelefone2())?null:"telefone2"+dto.getTelefone2());
-		telefones.add(Objects.isNull(dto.getTelefone3()) || "".equals(dto.getTelefone3())?null:"telefone3"+dto.getTelefone3());
+		telefones.add(Objects.isNull(dto.getTelefone1()) || "".equals(dto.getTelefone1())?null:dto.getTelefone1());
+		telefones.add(Objects.isNull(dto.getTelefone2()) || "".equals(dto.getTelefone2())?null:dto.getTelefone2());
+		telefones.add(Objects.isNull(dto.getTelefone3()) || "".equals(dto.getTelefone3())?null:dto.getTelefone3());
 		usuario.setTelefones(telefones);
 		
 		return usuario;
