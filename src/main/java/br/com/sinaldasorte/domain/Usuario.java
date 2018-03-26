@@ -2,10 +2,8 @@ package br.com.sinaldasorte.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
@@ -18,10 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.sinaldasorte.domain.enums.Generos;
 
@@ -41,21 +38,22 @@ public class Usuario implements Serializable {
 	private String sobrenome;
 
 	private Integer genero;
-
-	@Temporal(TemporalType.DATE)
-	@Column(nullable = false)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy", locale = "pt", timezone = "Brazil/East")
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "pt", timezone = "Brazil/East")
 	private Date dataDeNascimento;
 
 	@Column(nullable = false)
 	private String cpf;
-	
-	private String complemento;
 
 	@ManyToOne
 	@JoinColumn(name="logradouro_id")
 	private Logradouro logradouro;
 	
+	private String numero;
+	
+	private String complemento;
+	
+	@JsonIgnore
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="usuario")
 	private Conta conta;
 
@@ -64,23 +62,25 @@ public class Usuario implements Serializable {
 	 * */
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
-	private Set<String> telefones = new HashSet<>();
+	private List<String> telefones = new LinkedList<>();
 
 	public Usuario() {}
 
 	public Usuario(Long id, String nome, 
 			String sobrenome, Generos genero, 
 			Date dataDeNascimento, String cpf, 
-			String complemento, Logradouro logradouro) {
+			Logradouro logradouro, 
+			String numero, String complemento) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.sobrenome = sobrenome;
 		this.genero = (genero == null) ? null : genero.getCod();
 		this.dataDeNascimento = dataDeNascimento;
-		this.cpf = cpf;
+		this.cpf = cpf==null?cpf:cpf.replaceAll("\\.|-", "");
+		this.logradouro = logradouro;
+		this.numero = numero;		
 		this.complemento = complemento;
-		this.logradouro = logradouro;		
 	}
 
 	public Long getId() {
@@ -111,8 +111,8 @@ public class Usuario implements Serializable {
 		return genero;
 	}
 
-	public void setGenero(Integer genero) {
-		this.genero = genero;
+	public void setGenero(Generos genero) {
+		this.genero = genero.getCod();
 	}
 
 	public Date getDataDeNascimento() {
@@ -128,7 +128,23 @@ public class Usuario implements Serializable {
 	}
 
 	public void setCpf(String cpf) {
-		this.cpf = cpf;
+		this.cpf = cpf==null?cpf:cpf.replaceAll("\\.|-", "");
+	}
+
+	public Logradouro getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(Logradouro logradouro) {
+		this.logradouro = logradouro;
+	}
+	
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
 	}
 
 	public String getComplemento() {
@@ -139,14 +155,6 @@ public class Usuario implements Serializable {
 		this.complemento = complemento;
 	}
 
-	public Logradouro getLogradouro() {
-		return logradouro;
-	}
-
-	public void setLogradouro(Logradouro logradouro) {
-		this.logradouro = logradouro;
-	}
-
 	public Conta getConta() {
 		return conta;
 	}
@@ -155,14 +163,14 @@ public class Usuario implements Serializable {
 		this.conta = conta;
 	}
 	
-	public Set<String> getTelefones() {
-		return telefones.stream().map(x -> x).collect(Collectors.toSet());
+	public List<String> getTelefones() {
+		return telefones;
 	}
-		
-	public void addTelefone(String telefone) {
-		if(Objects.nonNull(telefone) && !"".equals(telefone))telefones.add(telefone);
+	
+	public void setTelefones(List<String> telefones) {
+		this.telefones = telefones;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -170,6 +178,7 @@ public class Usuario implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {

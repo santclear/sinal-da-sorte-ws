@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Cidade implements Serializable {
 	
@@ -28,6 +30,7 @@ public class Cidade implements Serializable {
 	@JoinColumn(name="uf_id")
 	private UF uf;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="cidade", cascade=CascadeType.ALL)
 	private List<Bairro> bairros = new LinkedList<>();
 

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Logradouro implements Serializable {
 	
@@ -25,6 +27,7 @@ public class Logradouro implements Serializable {
 	@JoinColumn(name="bairro_id")
 	private Bairro bairro;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="logradouro", cascade=CascadeType.ALL)
 	private List<Usuario> usuarios = new LinkedList<>();
 
@@ -32,7 +35,7 @@ public class Logradouro implements Serializable {
 
 	public Logradouro(String cep, String nome, Bairro bairro) {
 		super();
-		this.cep = cep;
+		this.cep = cep==null?cep:cep.replace("-", "");
 		this.nome = nome;
 		this.bairro = bairro;
 	}
@@ -42,7 +45,7 @@ public class Logradouro implements Serializable {
 	}
 	
 	public void setCep(String cep) {
-		this.cep = cep;
+		this.cep = cep==null?cep:cep.replace("-", "");
 	}
 
 	public String getNome() {

@@ -1,8 +1,7 @@
 package br.com.sinaldasorte.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +11,16 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import br.com.sinaldasorte.domain.Bairro;
-import br.com.sinaldasorte.domain.Cidade;
 import br.com.sinaldasorte.domain.Conta;
-import br.com.sinaldasorte.domain.Logradouro;
-import br.com.sinaldasorte.domain.UF;
 import br.com.sinaldasorte.domain.Usuario;
-import br.com.sinaldasorte.domain.enums.Generos;
 import br.com.sinaldasorte.domain.enums.Perfil;
-import br.com.sinaldasorte.domain.enums.Situacoes;
 import br.com.sinaldasorte.dto.ContaDto;
 import br.com.sinaldasorte.dto.ContaNewDto;
-import br.com.sinaldasorte.dto.UsuarioDto;
 import br.com.sinaldasorte.repository.ContaRepository;
 import br.com.sinaldasorte.security.ContaAuth;
 import br.com.sinaldasorte.service.exceptions.AutorizacaoException;
 import br.com.sinaldasorte.service.exceptions.ObjetoNaoEncontradoException;
+import br.com.sinaldasorte.service.exceptions.enums.MensagensExceptions;
 import br.com.sinaldasorte.util.Util;
 
 @Service
@@ -40,19 +33,7 @@ public class ContaService {
 	private ContaRepository repo;
 	
 	@Autowired
-	private UFService ufService;
-	
-	@Autowired
-	private CidadeService cidadeService;
-	
-	@Autowired
-	private BairroService bairroService;
-	
-	@Autowired
-	private LogradouroService logradouroService;
-	
-	@Autowired
-	private EmailService emailService;
+	private UsuarioService usuarioService;
 	
 	public Conta procure(Long id) {
 		ContaAuth conta = UserService.autenticado();
@@ -76,8 +57,11 @@ public class ContaService {
 		return obj;
 	}
 	
-	public Conta atualize(Conta obj) {
+	public Conta atualize(Conta obj) {		
 		Conta newObj = procure(obj.getId());
+		
+		usuarioService.atualizeDados(newObj.getUsuario(), obj.getUsuario());
+		
 		atualizeDados(newObj, obj);
 		// O método save do Spring Data realiza operações de save e update. Se o id for nulo ele salva e se não for atualiza.
 		return repo.save(newObj);
@@ -105,7 +89,7 @@ public class ContaService {
 		return repo.findAll();
 	}
 	
-	public Conta procurePorEmail(String email) {
+	public Conta encontrePorEmail(String email) {
 		
 		ContaAuth conta = UserService.autenticado();
 		if (conta==null || !conta.hasRole(Perfil.ADMIN) && !email.equals(conta.getUsername())) {
@@ -136,48 +120,24 @@ public class ContaService {
 		return repo.findAll(pageRequest);
 	}
 	
-	public Conta dtoParaEntidade(ContaDto objDTO) {
-		return new Conta(objDTO.getId(), objDTO.getEmail(), null, null);
+	public Conta dtoParaEntidade(ContaDto objDto) {
+		ContaAuth conta = UserService.autenticado();
+		if(!encriptadorDeSenha.matches(objDto.getSenha(), conta.getPassword())) {
+			throw new AutorizacaoException(MensagensExceptions.SENHA_INVALIDA.getCod());
+		}
+		if(Objects.nonNull(objDto.getNovaSenha()) && !"".equals(objDto.getNovaSenha())) objDto.setSenha(encriptadorDeSenha.encode(objDto.getNovaSenha()));
+		else objDto.setSenha(null);
+		Usuario usuario = this.usuarioService.dtoParaEntidade(objDto.getUsuario());
+		return new Conta(objDto.getId(), objDto.getEmail(), usuario, objDto.getSenha());
 	}
 	
-	public Conta dtoParaEntidade(ContaNewDto objDTO) throws ParseException {
-		UsuarioDto usuariDto = objDTO.getUsuario();
-		
-		UF uf = this.ufService.procure(objDTO.getUsuario().getEndereco().getUf());
-		if(uf == null) uf = this.ufService.insira(new UF(null, objDTO.getUsuario().getEndereco().getUf()));
-		
-		Cidade cidade = this.cidadeService.procure(objDTO.getUsuario().getEndereco().getCidade());
-		if(cidade == null) cidade = this.cidadeService.insira(new Cidade(null, objDTO.getUsuario().getEndereco().getCidade(), uf));
-		
-		Bairro bairro = this.bairroService.procure(objDTO.getUsuario().getEndereco().getBairro());
-		if(bairro == null) bairro = this.bairroService.insira(new Bairro(null, objDTO.getUsuario().getEndereco().getBairro(), cidade));
-		
-		Logradouro logradouro = logradouroService.procure(usuariDto.getEndereco().getCep());
-		if(logradouro == null) logradouro = this.logradouroService.insira(new Logradouro(usuariDto.getEndereco().getCep(), usuariDto.getEndereco().getLogradouro(), bairro));
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Usuario usuario = new Usuario(
-				null,
-				usuariDto.getNome(),
-				usuariDto.getSobrenome(),
-				Generos.toEnum(usuariDto.getGenero()),
-				sdf.parse(usuariDto.getDataDeNascimento()),
-				usuariDto.getCpf(),
-				usuariDto.getEndereco().getComplemento(),
-				logradouro);
-		usuario.addTelefone(usuariDto.getTelefone1());
-		usuario.addTelefone(usuariDto.getTelefone2());
-		usuario.addTelefone(usuariDto.getTelefone3());
-		Conta conta = new Conta(null, objDTO.getEmail(), usuario, encriptadorDeSenha.encode(objDTO.getSenha()));
-		conta.setSituacao(Situacoes.INATIVO);
-		conta.setHashConfirmacao(Util.novoHash());
-		
-		this.emailService.envieLinkConfirmacaoCadastroConta(conta);
-		
-		return conta;
+	public Conta dtoParaEntidade(ContaNewDto objDto) {
+		Usuario usuario = this.usuarioService.dtoParaEntidade(objDto.getUsuario());
+		return new Conta(null, objDto.getEmail(), usuario, encriptadorDeSenha.encode(objDto.getSenha()));
 	}
 	
 	private void atualizeDados(Conta newObj, Conta obj) {
 		newObj.setEmail(obj.getEmail());
+		if(Objects.nonNull(obj.getSenha())) newObj.setSenha(obj.getSenha());
 	}
 }

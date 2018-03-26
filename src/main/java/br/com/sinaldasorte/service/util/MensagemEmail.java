@@ -76,10 +76,10 @@ public abstract class MensagemEmail {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Olá "+ conta.getUsuario().getNome() +",\n\n");
 		if(conta.getSituacao() == Situacoes.ATIVO) {
-			sb.append("para concluir o seu cadastro, cole esse link no seu navegador e tecle \"Enter\": "+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
+			sb.append("para concluir o seu cadastro, cole esse link no seu navegador e tecle \"Enter\": \n"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
 		} else if(conta.getSituacao() == Situacoes.INATIVO) {
 			sb.append("você solicitou uma nova senha, mas sua conta está inativa, para ativá-la ");
-			sb.append("cole esse link no seu navegador e tecle \"Enter\": "+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +". ");
+			sb.append("cole esse link no seu navegador e tecle \"Enter\": \n"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +". ");
 			sb.append("Após a confirmação de cadastro solicite uma nova senha clicando \"ESQUECI MINHA SENHA\" na tela inicial do Sinal da Sorte.");
 		}
 		

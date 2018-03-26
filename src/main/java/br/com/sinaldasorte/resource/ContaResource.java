@@ -1,16 +1,11 @@
 package br.com.sinaldasorte.resource;
 
 import java.net.URI;
-import java.text.ParseException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.sinaldasorte.domain.Conta;
+import br.com.sinaldasorte.domain.enums.Situacoes;
 import br.com.sinaldasorte.dto.ContaDto;
 import br.com.sinaldasorte.dto.ContaNewDto;
 import br.com.sinaldasorte.service.ContaService;
+import br.com.sinaldasorte.service.EmailService;
+import br.com.sinaldasorte.util.Util;
 
 @RestController
 @RequestMapping(value="/contas")
@@ -31,23 +29,29 @@ public class ContaResource {
 	@Autowired
 	private ContaService service;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Conta> procure(@PathVariable Long id) {
 		Conta obj = service.procure(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@RequestMapping(value="/email", method=RequestMethod.GET)
-	public ResponseEntity<Conta> procure(@RequestParam(value="value") String email) {
+	@RequestMapping(value="/encontrePorEmail", method=RequestMethod.GET)
+	public ResponseEntity<Conta> encontre(@RequestParam(value="value") String email) {
 		// Entidade Conta ao invés da ContaDTO para que seja carregado todos os dados da Conta
-		Conta obj = service.procurePorEmail(email);
+		Conta obj = service.encontrePorEmail(email);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insira(@Valid @RequestBody ContaNewDto objDTO) throws ParseException {
+	public ResponseEntity<Void> insira(@Valid @RequestBody ContaNewDto objDTO) {
 		Conta obj = service.dtoParaEntidade(objDTO);
+		obj.setSituacao(Situacoes.INATIVO);
+		obj.setHashConfirmacao(Util.novoHash());
 		obj = service.insira(obj);
+		this.emailService.envieLinkConfirmacaoCadastroConta(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
@@ -55,7 +59,6 @@ public class ContaResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public  ResponseEntity<Void> atualize(@Valid @RequestBody ContaDto objDTO, @PathVariable Long id) {
 		Conta obj = service.dtoParaEntidade(objDTO);
-		obj.setId(id);
 		obj = service.atualize(obj);
 		return ResponseEntity.noContent().build();
 	}
@@ -66,25 +69,25 @@ public class ContaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	// Somente perfil ADMIN pode listar todas as contas
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	@RequestMapping(method=RequestMethod.GET)
-	public ResponseEntity<List<ContaDto>> procureTodos() {
-		List<Conta> list = service.procureTodos();
-		List<ContaDto> listDTO = list.stream().map(obj -> new ContaDto(obj)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDTO);
-	}
-	
-	// Somente perfil ADMIN pode paginar paginar as contas 
-	@PreAuthorize("hasAnyRole('ADMIN')")
-	@RequestMapping(value="/page", method=RequestMethod.GET)
-	public ResponseEntity<Page<ContaDto>> procurePagina(
-			@RequestParam(value="page", defaultValue="0") Integer page, 
-			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
-			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
-			@RequestParam(value="direction", defaultValue="DESC") String direction) {
-		Page<Conta> list = service.procurePagina(page, linesPerPage, orderBy, direction);
-		Page<ContaDto> listDTO = list.map(obj -> new ContaDto(obj));
-		return ResponseEntity.ok().body(listDTO);
-	}
+//	// Somente perfil ADMIN pode listar todas as contas
+//	@PreAuthorize("hasAnyRole('ADMIN')")
+//	@RequestMapping(method=RequestMethod.GET)
+//	public ResponseEntity<List<ContaDto>> procureTodos() {
+//		List<Conta> list = service.procureTodos();
+//		List<ContaDto> listDTO = list.stream().map(obj -> new ContaDto(obj)).collect(Collectors.toList());
+//		return ResponseEntity.ok().body(listDTO);
+//	}
+//	
+//	// Somente perfil ADMIN pode paginar paginar as contas 
+//	@PreAuthorize("hasAnyRole('ADMIN')")
+//	@RequestMapping(value="/page", method=RequestMethod.GET)
+//	public ResponseEntity<Page<ContaDto>> procurePagina(
+//			@RequestParam(value="page", defaultValue="0") Integer page, 
+//			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
+//			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
+//			@RequestParam(value="direction", defaultValue="DESC") String direction) {
+//		Page<Conta> list = service.procurePagina(page, linesPerPage, orderBy, direction);
+//		Page<ContaDto> listDTO = list.map(obj -> new ContaDto(obj));
+//		return ResponseEntity.ok().body(listDTO);
+//	}
 }

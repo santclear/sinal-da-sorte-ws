@@ -8,14 +8,18 @@ public class LogradouroDto implements Serializable {
 
 	private String cep;
 	private String nome;
+	private String numero;
+	private String complemento;
 	private Long bairroId;
 	
 	public LogradouroDto() {
 	}
 
-	public LogradouroDto(String cep, String nome, Long bairroId) {
+	public LogradouroDto(String cep, String nome, String numero, String complemento, Long bairroId) {
 		this.cep = cep;
 		this.nome = nome;
+		this.numero = numero;
+		this.complemento = complemento;
 		this.bairroId = bairroId;
 	}
 
@@ -33,6 +37,22 @@ public class LogradouroDto implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getNumero() {
+		return numero;
+	}
+
+	public void setNumero(String numero) {
+		this.numero = numero;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
 	}
 
 	public Long getBairroId() {

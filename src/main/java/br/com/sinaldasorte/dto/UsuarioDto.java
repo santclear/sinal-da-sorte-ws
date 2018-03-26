@@ -18,7 +18,7 @@ public class UsuarioDto {
     private String dataDeNascimento;
     
     @NotEmpty(message="Preenchimento obrigatório")
-	private Integer genero;
+	private String genero;
     
     private EnderecoDto endereco;
 
@@ -31,7 +31,7 @@ public class UsuarioDto {
 	
 	public UsuarioDto() {}
 
-	public UsuarioDto(Long id, String nome, String sobrenome, String cpf, String dataDeNascimento, Integer genero,
+	public UsuarioDto(Long id, String nome, String sobrenome, String cpf, String dataDeNascimento, String genero,
 			EnderecoDto endereco, String telefone1, String telefone2, String telefone3) {
 		this.id = id;
 		this.nome = nome;
@@ -85,11 +85,11 @@ public class UsuarioDto {
 		this.dataDeNascimento = dataDeNascimento;
 	}
 
-	public Integer getGenero() {
+	public String getGenero() {
 		return genero;
 	}
 
-	public void setGenero(Integer genero) {
+	public void setGenero(String genero) {
 		this.genero = genero;
 	}
 
