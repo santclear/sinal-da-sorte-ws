@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.sinaldasorte.domain.Conta;
 import br.com.sinaldasorte.domain.enums.Perfil;
-import br.com.sinaldasorte.domain.enums.Situacoes;
 import br.com.sinaldasorte.dto.ContaNewDto;
 import br.com.sinaldasorte.dto.EnderecoCorreiosDto;
 import br.com.sinaldasorte.dto.EnderecoDto;
@@ -36,7 +35,6 @@ public class DBService {
 				"48977337733", "", "");
 		ContaNewDto cdto2 = new ContaNewDto("santclear@gmail.com","12345678", usu2);
 		Conta con2 = contaService.dtoParaEntidade(cdto2);
-		con2.setSituacao(Situacoes.ATIVO);
 		con2.addPerfil(Perfil.ADMIN);
 		con2.addPerfil(Perfil.ASSINANTE);
 		contaService.insira(con2);

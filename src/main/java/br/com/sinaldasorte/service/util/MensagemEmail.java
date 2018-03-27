@@ -58,6 +58,18 @@ public abstract class MensagemEmail {
 		return sb.toString();
 	}
 	
+	public String linkConfirmarAtualizacaoEmail(Conta conta) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(linkConfirmarAtualizacaoEmailTexto(conta));
+		sb.append(assinaturaTexto());
+		sb.append(copyrightTexto());
+		sb.append("<split>");
+		sb.append(linkConfirmarAtualizacaoEmailHtml(conta));
+		sb.append(assinaturaHtml(conta));
+		sb.append(copyrightHtml());
+		return sb.toString();
+	}
+	
 	private String novaSenhaTexto(Conta conta, String novaSenha) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Olá "+ conta.getUsuario().getNome() +",\n");
@@ -85,6 +97,15 @@ public abstract class MensagemEmail {
 		
 		sb.append("\n\n");
 		sb.append("Estamos felizes por estares conosco. É o nosso desejo sincero que você alcance a sorte grande e que todos os seus sonhos se realizem!");
+		return sb.toString();
+	}
+	
+	private String linkConfirmarAtualizacaoEmailTexto(Conta conta) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Olá "+ conta.getUsuario().getNome() +",\n\n");
+
+		sb.append("foi solicitada a atualização de e-mail da sua conta do Sinal da Sorte, se foi você quem solicitou cole esse link no seu navegador e tecle \"Enter\": \n"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao());
+		sb.append("\n\nCaso não queira atualizar, descarte esse e-mail.");
 		return sb.toString();
 	}
 	
@@ -118,6 +139,16 @@ public abstract class MensagemEmail {
 		}
 		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Estamos felizes por estares conosco. É o nosso desejo sincero que você alcance a sorte grande e que todos os seus sonhos se realizem!</p>");
 		sb.append("	</div>");
+		return sb.toString();
+	}
+	
+	private String linkConfirmarAtualizacaoEmailHtml(Conta conta) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("<div style='margin: 0 auto; width: 500px; margin-bottom: 60px;'>");
+		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>");
+		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>foi solicitada a atualização de e-mail da sua conta do Sinal da Sorte, se foi você quem solicitou clique: <a style='color: #1b5e20;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
+		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Caso não queira atualizar, descarte esse e-mail.</p>");
+		sb.append("</div>");
 		return sb.toString();
 	}
 	

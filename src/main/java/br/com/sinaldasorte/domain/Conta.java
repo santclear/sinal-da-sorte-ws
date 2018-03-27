@@ -37,6 +37,8 @@ public class Conta implements Serializable {
 	@Column(unique = true, nullable = false)
 	private String email;
 	
+	private String emailAtualizacao;
+	
 	private Integer situacao;
 	
 	@JsonIgnore
@@ -88,6 +90,14 @@ public class Conta implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getEmailAtualizacao() {
+		return emailAtualizacao;
+	}
+
+	public void setEmailAtualizacao(String emailAtualizacao) {
+		this.emailAtualizacao = emailAtualizacao;
 	}
 
 	public Situacoes getSituacao() {

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.sinaldasorte.domain.Conta;
-import br.com.sinaldasorte.domain.enums.Situacoes;
 import br.com.sinaldasorte.service.ContaService;
 
 @Controller
@@ -31,7 +30,6 @@ public class ContaController {
 	@RequestMapping(value="/cadastro/confirme", method=RequestMethod.GET)
 	public  String atualize(@RequestParam(value="value") String hash, Model modelo) {
 		Conta obj = service.procurePorHashConfirmacao(hash);
-		obj.setSituacao(Situacoes.ATIVO);
 		obj = service.atualizePorHashConfirmacao(obj);
 		
 		modelo.addAttribute("nomeUsuario", obj.getUsuario().getNome());

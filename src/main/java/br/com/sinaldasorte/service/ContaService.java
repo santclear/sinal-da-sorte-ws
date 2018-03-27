@@ -14,10 +14,12 @@ import org.springframework.stereotype.Service;
 import br.com.sinaldasorte.domain.Conta;
 import br.com.sinaldasorte.domain.Usuario;
 import br.com.sinaldasorte.domain.enums.Perfil;
+import br.com.sinaldasorte.domain.enums.Situacoes;
 import br.com.sinaldasorte.dto.ContaDto;
 import br.com.sinaldasorte.dto.ContaNewDto;
 import br.com.sinaldasorte.repository.ContaRepository;
 import br.com.sinaldasorte.security.ContaAuth;
+import br.com.sinaldasorte.service.enums.INFORMACOES;
 import br.com.sinaldasorte.service.exceptions.AutorizacaoException;
 import br.com.sinaldasorte.service.exceptions.ObjetoNaoEncontradoException;
 import br.com.sinaldasorte.service.exceptions.enums.MensagensExceptions;
@@ -34,6 +36,9 @@ public class ContaService {
 	
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	public Conta procure(Long id) {
 		ContaAuth conta = UserService.autenticado();
@@ -52,6 +57,10 @@ public class ContaService {
 	}
 	
 	public Conta insira(Conta obj) {
+		obj.setHashConfirmacao(Util.novoHash());
+		obj.setSituacao(Situacoes.ATIVO);
+		this.emailService.envieLinkConfirmacaoCadastroConta(obj);
+		obj.setSituacao(Situacoes.INATIVO);
 		obj.setId(null);
 		repo.save(obj);
 		return obj;
@@ -60,20 +69,38 @@ public class ContaService {
 	public Conta atualize(Conta obj) {		
 		Conta newObj = procure(obj.getId());
 		
-		usuarioService.atualizeDados(newObj.getUsuario(), obj.getUsuario());
+		usuarioService.atualizeDados(newObj.getUsuario(), obj.getUsuario());		
 		
-		atualizeDados(newObj, obj);
+		if(newObj.getEmail().equals(obj.getEmail())) {
+			atualizeDados(newObj, obj);
+			return repo.save(newObj);
+		} else if(!newObj.getEmail().equals(obj.getEmail()) && !encriptadorDeSenha.matches(obj.getSenha(), newObj.getSenha())) {
+			newObj.setHashConfirmacao(Util.novoHash());
+			newObj.setEmailAtualizacao(obj.getEmail());
+			newObj.setSenha(encriptadorDeSenha.encode(obj.getSenha()));
+			repo.save(newObj);
+			this.emailService.envieLinkConfirmarAtualizacaoEmail(newObj);
+			throw new AutorizacaoException(INFORMACOES.ATUALIZAR_EMAIL_SENHA.getCod());
+		} else {
+			newObj.setHashConfirmacao(Util.novoHash());
+			newObj.setEmailAtualizacao(obj.getEmail());
+			repo.save(newObj);
+			this.emailService.envieLinkConfirmarAtualizacaoEmail(newObj);
+			throw new AutorizacaoException(INFORMACOES.ATUALIZAR_EMAIL.getCod());
+		}
+	}
+	
+	public Conta atualizePorHashConfirmacao(Conta newObj) {
+		if(Objects.nonNull(newObj.getEmailAtualizacao())) {
+			newObj.setEmail(newObj.getEmailAtualizacao());
+			newObj.setEmailAtualizacao(null);
+		}
+		newObj.setSituacao(Situacoes.ATIVO);
+		newObj.setHashConfirmacao(Util.novoHash() + Util.novoHash());
 		// O método save do Spring Data realiza operações de save e update. Se o id for nulo ele salva e se não for atualiza.
 		return repo.save(newObj);
 	}
 	
-	public Conta atualizePorHashConfirmacao(Conta obj) {
-		Conta newObj = procurePorHashConfirmacao(obj.getHashConfirmacao());
-		newObj.setHashConfirmacao(Util.novoHash() + Util.novoHash());
-		atualizeDados(newObj, obj);
-		// O método save do Spring Data realiza operações de save e update. Se o id for nulo ele salva e se não for atualiza.
-		return repo.save(newObj);
-	}
 	
 	//FIXME Essa operação deve atualizar a 'situacao' para 'INATIVO'
 	public void delete(Long id) {
@@ -125,8 +152,9 @@ public class ContaService {
 		if(!encriptadorDeSenha.matches(objDto.getSenha(), conta.getPassword())) {
 			throw new AutorizacaoException(MensagensExceptions.SENHA_INVALIDA.getCod());
 		}
-		if(Objects.nonNull(objDto.getNovaSenha()) && !"".equals(objDto.getNovaSenha())) objDto.setSenha(encriptadorDeSenha.encode(objDto.getNovaSenha()));
-		else objDto.setSenha(null);
+		
+		if(Objects.nonNull(objDto.getNovaSenha()) && !"".equals(objDto.getNovaSenha())) objDto.setSenha(objDto.getNovaSenha());
+		
 		Usuario usuario = this.usuarioService.dtoParaEntidade(objDto.getUsuario());
 		return new Conta(objDto.getId(), objDto.getEmail(), usuario, objDto.getSenha());
 	}
@@ -138,6 +166,6 @@ public class ContaService {
 	
 	private void atualizeDados(Conta newObj, Conta obj) {
 		newObj.setEmail(obj.getEmail());
-		if(Objects.nonNull(obj.getSenha())) newObj.setSenha(obj.getSenha());
+		if(Objects.nonNull(obj.getSenha())) newObj.setSenha(encriptadorDeSenha.encode(obj.getSenha()));
 	}
 }

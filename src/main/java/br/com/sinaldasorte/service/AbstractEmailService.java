@@ -51,4 +51,20 @@ public abstract class AbstractEmailService extends MensagemEmail implements Emai
 		sm.setText(linkConfirmacaoCadastroConta(conta));
 		return sm;
 	}
+	
+	@Override
+	public void envieLinkConfirmarAtualizacaoEmail(Conta conta) {
+		SimpleMailMessage sm = prepareLinkConfirmarAtualizacaoEmail(conta);
+		sendEmail(sm);
+	}
+	
+	protected SimpleMailMessage prepareLinkConfirmarAtualizacaoEmail(Conta conta) {
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setTo(conta.getEmail());
+		sm.setFrom(sender);
+		sm.setSubject("Sua confirmação de atualização de e-mail do Sinal da Sorte");
+		sm.setSentDate(new Date(System.currentTimeMillis()));
+		sm.setText(linkConfirmarAtualizacaoEmail(conta));
+		return sm;
+	}
 }

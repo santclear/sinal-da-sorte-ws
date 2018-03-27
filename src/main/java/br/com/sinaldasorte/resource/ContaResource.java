@@ -15,12 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.sinaldasorte.domain.Conta;
-import br.com.sinaldasorte.domain.enums.Situacoes;
 import br.com.sinaldasorte.dto.ContaDto;
 import br.com.sinaldasorte.dto.ContaNewDto;
 import br.com.sinaldasorte.service.ContaService;
-import br.com.sinaldasorte.service.EmailService;
-import br.com.sinaldasorte.util.Util;
 
 @RestController
 @RequestMapping(value="/contas")
@@ -28,9 +25,6 @@ public class ContaResource {
 	
 	@Autowired
 	private ContaService service;
-	
-	@Autowired
-	private EmailService emailService;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Conta> procure(@PathVariable Long id) {
@@ -48,10 +42,6 @@ public class ContaResource {
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insira(@Valid @RequestBody ContaNewDto objDTO) {
 		Conta obj = service.dtoParaEntidade(objDTO);
-		obj.setHashConfirmacao(Util.novoHash());
-		obj.setSituacao(Situacoes.ATIVO);
-		this.emailService.envieLinkConfirmacaoCadastroConta(obj);
-		obj.setSituacao(Situacoes.INATIVO);
 		obj = service.insira(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
