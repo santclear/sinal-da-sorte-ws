@@ -48,10 +48,10 @@ public class ContaResource {
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insira(@Valid @RequestBody ContaNewDto objDTO) {
 		Conta obj = service.dtoParaEntidade(objDTO);
+		obj.setHashConfirmacao(Util.novoHash());
 		obj.setSituacao(Situacoes.ATIVO);
 		this.emailService.envieLinkConfirmacaoCadastroConta(obj);
 		obj.setSituacao(Situacoes.INATIVO);
-		obj.setHashConfirmacao(Util.novoHash());
 		obj = service.insira(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();

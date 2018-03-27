@@ -120,7 +120,7 @@ public class UsuarioService {
 		
 		Usuario usuario = new Usuario(
 				dto.getId(), dto.getNome(), dto.getSobrenome(), 
-				Generos.toEnum(Integer.parseInt(dto.getGenero())), dataNascimento, dto.getCpf(), 
+				Generos.toEnum(dto.getGenero()), dataNascimento, dto.getCpf(), 
 				logradouro, dto.getEndereco().getNumero(), dto.getEndereco().getComplemento());
 		List<String> telefones = new LinkedList<>();
 		telefones.add(Objects.isNull(dto.getTelefone1()) || "".equals(dto.getTelefone1())?null:dto.getTelefone1());

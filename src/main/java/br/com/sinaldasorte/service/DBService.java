@@ -32,7 +32,7 @@ public class DBService {
 		
 		UsuarioDto usu2 = new UsuarioDto(null,
 				"Sant'Clear","Costa","27716419250",
-				"1983-01-13","1",end2,
+				"1983-01-13",1,end2,
 				"48977337733", "", "");
 		ContaNewDto cdto2 = new ContaNewDto("santclear@gmail.com","12345678", usu2);
 		Conta con2 = contaService.dtoParaEntidade(cdto2);
