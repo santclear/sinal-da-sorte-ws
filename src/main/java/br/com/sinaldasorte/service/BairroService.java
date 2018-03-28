@@ -26,8 +26,8 @@ public class BairroService {
 		return obj;
 	}
 	
-	public Bairro procure(String nome) {
-		Bairro obj = repo.procureBairro(nome);
+	public Bairro procure(String bairro, String cidade, String uf) {
+		Bairro obj = repo.procureBairro(bairro, cidade, uf);
 		
 		return obj;
 	}

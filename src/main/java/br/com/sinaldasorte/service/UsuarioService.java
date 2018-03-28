@@ -100,10 +100,10 @@ public class UsuarioService {
 		UF uf = this.ufService.procure(dto.getEndereco().getUf());
 		if(uf == null) uf = this.ufService.insira(new UF(null, dto.getEndereco().getUf()));
 		
-		Cidade cidade = this.cidadeService.procure(dto.getEndereco().getCidade());
+		Cidade cidade = this.cidadeService.procure(dto.getEndereco().getCidade(), dto.getEndereco().getUf());
 		if(cidade == null) cidade = this.cidadeService.insira(new Cidade(null, dto.getEndereco().getCidade(), uf));
 		
-		Bairro bairro = this.bairroService.procure(dto.getEndereco().getBairro());
+		Bairro bairro = this.bairroService.procure(dto.getEndereco().getBairro(), dto.getEndereco().getCidade(), dto.getEndereco().getUf());
 		if(bairro == null) bairro = this.bairroService.insira(new Bairro(null, dto.getEndereco().getBairro(), cidade));
 		
 		Logradouro logradouro = logradouroService.procure(dto.getEndereco().getCep());

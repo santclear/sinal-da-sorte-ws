@@ -12,6 +12,9 @@ import br.com.sinaldasorte.domain.Cidade;
 public interface CidadeRepository extends JpaRepository<Cidade, Long> {
 
 	@Transactional(readOnly=true) // Define que não haverá transação com o banco de dados
-	@Query("SELECT c FROM Cidade c LEFT JOIN c.uf u WHERE c.nome = :nome")
-	Cidade procureCidade(@Param("nome") String nome);
+	@Query("SELECT c FROM Cidade c "
+			+ "LEFT JOIN c.uf u "
+			+ "WHERE c.nome = :cidade "
+			+ "AND u.nome = :uf")
+	Cidade procureCidade(@Param("cidade") String cidade, @Param("uf") String uf);
 }

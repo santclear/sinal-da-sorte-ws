@@ -15,6 +15,8 @@ public interface BairroRepository extends JpaRepository<Bairro, Long> {
 	@Query("SELECT b FROM Bairro b "
 			+ "LEFT JOIN b.cidade c "
 			+ "LEFT JOIN c.uf u "
-			+ "WHERE b.nome = :nome")
-	Bairro procureBairro(@Param("nome") String nome);
+			+ "WHERE b.nome = :bairro "
+			+ "AND c.nome = :cidade "
+			+ "AND u.nome = :uf")
+	Bairro procureBairro(@Param("bairro") String bairro, @Param("cidade") String cidade, @Param("uf") String uf);
 }

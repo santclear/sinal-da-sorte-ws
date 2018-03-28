@@ -26,8 +26,8 @@ public class CidadeService {
 		return obj;
 	}
 	
-	public Cidade procure(String nome) {
-		Cidade obj = repo.procureCidade(nome);
+	public Cidade procure(String cidade, String uf) {
+		Cidade obj = repo.procureCidade(cidade, uf);
 		
 		return obj;
 	}
