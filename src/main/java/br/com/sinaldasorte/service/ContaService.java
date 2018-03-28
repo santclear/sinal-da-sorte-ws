@@ -19,7 +19,6 @@ import br.com.sinaldasorte.dto.ContaDto;
 import br.com.sinaldasorte.dto.ContaNewDto;
 import br.com.sinaldasorte.repository.ContaRepository;
 import br.com.sinaldasorte.security.ContaAuth;
-import br.com.sinaldasorte.service.enums.INFORMACOES;
 import br.com.sinaldasorte.service.exceptions.AutorizacaoException;
 import br.com.sinaldasorte.service.exceptions.ObjetoNaoEncontradoException;
 import br.com.sinaldasorte.service.exceptions.enums.MensagensExceptions;
@@ -78,16 +77,14 @@ public class ContaService {
 			newObj.setHashConfirmacao(Util.novoHash());
 			newObj.setEmailAtualizacao(obj.getEmail());
 			newObj.setSenha(encriptadorDeSenha.encode(obj.getSenha()));
-			repo.save(newObj);
-			this.emailService.envieLinkConfirmarAtualizacaoEmail(newObj);
-			throw new AutorizacaoException(INFORMACOES.ATUALIZAR_EMAIL_SENHA.getCod());
 		} else {
 			newObj.setHashConfirmacao(Util.novoHash());
 			newObj.setEmailAtualizacao(obj.getEmail());
-			repo.save(newObj);
-			this.emailService.envieLinkConfirmarAtualizacaoEmail(newObj);
-			throw new AutorizacaoException(INFORMACOES.ATUALIZAR_EMAIL.getCod());
 		}
+		Conta conta = repo.save(newObj);
+		newObj.setEmail(obj.getEmail());
+		this.emailService.envieLinkConfirmarAtualizacaoEmail(newObj);
+		return conta;
 	}
 	
 	public Conta atualizePorHashConfirmacao(Conta newObj) {
