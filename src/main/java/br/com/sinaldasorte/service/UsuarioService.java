@@ -3,8 +3,9 @@ package br.com.sinaldasorte.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,16 +99,16 @@ public class UsuarioService {
 	
 	public Usuario dtoParaEntidade(UsuarioDto dto) {
 		UF uf = this.ufService.procure(dto.getEndereco().getUf());
-		if(uf == null) uf = this.ufService.insira(new UF(null, dto.getEndereco().getUf()));
+		if(uf == null) uf = new UF(null, dto.getEndereco().getUf());
 		
 		Cidade cidade = this.cidadeService.procure(dto.getEndereco().getCidade(), dto.getEndereco().getUf());
-		if(cidade == null) cidade = this.cidadeService.insira(new Cidade(null, dto.getEndereco().getCidade(), uf));
+		if(cidade == null) cidade = new Cidade(null, dto.getEndereco().getCidade(), uf);
 		
 		Bairro bairro = this.bairroService.procure(dto.getEndereco().getBairro(), dto.getEndereco().getCidade(), dto.getEndereco().getUf());
-		if(bairro == null) bairro = this.bairroService.insira(new Bairro(null, dto.getEndereco().getBairro(), cidade));
+		if(bairro == null) bairro = new Bairro(null, dto.getEndereco().getBairro(), cidade);
 		
 		Logradouro logradouro = logradouroService.procure(dto.getEndereco().getCep());
-		if(logradouro == null) logradouro = this.logradouroService.insira(new Logradouro(dto.getEndereco().getCep(), dto.getEndereco().getLogradouro(), bairro));
+		if(logradouro == null) logradouro = new Logradouro(dto.getEndereco().getCep(), dto.getEndereco().getLogradouro(), bairro);
 		
 		SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
 		Date dataNascimento = null;
@@ -122,10 +123,11 @@ public class UsuarioService {
 				dto.getId(), dto.getNome(), dto.getSobrenome(), 
 				Generos.toEnum(dto.getGenero()), dataNascimento, dto.getCpf(), 
 				logradouro, dto.getEndereco().getNumero(), dto.getEndereco().getComplemento());
-		List<String> telefones = new LinkedList<>();
-		telefones.add(Objects.isNull(dto.getTelefone1()) || "".equals(dto.getTelefone1())?null:dto.getTelefone1());
-		telefones.add(Objects.isNull(dto.getTelefone2()) || "".equals(dto.getTelefone2())?null:dto.getTelefone2());
-		telefones.add(Objects.isNull(dto.getTelefone3()) || "".equals(dto.getTelefone3())?null:dto.getTelefone3());
+		Map<String, String> telefones = new HashMap<>();
+		if(Objects.nonNull(dto.getTelefone1()) && !"".equals(dto.getTelefone1())) telefones.put("telefone1", dto.getTelefone1());
+		if(Objects.nonNull(dto.getTelefone2()) && !"".equals(dto.getTelefone2())) telefones.put("telefone2", dto.getTelefone2());
+		if(Objects.nonNull(dto.getTelefone3()) && !"".equals(dto.getTelefone3())) telefones.put("telefone3", dto.getTelefone3());
+		
 		usuario.setTelefones(telefones);
 		
 		return usuario;

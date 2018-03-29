@@ -1,4 +1,4 @@
-package br.com.sinaldasorte.service;
+package br.com.sinaldasorte.service.interfaces;
 
 import org.springframework.mail.SimpleMailMessage;
 

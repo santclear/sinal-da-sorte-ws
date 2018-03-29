@@ -15,8 +15,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import br.com.sinaldasorte.service.DBService;
-import br.com.sinaldasorte.service.EmailService;
 import br.com.sinaldasorte.service.SmtpEmailService;
+import br.com.sinaldasorte.service.interfaces.EmailService;
 import br.com.sinaldasorte.service.util.OAuth2SaslClientFactory;
 
 @Configuration

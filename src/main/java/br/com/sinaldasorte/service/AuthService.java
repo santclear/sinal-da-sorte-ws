@@ -8,6 +8,7 @@ import br.com.sinaldasorte.domain.Conta;
 import br.com.sinaldasorte.domain.enums.Situacoes;
 import br.com.sinaldasorte.repository.ContaRepository;
 import br.com.sinaldasorte.service.exceptions.ObjetoNaoEncontradoException;
+import br.com.sinaldasorte.service.interfaces.EmailService;
 import br.com.sinaldasorte.util.Util;
 
 @Service

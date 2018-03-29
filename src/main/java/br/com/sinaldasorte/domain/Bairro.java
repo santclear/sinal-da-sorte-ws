@@ -26,12 +26,12 @@ public class Bairro implements Serializable {
 	
 	private String nome;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="cidade_id")
 	private Cidade cidade;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="bairro", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="bairro")
 	private List<Logradouro> logradouros = new LinkedList<>();
 
 	public Bairro() {}

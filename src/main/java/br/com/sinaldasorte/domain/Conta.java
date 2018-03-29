@@ -1,6 +1,7 @@
 package br.com.sinaldasorte.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,12 +13,22 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
+import javax.persistence.PreUpdate;
+
+import org.hibernate.envers.Audited;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -25,6 +36,8 @@ import br.com.sinaldasorte.domain.enums.Perfil;
 import br.com.sinaldasorte.domain.enums.Situacoes;
 
 @Entity
+@Audited
+@EntityListeners(AuditingEntityListener.class)
 public class Conta implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -61,6 +74,20 @@ public class Conta implements Serializable {
 	
 	@OneToMany(mappedBy = "conta", cascade=CascadeType.ALL)
 	private List<Volante> volantes = new LinkedList<>();
+	
+	private String operacao;
+
+	private long timestamp;
+
+	@Column(nullable = false, updatable = false)
+	@CreatedDate
+	private long dataCriacao;
+
+	@LastModifiedDate
+	private long dataModificacao;
+
+	@LastModifiedBy
+	private String modificadoPor;
 
 	public Conta() {
 		addPerfil(Perfil.GRATUITO);
@@ -147,6 +174,70 @@ public class Conta implements Serializable {
 	public void setVolantes(List<Volante> volantes) {
 		this.volantes = volantes;
 	}
+	
+	/**
+	 * Auditoria
+	 * */
+	public String getOperacao() {
+		return this.operacao;
+	}
+	
+	public void setOperacao(String operacao) {
+		this.operacao = operacao;
+	}
+
+	public long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
+	}
+	
+	public long getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(long dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public long getDataModificacao() {
+		return dataModificacao;
+	}
+
+	public void setDataModificacao(long dataModificacao) {
+		this.dataModificacao = dataModificacao;
+	}
+
+	public String getModificadoPor() {
+		return modificadoPor;
+	}
+
+	public void setModificadoPor(String modificadoPor) {
+		this.modificadoPor = modificadoPor;
+	}
+
+
+	@PrePersist
+    public void onPrePersist() {
+        audit("CRIAÇÃO");
+    }
+      
+    @PreUpdate
+    public void onPreUpdate() {
+        audit("ATUALIZAÇÃO");
+    }
+      
+    @PreRemove
+    public void onPreRemove() {
+        audit("EXCLUSÃO");
+    }
+      
+    private void audit(String operacao) {
+        setOperacao(operacao);
+        setTimestamp((new Date()).getTime());
+    }
 
 	@Override
 	public int hashCode() {

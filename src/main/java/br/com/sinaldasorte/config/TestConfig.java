@@ -10,9 +10,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import br.com.sinaldasorte.service.CurrentTimeDateTimeService;
 import br.com.sinaldasorte.service.DBService;
-import br.com.sinaldasorte.service.EmailService;
 import br.com.sinaldasorte.service.MockEmailService;
+import br.com.sinaldasorte.service.interfaces.DateTimeService;
+import br.com.sinaldasorte.service.interfaces.EmailService;
 
 @Configuration
 @Profile("test")
@@ -32,4 +34,9 @@ public class TestConfig {
 	public EmailService emailService() {
 		return new MockEmailService();
 	}
+	
+    @Bean
+    DateTimeService currentTimeDateTimeService() {
+        return new CurrentTimeDateTimeService();
+    }
 }

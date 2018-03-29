@@ -2,20 +2,30 @@ package br.com.sinaldasorte.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreRemove;
+import javax.persistence.PreUpdate;
+
+import org.hibernate.envers.Audited;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,6 +33,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.sinaldasorte.domain.enums.Generos;
 
 @Entity
+@Audited
+@EntityListeners(AuditingEntityListener.class)
 public class Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
@@ -45,7 +57,7 @@ public class Usuario implements Serializable {
 	@Column(nullable = false)
 	private String cpf;
 
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="logradouro_id")
 	private Logradouro logradouro;
 	
@@ -62,7 +74,21 @@ public class Usuario implements Serializable {
 	 * */
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
-	private List<String> telefones = new LinkedList<>();
+	private Map<String, String> telefones = new HashMap<>();
+	
+    private String operacao;
+      
+    private long timestamp;
+    
+    @Column(nullable = false, updatable = false)
+    @CreatedDate
+    private long dataCriacao;
+ 
+    @LastModifiedDate
+    private long dataModificacao;
+ 
+    @LastModifiedBy
+    private String modificadoPor;
 
 	public Usuario() {}
 
@@ -110,7 +136,7 @@ public class Usuario implements Serializable {
 	public Integer getGenero() {
 		return genero;
 	}
-
+	
 	public void setGenero(Generos genero) {
 		this.genero = genero.getCod();
 	}
@@ -163,13 +189,77 @@ public class Usuario implements Serializable {
 		this.conta = conta;
 	}
 	
-	public List<String> getTelefones() {
+	public Map<String, String> getTelefones() {
 		return telefones;
 	}
 	
-	public void setTelefones(List<String> telefones) {
+	public void setTelefones(Map<String, String> telefones) {
 		this.telefones = telefones;
 	}
+	
+	/**
+	 * Auditoria
+	 * */
+	public String getOperacao() {
+		return this.operacao;
+	}
+	
+	public void setOperacao(String operacao) {
+		this.operacao = operacao;
+	}
+
+	public long getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
+	}
+	
+	public long getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(long dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public long getDataModificacao() {
+		return dataModificacao;
+	}
+
+	public void setDataModificacao(long dataModificacao) {
+		this.dataModificacao = dataModificacao;
+	}
+
+	public String getModificadoPor() {
+		return modificadoPor;
+	}
+
+	public void setModificadoPor(String modificadoPor) {
+		this.modificadoPor = modificadoPor;
+	}
+
+
+	@PrePersist
+    public void onPrePersist() {
+        audit("CRIAÇÃO");
+    }
+      
+    @PreUpdate
+    public void onPreUpdate() {
+        audit("ATUALIZAÇÃO");
+    }
+      
+    @PreRemove
+    public void onPreRemove() {
+        audit("EXCLUSÃO");
+    }
+      
+    private void audit(String operacao) {
+        setOperacao(operacao);
+        setTimestamp((new Date()).getTime());
+    }
 	
 	@Override
 	public int hashCode() {
@@ -178,8 +268,7 @@ public class Usuario implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -23,12 +26,13 @@ public class Logradouro implements Serializable {
 	
 	private String nome;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="bairro_id")
 	private Bairro bairro;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="logradouro", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="logradouro")
+	@Audited(targetAuditMode = RelationTargetAuditMode.AUDITED)
 	private List<Usuario> usuarios = new LinkedList<>();
 
 	public Logradouro() {}

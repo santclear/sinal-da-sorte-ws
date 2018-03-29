@@ -22,6 +22,7 @@ import br.com.sinaldasorte.security.ContaAuth;
 import br.com.sinaldasorte.service.exceptions.AutorizacaoException;
 import br.com.sinaldasorte.service.exceptions.ObjetoNaoEncontradoException;
 import br.com.sinaldasorte.service.exceptions.enums.MensagensExceptions;
+import br.com.sinaldasorte.service.interfaces.EmailService;
 import br.com.sinaldasorte.util.Util;
 
 @Service

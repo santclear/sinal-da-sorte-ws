@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 
 import br.com.sinaldasorte.domain.Conta;
+import br.com.sinaldasorte.service.interfaces.EmailService;
 import br.com.sinaldasorte.service.util.MensagemEmail;
 
 public abstract class AbstractEmailService extends MensagemEmail implements EmailService {
