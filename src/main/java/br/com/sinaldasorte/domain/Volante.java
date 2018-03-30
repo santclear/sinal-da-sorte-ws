@@ -13,8 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.envers.Audited;
-import org.hibernate.envers.RelationTargetAuditMode;
+import org.hibernate.envers.NotAudited;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -27,10 +26,10 @@ public class Volante implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+	@NotAudited
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="conta_id", nullable = false)
-	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 	private Conta conta;
 	
 	@JsonIgnore

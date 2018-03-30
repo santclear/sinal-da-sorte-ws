@@ -24,7 +24,10 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 
+import org.hibernate.envers.AuditJoinTable;
+import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.NotAudited;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -35,8 +38,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import br.com.sinaldasorte.domain.enums.Perfil;
 import br.com.sinaldasorte.domain.enums.Situacoes;
 
-@Entity
 @Audited
+@AuditTable(value = "zconta_aud")
+@Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Conta implements Serializable {
 	
@@ -68,10 +72,12 @@ public class Conta implements Serializable {
 	@Column(unique = true)
 	private String hashConfirmacao;
 	
+	@AuditJoinTable(name="zperfis_aud")
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name="PERFIS")
 	private Set<Integer> perfis = new HashSet<>();
 	
+	@NotAudited
 	@OneToMany(mappedBy = "conta", cascade=CascadeType.ALL)
 	private List<Volante> volantes = new LinkedList<>();
 	
@@ -217,7 +223,6 @@ public class Conta implements Serializable {
 	public void setModificadoPor(String modificadoPor) {
 		this.modificadoPor = modificadoPor;
 	}
-
 
 	@PrePersist
     public void onPrePersist() {

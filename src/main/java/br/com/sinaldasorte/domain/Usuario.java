@@ -21,6 +21,8 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
 
+import org.hibernate.envers.AuditJoinTable;
+import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -32,8 +34,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.sinaldasorte.domain.enums.Generos;
 
-@Entity
 @Audited
+@AuditTable(value = "zusuario_aud")
+@Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Usuario implements Serializable {
 	
@@ -56,7 +59,7 @@ public class Usuario implements Serializable {
 
 	@Column(nullable = false)
 	private String cpf;
-
+	
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="logradouro_id")
 	private Logradouro logradouro;
@@ -72,6 +75,7 @@ public class Usuario implements Serializable {
 	/* Telefone é uma entidade fraca, tem apenas um atributo, não é necessário criar uma classe entidade para ela.
 	 * Essas anotações estão definindo que será criado uma tabela chamada TELEFONE no banco de dados.
 	 * */
+	@AuditJoinTable(name="ztelefone_aud")
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Map<String, String> telefones = new HashMap<>();
@@ -239,8 +243,7 @@ public class Usuario implements Serializable {
 	public void setModificadoPor(String modificadoPor) {
 		this.modificadoPor = modificadoPor;
 	}
-
-
+	
 	@PrePersist
     public void onPrePersist() {
         audit("CRIAÇÃO");
