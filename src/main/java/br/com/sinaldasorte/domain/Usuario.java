@@ -82,14 +82,14 @@ public class Usuario implements Serializable {
 	
     private String operacao;
       
-    private long timestamp;
+    private Date timestamp;
     
     @Column(nullable = false, updatable = false)
     @CreatedDate
-    private long dataCriacao;
+    private Date dataCriacao;
  
     @LastModifiedDate
-    private long dataModificacao;
+    private Date dataModificacao;
  
     @LastModifiedBy
     private String modificadoPor;
@@ -212,27 +212,27 @@ public class Usuario implements Serializable {
 		this.operacao = operacao;
 	}
 
-	public long getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 	
-	public long getDataCriacao() {
+	public Date getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(long dataCriacao) {
+	public void setDataCriacao(Date dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 
-	public long getDataModificacao() {
+	public Date getDataModificacao() {
 		return dataModificacao;
 	}
 
-	public void setDataModificacao(long dataModificacao) {
+	public void setDataModificacao(Date dataModificacao) {
 		this.dataModificacao = dataModificacao;
 	}
 
@@ -261,7 +261,7 @@ public class Usuario implements Serializable {
       
     private void audit(String operacao) {
         setOperacao(operacao);
-        setTimestamp((new Date()).getTime());
+        setTimestamp(new Date());
     }
 	
 	@Override

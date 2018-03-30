@@ -84,7 +84,8 @@ public class ContaService {
 		}
 		Conta conta = repo.save(newObj);
 		newObj.setEmail(obj.getEmail());
-		this.emailService.envieLinkConfirmarAtualizacaoEmail(newObj);
+		obj.setHashConfirmacao(newObj.getHashConfirmacao());
+		this.emailService.envieLinkConfirmarAtualizacaoEmail(obj);
 		return conta;
 	}
 	
