@@ -54,9 +54,10 @@ public class ContaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		service.delete(id);
+	@RequestMapping(value="/exclua/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> exclua(@Valid @RequestBody ContaDto objDTO, @PathVariable Long id) {
+		Conta obj = service.dtoParaEntidade(objDTO);
+		service.exclua(obj);
 		return ResponseEntity.noContent().build();
 	}
 	

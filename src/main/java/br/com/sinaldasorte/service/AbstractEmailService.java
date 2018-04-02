@@ -38,7 +38,7 @@ public abstract class AbstractEmailService extends MensagemEmail implements Emai
 	}
 	
 	@Override
-	public void envieLinkConfirmacaoCadastroConta(Conta conta) {
+	public void envieLinkConfirmacaoCadastro(Conta conta) {
 		SimpleMailMessage sm = prepareLinkConfirmacaoCadastroConta(conta);
 		sendEmail(sm);
 	}
@@ -49,7 +49,7 @@ public abstract class AbstractEmailService extends MensagemEmail implements Emai
 		sm.setFrom(sender);
 		sm.setSubject("Sua confirmação de cadastro de conta do Sinal da Sorte");
 		sm.setSentDate(new Date(System.currentTimeMillis()));
-		sm.setText(linkConfirmacaoCadastroConta(conta));
+		sm.setText(linkConfirmacaoCadastro(conta));
 		return sm;
 	}
 	
@@ -66,6 +66,22 @@ public abstract class AbstractEmailService extends MensagemEmail implements Emai
 		sm.setSubject("Sua confirmação de atualização de e-mail do Sinal da Sorte");
 		sm.setSentDate(new Date(System.currentTimeMillis()));
 		sm.setText(linkConfirmarAtualizacaoEmail(conta));
+		return sm;
+	}
+	
+	@Override
+	public void envieLinkConfirmarExclusao(Conta conta) {
+		SimpleMailMessage sm = prepareLinkConfirmarExclusao(conta);
+		sendEmail(sm);
+	}
+	
+	protected SimpleMailMessage prepareLinkConfirmarExclusao(Conta conta) {
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setTo(conta.getEmail());
+		sm.setFrom(sender);
+		sm.setSubject("Sua confirmação de exclusão de conta do Sinal da Sorte");
+		sm.setSentDate(new Date(System.currentTimeMillis()));
+		sm.setText(linkConfirmarExclusao(conta));
 		return sm;
 	}
 }

@@ -59,7 +59,7 @@ public class ContaService {
 	public Conta insira(Conta obj) {
 		obj.setHashConfirmacao(Util.novoHash());
 		obj.setSituacao(Situacoes.ATIVO);
-		this.emailService.envieLinkConfirmacaoCadastroConta(obj);
+		this.emailService.envieLinkConfirmacaoCadastro(obj);
 		obj.setSituacao(Situacoes.INATIVO);
 		obj.setId(null);
 		repo.save(obj);
@@ -102,13 +102,23 @@ public class ContaService {
 	
 	
 	//FIXME Essa operação deve atualizar a 'situacao' para 'INATIVO'
-	public void delete(Long id) {
-//		find(id);
-//		try {
-//			repo.delete(id);
-//		} catch(DataIntegrityViolationException e) {
-//			throw new DataIntegrityException("Alguma msg");
-//		}
+	public void exclua(Conta obj) {
+		Conta newObj = procure(obj.getId());		
+		
+
+		newObj.setHashConfirmacao(Util.novoHash());
+
+		repo.save(newObj);
+		newObj.setEmail(newObj.getEmail());
+		newObj.setHashConfirmacao(newObj.getHashConfirmacao());
+		this.emailService.envieLinkConfirmarExclusao(newObj);
+	}
+	
+	public Conta excluaPorHashConfirmacao(Conta newObj) {
+		newObj.setSituacao(Situacoes.INATIVO_PERMANENTE);
+		newObj.setHashConfirmacao(Util.novoHash() + Util.novoHash());
+		// O método save do Spring Data realiza operações de save e update. Se o id for nulo ele salva e se não for atualiza.
+		return repo.save(newObj);
 	}
 	
 	public List<Conta> procureTodos() {
@@ -154,7 +164,7 @@ public class ContaService {
 		
 		if(Objects.nonNull(objDto.getNovaSenha()) && !"".equals(objDto.getNovaSenha())) objDto.setSenha(objDto.getNovaSenha());
 		
-		Usuario usuario = this.usuarioService.dtoParaEntidade(objDto.getUsuario());
+		Usuario usuario = objDto.getUsuario()==null?null:this.usuarioService.dtoParaEntidade(objDto.getUsuario());
 		return new Conta(objDto.getId(), objDto.getEmail(), usuario, objDto.getSenha());
 	}
 	

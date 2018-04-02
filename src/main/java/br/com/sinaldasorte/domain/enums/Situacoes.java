@@ -4,7 +4,8 @@ public enum Situacoes {
 	
 	ATIVO(1, "Ativo"),
 	INATIVO(2, "Inativo"),
-	INADIMPLENTE(3, "Inadimplente");
+	INATIVO_PERMANENTE(3, "Inativo permanente"),
+	INADIMPLENTE(4, "Inadimplente");
 	
 	private int cod;
 	private String descricao;

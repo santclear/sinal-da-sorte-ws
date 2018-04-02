@@ -39,7 +39,7 @@ public class ContaUpdateValidator implements ConstraintValidator<ContaUpdate, Co
 		
 		Conta aux = repo.findByEmail(objDTO.getEmail());
 		if(aux != null && !aux.getId().equals(uriId)) {
-			list.add(new FieldMessage("email", "Email já existente"));
+			list.add(new FieldMessage("email", "Email inválido."));
 		}
 		
 		for (FieldMessage e : list) {

@@ -38,6 +38,18 @@ public class ContaController {
 		modelo.addAttribute("organizacao", organizacao);
 		
 		return "confirmacao-cadastro-conta";
+	}
+	
+	@RequestMapping(value="/exclusao/confirme", method=RequestMethod.GET)
+	public  String exclua(@RequestParam(value="value") String hash, Model modelo) {
+		Conta obj = service.procurePorHashConfirmacao(hash);
+		obj = service.excluaPorHashConfirmacao(obj);
 		
+		modelo.addAttribute("nomeUsuario", obj.getUsuario().getNome());
+		modelo.addAttribute("sinalDaSorteFrontUrl", sinalDaSorteFrontUrl);
+		modelo.addAttribute("copyright", copyright);
+		modelo.addAttribute("organizacao", organizacao);
+		
+		return "confirmacao-exclusao-conta";
 	}
 }

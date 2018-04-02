@@ -34,6 +34,6 @@ public class AuthService {
 			conta.setSenha(pe.encode(newPass));
 			repo.save(conta);
 			service.sendNewPasswordEmail(conta, newPass);
-		} else if(conta.getSituacao() == Situacoes.INATIVO) service.envieLinkConfirmacaoCadastroConta(conta);
+		} else if(conta.getSituacao() == Situacoes.INATIVO) service.envieLinkConfirmacaoCadastro(conta);
 	}
 }

@@ -27,7 +27,7 @@ public class ContaInsertValidator implements ConstraintValidator<ContaInsert, Co
 		
 		Conta aux = repo.findByEmail(objDTO.getEmail());
 		if(aux != null) {
-			list.add(new FieldMessage("email", "Email já existente"));
+			list.add(new FieldMessage("email", "Email inválido."));
 		}
 		
 		for (FieldMessage e : list) {

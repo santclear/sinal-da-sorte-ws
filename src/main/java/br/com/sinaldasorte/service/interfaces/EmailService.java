@@ -8,6 +8,7 @@ public interface EmailService {
 
 	void sendEmail(SimpleMailMessage mensagem);
 	void sendNewPasswordEmail(Conta conta, String novaSenha);
-	void envieLinkConfirmacaoCadastroConta(Conta conta);
+	void envieLinkConfirmacaoCadastro(Conta conta);
 	void envieLinkConfirmarAtualizacaoEmail(Conta conta);
+	void envieLinkConfirmarExclusao(Conta conta);
 }
