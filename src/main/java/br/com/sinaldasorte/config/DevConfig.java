@@ -14,8 +14,10 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
+import br.com.sinaldasorte.service.CurrentTimeDateTimeService;
 import br.com.sinaldasorte.service.DBService;
 import br.com.sinaldasorte.service.SmtpEmailService;
+import br.com.sinaldasorte.service.interfaces.DateTimeService;
 import br.com.sinaldasorte.service.interfaces.EmailService;
 import br.com.sinaldasorte.service.util.OAuth2SaslClientFactory;
 
@@ -44,6 +46,11 @@ public class DevConfig {
 	public EmailService emailService() {
 		return new SmtpEmailService();
 	}
+	
+    @Bean
+    DateTimeService currentTimeDateTimeService() {
+        return new CurrentTimeDateTimeService();
+    }
 	
 	@Bean
 	public JavaMailSender getJavaMailSender() {
