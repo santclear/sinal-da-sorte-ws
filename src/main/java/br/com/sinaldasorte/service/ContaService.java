@@ -2,8 +2,8 @@ package br.com.sinaldasorte.service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,11 +49,9 @@ public class ContaService {
 			throw new AutorizacaoException("Acesso negado");
 		}
 		
-		Conta obj = repo.findOne(id);
-		if(obj == null) {
-			throw new ObjetoNaoEncontradoException("Objeto não encontrado Id: "+ id +", Tipo: "+ Conta.class.getName());
-		}
-		return obj;
+		Optional<Conta> obj = repo.findById(id);
+
+		return obj.orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto não encontrado! Id: " + id + ", Tipo: " + Conta.class.getName()));
 	}
 	
 	public Conta insira(Conta obj) {
@@ -132,18 +130,15 @@ public class ContaService {
 			throw new AutorizacaoException("Acesso negado");
 		}
 		
-		Conta obj = repo.findOne(conta.getId());
-		if (obj == null) {
-			throw new ObjetoNaoEncontradoException("Objeto não encontrado! Id: "+ conta.getId() +", Tipo: " + Conta.class.getName());
-		}
-		return obj;
+		Optional<Conta> obj = repo.findById(conta.getId());
+
+		return obj.orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto não encontrado! Id: " + conta.getId() + ", Tipo: " + Conta.class.getName()));
 	}
 	
 	public Conta procurePorHashConfirmacao(String hash) {
 		
 		Conta obj = repo.findByHashConfirmacao(hash);
 		if(obj == null) {
-			Logger.getInstance(ContaService.class).info("Objeto não encontrado Hash: "+ hash +", Tipo: "+ Conta.class.getName());
 			throw new ObjetoNaoEncontradoException("Objeto não encontrado Hash: "+ hash);
 		}
 		
@@ -152,7 +147,7 @@ public class ContaService {
 	
 	// Page encapsula paginação. A contagem de página inicia em zero. O atributo direction é o tipo de ordenação descentende ou ascendente
 	public Page<Conta> procurePagina(Integer page, Integer linesPerPage, String orderBy, String direction) {
-		PageRequest pageRequest = new PageRequest(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
 	}
 	

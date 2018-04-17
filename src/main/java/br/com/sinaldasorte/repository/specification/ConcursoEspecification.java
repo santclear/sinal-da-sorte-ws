@@ -13,7 +13,9 @@ public class ConcursoEspecification {
 	
 	public static Specification<Concurso> numero(Integer numero) {
 		return new Specification<Concurso>() {
-			
+
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Predicate toPredicate(Root<Concurso> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 				return cb.equal(root.get("numero"), numero);

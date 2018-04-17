@@ -2,8 +2,8 @@ package br.com.sinaldasorte.dto;
 
 import java.io.Serializable;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 import br.com.sinaldasorte.service.validation.ContaInsert;
 

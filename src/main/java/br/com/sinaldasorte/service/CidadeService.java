@@ -1,6 +1,7 @@
 package br.com.sinaldasorte.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import br.com.sinaldasorte.domain.UF;
 import br.com.sinaldasorte.dto.CidadeDto;
 import br.com.sinaldasorte.repository.CidadeRepository;
 import br.com.sinaldasorte.repository.UFRepository;
+import br.com.sinaldasorte.service.exceptions.ObjetoNaoEncontradoException;
 
 @Service
 public class CidadeService {
@@ -21,9 +23,9 @@ public class CidadeService {
 	private UFRepository ufRepo;
 	
 	public Cidade procure(Long id) {
-		Cidade obj = repo.findOne(id);
+		Optional<Cidade> obj = repo.findById(id);
 		
-		return obj;
+		return obj.orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto não encontrado! Id: " + id + ", Tipo: " + Cidade.class.getName()));
 	}
 	
 	public Cidade procure(String cidade, String uf) {

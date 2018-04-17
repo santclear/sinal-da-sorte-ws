@@ -28,7 +28,7 @@ class PersistenceContext {
   
     @Bean
     DateTimeProvider dateTimeProvider(DateTimeService dateTimeService) {
-        return new AuditingDateTimeProvider(dateTimeService);
+        return new AuditingDateTimeProvider();
     }
 }
 

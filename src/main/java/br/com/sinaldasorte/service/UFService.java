@@ -1,6 +1,7 @@
 package br.com.sinaldasorte.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,9 @@ public class UFService {
 	private UFRepository repo;
 	
 	public UF procure(Long id) {
-		UF obj = repo.findOne(id);
+		Optional<UF> obj = repo.findById(id);
 		
-		return obj;
+		return obj.orElse(null);
 	}
 	
 	public UF procure(String nome) {

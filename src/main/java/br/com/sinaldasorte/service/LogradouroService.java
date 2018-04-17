@@ -2,6 +2,7 @@ package br.com.sinaldasorte.service;
 
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.xml.rpc.ServiceException;
 
@@ -29,9 +30,9 @@ public class LogradouroService {
 	private BairroRepository bairroRepo;
 	
 	public Logradouro procure(String cep) {
-		Logradouro obj = repo.findOne(cep);
+		Optional<Logradouro> obj = repo.findById(cep);
 		
-		return obj;
+		return obj.orElse(null);
 	}
 	
 	public Logradouro insira(Logradouro obj) {

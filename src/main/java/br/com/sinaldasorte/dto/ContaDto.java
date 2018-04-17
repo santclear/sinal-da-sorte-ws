@@ -2,7 +2,7 @@ package br.com.sinaldasorte.dto;
 
 import java.io.Serializable;
 
-import org.hibernate.validator.constraints.Email;
+import javax.validation.constraints.Email;
 
 import br.com.sinaldasorte.service.validation.ContaUpdate;
 

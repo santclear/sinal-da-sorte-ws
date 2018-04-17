@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,11 +53,9 @@ public class UsuarioService {
 			throw new AutorizacaoException("Acesso negado");
 		}
 		
-		Usuario obj = repo.findOne(id);
-		if(obj == null) {
-			throw new ObjetoNaoEncontradoException("Objeto não encontrado Id: "+ id +", Tipo: "+ Usuario.class.getName());
-		}
-		return obj;
+		Optional<Usuario> obj = repo.findById(id);
+		
+		return obj.orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto não encontrado! Id: " + id + ", Tipo: " + Usuario.class.getName()));
 	}
 	
 	public List<Usuario> procureTodos() {
@@ -70,11 +69,9 @@ public class UsuarioService {
 			throw new AutorizacaoException("Acesso negado");
 		}
 		
-		Usuario obj = repo.findOne(conta.getId());
-		if (obj == null) {
-			throw new ObjetoNaoEncontradoException("Objeto não encontrado! Id: "+ conta.getId() +", Tipo: " + Usuario.class.getName());
-		}
-		return obj;
+		Optional<Usuario> obj = repo.findById(conta.getId());
+		
+		return obj.orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto não encontrado! Id: " + conta.getId() + ", Tipo: " + Usuario.class.getName()));
 	}
 	
 	
