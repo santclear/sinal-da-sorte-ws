@@ -3,6 +3,7 @@ package br.com.sinaldasorte.domain;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Rateio implements Serializable {
     private Long id;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private Sorteio sorteio;
 
@@ -39,9 +40,17 @@ public class Rateio implements Serializable {
 	@Column(nullable = false, length = 45)
 	private String tipoDePremio;
 	
+	@Column(length = 10000)
+	private String cidades;
+	
+	@Column(length = 10000)
+	private String ufs;
+	
 	public Rateio() {}
 
-	public Rateio(Long id, Sorteio sorteio, BigDecimal rateio, int numeroDeGanhadores, BigDecimal acumuladoParaOProximoConcurso, String tipoDePremio) {
+	public Rateio(Long id, Sorteio sorteio, BigDecimal rateio, 
+			int numeroDeGanhadores, BigDecimal acumuladoParaOProximoConcurso, 
+			String tipoDePremio, String cidades, String ufs) {
 		super();
 		this.id = id;
 		this.sorteio = sorteio;
@@ -49,6 +58,8 @@ public class Rateio implements Serializable {
 		this.numeroDeGanhadores = numeroDeGanhadores;
 		this.acumuladoParaOProximoConcurso = acumuladoParaOProximoConcurso;
 		this.tipoDePremio = tipoDePremio;
+		this.cidades = cidades;
+		this.ufs = ufs;
 	}
 
 	public Long getId() {
@@ -97,6 +108,22 @@ public class Rateio implements Serializable {
 
 	public void setTipoDePremio(String tipoDePremio) {
 		this.tipoDePremio = tipoDePremio;
+	}
+
+	public String getCidades() {
+		return cidades;
+	}
+
+	public void setCidades(String cidades) {
+		this.cidades = cidades;
+	}
+
+	public String getUfs() {
+		return ufs;
+	}
+
+	public void setUfs(String ufs) {
+		this.ufs = ufs;
 	}
 
 	@Override

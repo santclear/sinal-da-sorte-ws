@@ -26,7 +26,7 @@ public class Sorteio implements Serializable {
     private Long id;
 
 	@JsonIgnore
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(nullable = false)
 	private Concurso concurso;
 	
@@ -35,8 +35,7 @@ public class Sorteio implements Serializable {
 	@Column(nullable = false, length = 199)
 	private String numerosSorteados;
 	
-	// Se excluir um sorteio excluirá os rateios relacionados
-	@OneToMany(mappedBy = "sorteio", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "sorteio")
 	private List<Rateio> rateios = new LinkedList<>();
 	
 	public Sorteio() {}
