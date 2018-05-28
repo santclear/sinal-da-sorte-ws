@@ -139,23 +139,23 @@ public class Rateio implements Serializable {
 	@Transient
 	public List<QtdCidadeUfDto> getQtdCidadesUfs() {
 		List<QtdCidadeUfDto> qtdCidadesUfs = new ArrayList<>();
-		
-		if(ufs != null && !";".equals(ufs)) {
+		if(cidades != null) {
 			String cidades[] = this.cidades.split(";");
 			String ufs[] = this.ufs.split(";");
 			Map<String, Integer> qtdCidadesUfsMap = new HashMap<>();
-			if(ufs.length > 0) {
-				for(int i = 0; i < cidades.length; i++) {
-					Integer qtd = qtdCidadesUfsMap.get(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase());
-					if(qtdCidadesUfsMap.get(cidades[i].toUpperCase()) == null) qtdCidadesUfsMap.put(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase(), 1);
-					else qtdCidadesUfsMap.put(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase(), qtd + 1);
-				}
-			} else {
-				for(int i = 0; i < ufs.length; i++) {
-					Integer qtd = qtdCidadesUfsMap.get(ufs[i].toUpperCase());
-					if(qtdCidadesUfsMap.get(ufs[i].toUpperCase()) == null) qtdCidadesUfsMap.put(ufs[i].toUpperCase(), 1);
-					else qtdCidadesUfsMap.put(ufs[i].toUpperCase(), qtd + 1);
-				}
+			for(int i = 0; i < cidades.length; i++) {
+				Integer qtd = qtdCidadesUfsMap.get(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase());
+				if(qtdCidadesUfsMap.get(cidades[i].toUpperCase()) == null) qtdCidadesUfsMap.put(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase(), 1);
+				else qtdCidadesUfsMap.put(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase(), qtd + 1);
+			}
+			qtdCidadesUfsMap.forEach((cidadeUf,qtd)-> qtdCidadesUfs.add(new QtdCidadeUfDto(cidadeUf, qtd)));
+		} else if(cidades == null && ufs != null) {
+			String ufs[] = this.ufs.split(";");
+			Map<String, Integer> qtdCidadesUfsMap = new HashMap<>();
+			for(int i = 0; i < ufs.length; i++) {
+				Integer qtd = qtdCidadesUfsMap.get(ufs[i].toUpperCase());
+				if(qtdCidadesUfsMap.get(ufs[i].toUpperCase()) == null) qtdCidadesUfsMap.put(ufs[i].toUpperCase(), 1);
+				else qtdCidadesUfsMap.put(ufs[i].toUpperCase(), qtd + 1);
 			}
 			qtdCidadesUfsMap.forEach((cidadeUf,qtd)-> qtdCidadesUfs.add(new QtdCidadeUfDto(cidadeUf, qtd)));
 		}
