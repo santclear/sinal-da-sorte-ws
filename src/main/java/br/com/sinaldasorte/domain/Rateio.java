@@ -2,6 +2,10 @@ package br.com.sinaldasorte.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,7 +16,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.springframework.data.annotation.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import br.com.sinaldasorte.dto.QtdCidadeUfDto;
 
 @Entity
 public class Rateio implements Serializable {
@@ -40,9 +48,11 @@ public class Rateio implements Serializable {
 	@Column(nullable = false, length = 45)
 	private String tipoDePremio;
 	
+	@JsonIgnore
 	@Column(length = 10000)
 	private String cidades;
 	
+	@JsonIgnore
 	@Column(length = 10000)
 	private String ufs;
 	
@@ -124,6 +134,32 @@ public class Rateio implements Serializable {
 
 	public void setUfs(String ufs) {
 		this.ufs = ufs;
+	}
+
+	@Transient
+	public List<QtdCidadeUfDto> getQtdCidadesUfs() {
+		List<QtdCidadeUfDto> qtdCidadesUfs = new ArrayList<>();
+		
+		if(ufs != null && !";".equals(ufs)) {
+			String cidades[] = this.cidades.split(";");
+			String ufs[] = this.ufs.split(";");
+			Map<String, Integer> qtdCidadesUfsMap = new HashMap<>();
+			if(ufs.length > 0) {
+				for(int i = 0; i < cidades.length; i++) {
+					Integer qtd = qtdCidadesUfsMap.get(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase());
+					if(qtdCidadesUfsMap.get(cidades[i].toUpperCase()) == null) qtdCidadesUfsMap.put(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase(), 1);
+					else qtdCidadesUfsMap.put(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase(), qtd + 1);
+				}
+			} else {
+				for(int i = 0; i < ufs.length; i++) {
+					Integer qtd = qtdCidadesUfsMap.get(ufs[i].toUpperCase());
+					if(qtdCidadesUfsMap.get(ufs[i].toUpperCase()) == null) qtdCidadesUfsMap.put(ufs[i].toUpperCase(), 1);
+					else qtdCidadesUfsMap.put(ufs[i].toUpperCase(), qtd + 1);
+				}
+			}
+			qtdCidadesUfsMap.forEach((cidadeUf,qtd)-> qtdCidadesUfs.add(new QtdCidadeUfDto(cidadeUf, qtd)));
+		}
+		return qtdCidadesUfs;
 	}
 
 	@Override
