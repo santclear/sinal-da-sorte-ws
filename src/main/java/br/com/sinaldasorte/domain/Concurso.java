@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +33,7 @@ public class Concurso implements Serializable {
 	private Loteria loteria;
 	
 	@Column(nullable = false)
-	private int numero;
+	private Integer numero;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(length = 10)
@@ -44,11 +43,8 @@ public class Concurso implements Serializable {
 	@Column(precision = 15, scale = 2)
 	private BigDecimal arrecadacaoTotal;
 	
-	@Column(length = 50)
-	private String cidade;
-	
-	@Column(length = 2)
-	private String uf;
+	@Column(length = 1000)
+	private String localizacaoSorteio;
 	
 	@Column(precision = 15, scale = 2)
 	private BigDecimal estimativaDePremioParaOProximoConcurso;
@@ -57,12 +53,12 @@ public class Concurso implements Serializable {
 	private BigDecimal acumuladoEspecial;
 	
 	// Se excluir um concurso excluirá os sorteios relacionados
-	@OneToMany(mappedBy = "concurso", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "concurso")
 	private List<Sorteio> sorteios = new LinkedList<>();
 	
 	public Concurso() {}
 	
-	public Concurso(Long id, Loteria loteria, int numero, Calendar dataDoSorteio, BigDecimal arrecadacaoTotal, String cidade, String uf,
+	public Concurso(Long id, Loteria loteria, Integer numero, Calendar dataDoSorteio, BigDecimal arrecadacaoTotal, String localizacaoSorteio,
 		BigDecimal estimativaDePremioParaOProximoConcurso, BigDecimal acumuladoEspecial) {
 		super();
 		this.id = id;
@@ -70,8 +66,7 @@ public class Concurso implements Serializable {
 		this.numero = numero;
 		this.dataDoSorteio = dataDoSorteio;
 		this.arrecadacaoTotal = arrecadacaoTotal;
-		this.cidade = cidade;
-		this.uf = uf;
+		this.localizacaoSorteio = localizacaoSorteio;
 		this.estimativaDePremioParaOProximoConcurso = estimativaDePremioParaOProximoConcurso;
 		this.acumuladoEspecial = acumuladoEspecial;
 	}
@@ -92,11 +87,11 @@ public class Concurso implements Serializable {
 		this.loteria = loteria;
 	}
 
-	public int getNumero() {
+	public Integer getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(Integer numero) {
 		this.numero = numero;
 	}
 
@@ -116,20 +111,12 @@ public class Concurso implements Serializable {
 		this.arrecadacaoTotal = arrecadacaoTotal;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public String getLocalizacaoSorteio() {
+		return localizacaoSorteio;
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
-	}
-
-	public String getUf() {
-		return uf;
-	}
-
-	public void setUf(String uf) {
-		this.uf = uf;
+	public void setLocalizacaoSorteio(String localizacaoSorteio) {
+		this.localizacaoSorteio = localizacaoSorteio;
 	}
 
 	public BigDecimal getEstimativaDePremioParaOProximoConcurso() {
