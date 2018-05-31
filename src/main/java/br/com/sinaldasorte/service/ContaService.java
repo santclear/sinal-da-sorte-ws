@@ -98,8 +98,6 @@ public class ContaService {
 		return repo.save(newObj);
 	}
 	
-	
-	//FIXME Essa operação deve atualizar a 'situacao' para 'INATIVO'
 	public void exclua(Conta obj) {
 		Conta newObj = procure(obj.getId());		
 		

@@ -5,7 +5,7 @@ spring:
     password: 
 #debug
   jpa:
-    show-sql: true
+    show-sql: false
 #mostra as execuções de queries de forma amigável
     properties:
       hibernate:
