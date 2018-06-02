@@ -45,4 +45,12 @@ sinaldasorte:
   responsavel: Ali
   copyright: Copyright Sinal da Sorte 2018
   organizacao: Sant'Clear Soluções
-  slogan: Aposte com estratégia. 
+  slogan: Aposte com estratégia.
+  
+  google:
+    tokenUrl: 
+    oauthClientId: 
+    oauthSecret: 
+    refreshToken: 
+    accessToken: 
+    tokenExpires: 

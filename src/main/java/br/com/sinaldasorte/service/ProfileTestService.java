@@ -16,7 +16,7 @@ import br.com.sinaldasorte.dto.EnderecoDto;
 import br.com.sinaldasorte.dto.UsuarioDto;
 
 @Service
-public class DBService {
+public class ProfileTestService {
 	
 	@Autowired
 	private ContaService contaService;

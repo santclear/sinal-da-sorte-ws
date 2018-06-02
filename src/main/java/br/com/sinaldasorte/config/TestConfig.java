@@ -11,8 +11,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import br.com.sinaldasorte.service.CurrentTimeDateTimeService;
-import br.com.sinaldasorte.service.DBService;
 import br.com.sinaldasorte.service.MockEmailService;
+import br.com.sinaldasorte.service.ProfileTestService;
 import br.com.sinaldasorte.service.interfaces.DateTimeService;
 import br.com.sinaldasorte.service.interfaces.EmailService;
 
@@ -21,11 +21,11 @@ import br.com.sinaldasorte.service.interfaces.EmailService;
 public class TestConfig {
 
 	@Autowired
-	private DBService dbService;
+	private ProfileTestService service;
 	
 	@Bean
 	public boolean instantiateDatabase() throws ParseException, RemoteException, ServiceException {
-		dbService.instantiateTestDatabase();
+		service.instantiateTestDatabase();
 		return true;
 	}
 	
