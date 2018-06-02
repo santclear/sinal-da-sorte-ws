@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import br.com.sinaldasorte.domain.Concurso;
-import br.com.sinaldasorte.dto.EstatisticaDto;
 
 @Repository
 public interface ConcursoRepository extends JpaRepository<Concurso, Long>, JpaSpecificationExecutor<Concurso> {

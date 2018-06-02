@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.sinaldasorte.domain.Concurso;
-import br.com.sinaldasorte.dto.EstatisticaDto;
 import br.com.sinaldasorte.repository.ConcursoRepository;
 
 @Service

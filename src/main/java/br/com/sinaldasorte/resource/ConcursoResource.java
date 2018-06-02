@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.sinaldasorte.domain.Concurso;
-import br.com.sinaldasorte.dto.EstatisticaDto;
 import br.com.sinaldasorte.service.ConcursoService;
 
 //URL http://localhost:8080/jsondoc-ui.html > http://localhost:8080/jsondoc
