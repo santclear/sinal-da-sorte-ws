@@ -27,33 +27,5 @@ public interface ConcursoRepository extends JpaRepository<Concurso, Long>, JpaSp
 	  + "INNER JOIN concurso.loteria loteria "
 	  + "WHERE concurso.numero < ?1 AND "
 	  + "loteria.id = ?2")
-	List<Concurso> procureConcursosComNumeroMenorQue(Integer numero, Long idLoteria);
-	
-	@Query(
-	    "SELECT new br.com.sinaldasorte.dto.EstatisticaDto("
-	  + "	dez.numero AS dezena, "
-	  + "	("
-	  + "		SELECT COUNT(*) "
-	  + "		FROM Sorteio sort "
-	  + "		JOIN sort.concurso conc "
-	  + "		JOIN conc.loteria lot "
-	  + "		WHERE lot.id = ?1 "
-	  + "		AND sort.numero = ?2 "
-	  + "		AND sort.numerosSorteados LIKE concat('%',dez.numero,'%')"
-	  + "	) AS frequencia, "
-	  + "	("
-	  + "		SELECT (COUNT(*) * 1.0 * 100) / max(conc.numero) "
-	  + "		FROM Sorteio sort "
-	  + "		JOIN sort.concurso conc "
-	  + "		JOIN conc.loteria lot "
-	  + "		WHERE lot.id = ?1 "
-	  + "		AND sort.numero = ?2 "
-	  + "		AND sort.numerosSorteados LIKE concat('%',dez.numero,'%')"
-	  + "	) AS frequenciaPorCento) "
-	  + "FROM Dezena dez "
-	  + "JOIN dez.loteria l "
-	  + "WHERE l.id = ?1 "
-	  + "ORDER BY frequencia DESC")
-	List<EstatisticaDto> calculeFrequenciasTotaisDasDezenas(Long idLoteria, Integer numeroDoSorteio);
-	
+	List<Concurso> procureConcursosComNumeroMenorQue(Integer numero, Long idLoteria);	
 }

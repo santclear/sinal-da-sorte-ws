@@ -29,9 +29,4 @@ public class ConcursoResource {
 	public List<Concurso> procureConcursosComNumeroMenorQue(@PathVariable Integer numero, @PathVariable Long idLoteria) {
 		return this.service.procureConcursosComNumeroMenorQue(numero, idLoteria);
 	}
-	
-	@RequestMapping(value = "calculeFrequenciasTotaisDasDezenas/idLoteria={idLoteria}&numeroSorteio={numeroDoSorteio}", method = RequestMethod.GET)
-	public List<EstatisticaDto> calculeFrequenciasTotaisDasDezenas(@PathVariable Long idLoteria, @PathVariable Integer numeroDoSorteio) {		
-		return this.service.calculeFrequenciasTotaisDasDezenas(idLoteria, numeroDoSorteio);
-	}
 }

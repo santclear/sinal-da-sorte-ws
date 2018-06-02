@@ -22,8 +22,4 @@ public class ConcursoService {
 	public List<Concurso> procureConcursosComNumeroMenorQue(Integer numero, Long idLoteria) {
 		return this.repo.procureConcursosComNumeroMenorQue(numero, idLoteria);
 	}
-	
-	public List<EstatisticaDto> calculeFrequenciasTotaisDasDezenas(Long idLoteria, Integer numeroDoSorteio) {
-		return this.repo.calculeFrequenciasTotaisDasDezenas(idLoteria, numeroDoSorteio);
-	}
 }
