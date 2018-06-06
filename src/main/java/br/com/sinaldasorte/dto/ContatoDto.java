@@ -10,6 +10,7 @@ public class ContatoDto implements Serializable {
 	private String assunto;
 	private String mensagem;
 	private String contato;
+	private String emailLogin;
 	
 	public String getPara() {
 		return para;
@@ -41,5 +42,13 @@ public class ContatoDto implements Serializable {
 
 	public void setContato(String contato) {
 		this.contato = contato;
+	}
+
+	public String getEmailLogin() {
+		return emailLogin;
+	}
+
+	public void setEmailLogin(String emailLogin) {
+		this.emailLogin = emailLogin;
 	}
 }

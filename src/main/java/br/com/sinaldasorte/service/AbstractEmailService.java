@@ -98,7 +98,15 @@ public abstract class AbstractEmailService extends MensagemEmail implements Emai
 		SimpleMailMessage sm = new SimpleMailMessage();
 		sm.setFrom(sender);
 		sm.setSentDate(new Date(System.currentTimeMillis()));
-		sm.setText(dto.getMensagem()+"\n\nContato: "+dto.getContato());
+		StringBuilder texto = new StringBuilder();
+		texto.append(dto.getMensagem());
+		texto.append("\n\nContatos: "+dto.getContato());
+		if(dto.getEmailLogin() != null) {
+			texto.append("\nUsuário: "+ dto.getEmailLogin());
+		} else {
+			texto.append("\nUsuário: Anônimo");
+		}
+		sm.setText(texto.toString());
 		if(sender.equals(dto.getPara())) {
 			sm.setTo(sender);
 			sm.setSubject("[Contato - Sinal da Sorte]: "+ dto.getAssunto());
@@ -108,7 +116,17 @@ public abstract class AbstractEmailService extends MensagemEmail implements Emai
 		} else {
 			sm.setTo(organizacaoEmail);
 			sm.setSubject("[Contato Hack - Sinal da Sorte]: "+ dto.getAssunto());
-			sm.setText("ATENÇÃO! Nenhuma opção de Tipo de Contato foi selecionada na page de Contato \n\nMensagem do remetente:\n\n"+ dto.getMensagem()+"\n\nContato: "+dto.getContato());
+			texto = new StringBuilder();
+			texto.append("ATENÇÃO! Nenhuma opção de Tipo de Contato foi selecionada na page de Contato");
+			texto.append("\n\nMensagem do remetente:\n\n");
+			texto.append(dto.getMensagem());
+			texto.append("\n\nContato: "+ dto.getContato());
+			if(dto.getEmailLogin() != null) {
+				texto.append("\nUsuário: "+ dto.getEmailLogin());
+			} else {
+				texto.append("\nUsuário: Anônimo");
+			}
+			sm.setText(texto.toString());
 		}
 		return sm;
 	}
