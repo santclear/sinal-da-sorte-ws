@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 
 import br.com.sinaldasorte.domain.Conta;
+import br.com.sinaldasorte.dto.ContatoDto;
 import br.com.sinaldasorte.service.interfaces.EmailService;
 import br.com.sinaldasorte.service.util.MensagemEmail;
 
@@ -19,6 +20,9 @@ public abstract class AbstractEmailService extends MensagemEmail implements Emai
 	
 	@Value("${sinaldasorte.ws.url}")
 	private String sinalDaSorteWsUrl;
+	
+	@Value("${organizacao.email}")
+	private String organizacaoEmail;
 	
 	@Override
 	public void sendNewPasswordEmail(Conta conta, String newPass) {
@@ -82,6 +86,30 @@ public abstract class AbstractEmailService extends MensagemEmail implements Emai
 		sm.setSubject("Sua confirmação de exclusão de conta do Sinal da Sorte");
 		sm.setSentDate(new Date(System.currentTimeMillis()));
 		sm.setText(linkConfirmarExclusao(conta));
+		return sm;
+	}
+	
+	public void envieContato(ContatoDto dto) {
+		SimpleMailMessage sm = prepareEnvieContato(dto);
+		sendEmail(sm);
+	}
+	
+	protected SimpleMailMessage prepareEnvieContato(ContatoDto dto) {
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setFrom(sender);
+		sm.setSentDate(new Date(System.currentTimeMillis()));
+		sm.setText(dto.getMensagem()+"\n\nContato: "+dto.getContato());
+		if(sender.equals(dto.getPara())) {
+			sm.setTo(sender);
+			sm.setSubject("[Contato - Sinal da Sorte]: "+ dto.getAssunto());
+		} else if(organizacaoEmail.equals(dto.getPara())) {
+			sm.setTo(organizacaoEmail);
+			sm.setSubject("[Contato Profissional - Sinal da Sorte]: "+ dto.getAssunto());
+		} else {
+			sm.setTo(organizacaoEmail);
+			sm.setSubject("[Contato Hack - Sinal da Sorte]: "+ dto.getAssunto());
+			sm.setText("ATENÇÃO! Nenhuma opção de Tipo de Contato foi selecionada na page de Contato \n\nMensagem do remetente:\n\n"+ dto.getMensagem()+"\n\nContato: "+dto.getContato());
+		}
 		return sm;
 	}
 }

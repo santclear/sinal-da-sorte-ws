@@ -24,7 +24,7 @@ spring:
 #    password: 
     
 # Comum com mysql e h2
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true #mostra as execuções de queries de forma amigável
@@ -46,3 +46,7 @@ sinaldasorte:
   copyright: Copyright Sinal da Sorte 2018
   organizacao: Sant'Clear Soluções
   slogan: Aposte com estratégia. 
+  
+organizacao:
+  nome: Sant'Clear Soluções
+  email: santclearsolucoes@gmail.com

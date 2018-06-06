@@ -6,8 +6,8 @@ spring:
 #    active: prod
 
 default:
-  sender: santclear@gmail.com
-  recipient: santclear@gmail.com
+  sender: sinaldasorteweb@gmail.com
+  recipient: sinaldasorteweb@gmail.com
 
 # Palavra qualquer que serve como segredo para o JWT
 jwt:

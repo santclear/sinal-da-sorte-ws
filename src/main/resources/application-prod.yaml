@@ -46,6 +46,10 @@ sinaldasorte:
   copyright: Copyright Sinal da Sorte 2018
   organizacao: Sant'Clear Soluções
   slogan: Aposte com estratégia.
+
+organizacao:
+  nome: Sant'Clear Soluções
+  email: santclearsolucoes@gmail.com
   
   google:
     tokenUrl: 
