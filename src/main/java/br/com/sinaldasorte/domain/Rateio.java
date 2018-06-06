@@ -145,17 +145,21 @@ public class Rateio implements Serializable {
 			Map<String, Integer> qtdCidadesUfsMap = new HashMap<>();
 			for(int i = 0; i < cidades.length; i++) {
 				Integer qtd = qtdCidadesUfsMap.get(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase());
-				if(qtdCidadesUfsMap.get(cidades[i].toUpperCase()) == null) qtdCidadesUfsMap.put(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase(), 1);
-				else qtdCidadesUfsMap.put(cidades[i].toUpperCase()+"/"+ufs[i].toUpperCase(), qtd + 1);
+				String cidadesStr = cidades[i].toUpperCase();
+				String ufsStr = ufs[i].toUpperCase();
+				String cidadesUfsKey = cidadesStr+"/"+ufsStr;
+				if(qtdCidadesUfsMap.get(cidadesUfsKey) == null) qtdCidadesUfsMap.put(cidadesUfsKey, 1);
+				else qtdCidadesUfsMap.put(cidadesUfsKey, qtd + 1);
 			}
 			qtdCidadesUfsMap.forEach((cidadeUf,qtd)-> qtdCidadesUfs.add(new QtdCidadeUfDto(cidadeUf, qtd)));
 		} else if(cidades == null && ufs != null) {
 			String ufs[] = this.ufs.split(";");
 			Map<String, Integer> qtdCidadesUfsMap = new HashMap<>();
 			for(int i = 0; i < ufs.length; i++) {
+				String ufsStr = ufs[i].toUpperCase();
 				Integer qtd = qtdCidadesUfsMap.get(ufs[i].toUpperCase());
-				if(qtdCidadesUfsMap.get(ufs[i].toUpperCase()) == null) qtdCidadesUfsMap.put(ufs[i].toUpperCase(), 1);
-				else qtdCidadesUfsMap.put(ufs[i].toUpperCase(), qtd + 1);
+				if(qtdCidadesUfsMap.get(ufsStr) == null) qtdCidadesUfsMap.put(ufsStr, 1);
+				else qtdCidadesUfsMap.put(ufsStr, qtd + 1);
 			}
 			qtdCidadesUfsMap.forEach((cidadeUf,qtd)-> qtdCidadesUfs.add(new QtdCidadeUfDto(cidadeUf, qtd)));
 		}
