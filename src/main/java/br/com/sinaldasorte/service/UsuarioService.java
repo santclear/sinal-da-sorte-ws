@@ -32,17 +32,17 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repo;
 	
-	@Autowired
-	private UFService ufService;
-	
-	@Autowired
-	private CidadeService cidadeService;
-	
-	@Autowired
-	private BairroService bairroService;
-	
-	@Autowired
-	private LogradouroService logradouroService;
+//	@Autowired
+//	private UFService ufService;
+//	
+//	@Autowired
+//	private CidadeService cidadeService;
+//	
+//	@Autowired
+//	private BairroService bairroService;
+//	
+//	@Autowired
+//	private LogradouroService logradouroService;
 	
 	public Usuario procure(Long id) {
 		ContaAuth conta = UserService.autenticado();
@@ -95,17 +95,17 @@ public class UsuarioService {
 	}
 	
 	public Usuario dtoParaEntidade(UsuarioDto dto) {
-		UF uf = this.ufService.procure(dto.getEndereco().getUf());
-		if(uf == null) uf = new UF(null, dto.getEndereco().getUf());
-		
-		Cidade cidade = this.cidadeService.procure(dto.getEndereco().getCidade(), dto.getEndereco().getUf());
-		if(cidade == null) cidade = new Cidade(null, dto.getEndereco().getCidade(), uf);
-		
-		Bairro bairro = this.bairroService.procure(dto.getEndereco().getBairro(), dto.getEndereco().getCidade(), dto.getEndereco().getUf());
-		if(bairro == null) bairro = new Bairro(null, dto.getEndereco().getBairro(), cidade);
-		
-		Logradouro logradouro = logradouroService.procure(dto.getEndereco().getCep());
-		if(logradouro == null) logradouro = new Logradouro(dto.getEndereco().getCep(), dto.getEndereco().getLogradouro(), bairro);
+//		UF uf = this.ufService.procure(dto.getEndereco().getUf());
+//		if(uf == null) uf = new UF(null, dto.getEndereco().getUf());
+//		
+//		Cidade cidade = this.cidadeService.procure(dto.getEndereco().getCidade(), dto.getEndereco().getUf());
+//		if(cidade == null) cidade = new Cidade(null, dto.getEndereco().getCidade(), uf);
+//		
+//		Bairro bairro = this.bairroService.procure(dto.getEndereco().getBairro(), dto.getEndereco().getCidade(), dto.getEndereco().getUf());
+//		if(bairro == null) bairro = new Bairro(null, dto.getEndereco().getBairro(), cidade);
+//		
+//		Logradouro logradouro = logradouroService.procure(dto.getEndereco().getCep());
+//		if(logradouro == null) logradouro = new Logradouro(dto.getEndereco().getCep(), dto.getEndereco().getLogradouro(), bairro);
 		
 		SimpleDateFormat formatador = new SimpleDateFormat("yyyy-MM-dd");
 		Date dataNascimento = null;
@@ -116,16 +116,18 @@ public class UsuarioService {
 			throw new ProcessamentoInternoException("Ocorreu um erro ao tentar inserir a data de nascimento.");
 		}
 		
-		Usuario usuario = new Usuario(
-				dto.getId(), dto.getNome(), dto.getSobrenome(), 
-				Generos.toEnum(dto.getGenero()), dataNascimento, dto.getCpf(), 
-				logradouro, dto.getEndereco().getNumero(), dto.getEndereco().getComplemento());
-		Map<String, String> telefones = new HashMap<>();
-		if(Objects.nonNull(dto.getTelefone1()) && !"".equals(dto.getTelefone1())) telefones.put("telefone1", dto.getTelefone1());
-		if(Objects.nonNull(dto.getTelefone2()) && !"".equals(dto.getTelefone2())) telefones.put("telefone2", dto.getTelefone2());
-		if(Objects.nonNull(dto.getTelefone3()) && !"".equals(dto.getTelefone3())) telefones.put("telefone3", dto.getTelefone3());
+//		Usuario usuario = new Usuario(
+//				dto.getId(), dto.getNome(), dto.getSobrenome(), 
+//				Generos.toEnum(dto.getGenero()), dataNascimento, dto.getCpf(), 
+//				logradouro, dto.getEndereco().getNumero(), dto.getEndereco().getComplemento());
 		
-		usuario.setTelefones(telefones);
+		Usuario usuario = new Usuario(dto.getId(), dto.getNome(), dto.getSobrenome(), Generos.toEnum(dto.getGenero()), dataNascimento);
+//		Map<String, String> telefones = new HashMap<>();
+//		if(Objects.nonNull(dto.getTelefone1()) && !"".equals(dto.getTelefone1())) telefones.put("telefone1", dto.getTelefone1());
+//		if(Objects.nonNull(dto.getTelefone2()) && !"".equals(dto.getTelefone2())) telefones.put("telefone2", dto.getTelefone2());
+//		if(Objects.nonNull(dto.getTelefone3()) && !"".equals(dto.getTelefone3())) telefones.put("telefone3", dto.getTelefone3());
+//		
+//		usuario.setTelefones(telefones);
 		
 		return usuario;
 	}

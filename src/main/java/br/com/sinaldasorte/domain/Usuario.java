@@ -56,8 +56,8 @@ public class Usuario implements Serializable {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "pt", timezone = "Brazil/East")
 	private Date dataDeNascimento;
-
-	@Column(nullable = false)
+	
+	@Column(length = 11)
 	private String cpf;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
@@ -95,6 +95,15 @@ public class Usuario implements Serializable {
     private String modificadoPor;
 
 	public Usuario() {}
+	
+	public Usuario(Long id, String nome, String sobrenome, Generos genero, Date dataDeNascimento) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.sobrenome = sobrenome;
+		this.genero = (genero == null) ? null : genero.getCod();
+		this.dataDeNascimento = dataDeNascimento;
+	}
 
 	public Usuario(Long id, String nome, 
 			String sobrenome, Generos genero, 
