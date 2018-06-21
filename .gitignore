@@ -3,4 +3,6 @@
 *.original
 *.class
 *.jar
+application-prod.yaml
+application.yaml
 target/
