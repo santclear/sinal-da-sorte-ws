@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		// Se o profile ativo em application.properties for o test, permite acesso ao BD H2
 		// env.getActiveProfiles() obtém os profiles ativos
-		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+		if (Arrays.asList(env.getActiveProfiles()).contains("test") || Arrays.asList(env.getActiveProfiles()).contains("test-smtp")) {
 			http.headers().frameOptions().disable();
 		}
 		
