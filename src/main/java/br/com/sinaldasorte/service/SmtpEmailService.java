@@ -26,7 +26,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SmtpEmailService extends AbstractEmailService {
-
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+	
 	@Autowired
 	private JavaMailSender javaMailSender;
 	
@@ -47,8 +49,6 @@ public class SmtpEmailService extends AbstractEmailService {
 	
 	@Value("${sinaldasorte.google.tokenExpires}")
 	private String tokenExpires;
-	
-	private static final Logger LOG = LoggerFactory.getLogger(SmtpEmailService.class);
 	
 	@Override
 	public void sendEmail(SimpleMailMessage simpleMailMessage) {
@@ -75,7 +75,7 @@ public class SmtpEmailService extends AbstractEmailService {
 	                String line;
 	                BufferedReader in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
 	                while((line = in.readLine()) != null) {
-	                    System.out.println(line);
+	                	LOGGER.error(line);
 	                }
 	                System.out.flush();
 	            }
@@ -100,11 +100,11 @@ public class SmtpEmailService extends AbstractEmailService {
 			
 			helper.setText(String.format(texto), html);
 			
-			LOG.info("Enviando email...");
+			LOGGER.debug("Enviando email...");
 			((JavaMailSenderImpl)this.javaMailSender).send(message);
-			LOG.info(texto);
-			LOG.info(html);
-			LOG.info("Email enviado");
+			LOGGER.debug(texto);
+			LOGGER.debug(html);
+			LOGGER.debug("Email enviado");
 		} catch (MessagingException e) {
 			throw new MailParseException("Ocorreu um erro ao tentar preparar o e-mail para envio: "+ e.getMessage());
 		}
