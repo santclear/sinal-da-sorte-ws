@@ -3,19 +3,12 @@ package br.com.sinaldasorte.service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.sinaldasorte.domain.Bairro;
-import br.com.sinaldasorte.domain.Cidade;
-import br.com.sinaldasorte.domain.Logradouro;
-import br.com.sinaldasorte.domain.UF;
 import br.com.sinaldasorte.domain.Usuario;
 import br.com.sinaldasorte.domain.enums.Generos;
 import br.com.sinaldasorte.domain.enums.Perfil;
@@ -111,7 +104,6 @@ public class UsuarioService {
 		Date dataNascimento = null;
 		try {
 			dataNascimento = formatador.parse(dto.getDataDeNascimento());
-			System.out.println(dataNascimento);
 		} catch (ParseException e) {
 			throw new ProcessamentoInternoException("Ocorreu um erro ao tentar inserir a data de nascimento.");
 		}
