@@ -9,7 +9,11 @@ spring:
 #mostra as execuções de queries de forma amigável
     properties:
       hibernate:
-        format_sql: true
+        format_sql: true  
+  
+  output:
+    ansi:
+      enabled: DETECT
 
 sinaldasorte:
   front:
@@ -21,9 +25,19 @@ sinaldasorte:
   adverbio: Atenciosamente
   responsavel: Ali
   copyright: Copyright Sinal da Sorte 2018
-  organizacao: Sant'Clear Soluções
+  organizacao: Sant'Clear
   slogan: Aposte com estratégia.
   
 organizacao:
   nome: Sant'Clear Soluções
   email: santclearsolucoes@gmail.com
+  
+logging:
+  level:
+    org:
+      springframework:
+        web: DEBUG
+      hibernate: ERROR
+    br:
+      com:
+        sinaldasorte: DEBUG
