@@ -136,9 +136,6 @@ public class ContaService {
 	public Conta procurePorHashConfirmacao(String hash) {
 		
 		Conta obj = repo.findByHashConfirmacao(hash);
-		if(obj == null) {
-			throw new ObjetoNaoEncontradoException("Objeto não encontrado Hash: "+ hash);
-		}
 		
 		return obj;
 	}

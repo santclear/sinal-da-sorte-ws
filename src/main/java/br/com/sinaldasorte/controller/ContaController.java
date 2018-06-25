@@ -30,6 +30,9 @@ public class ContaController {
 	@RequestMapping(value="/cadastro/confirme", method=RequestMethod.GET)
 	public  String atualize(@RequestParam(value="value") String hash, Model modelo) {
 		Conta obj = service.procurePorHashConfirmacao(hash);
+		if(obj == null) {
+			return "cadastro-conta-confirmado";
+		}
 		obj = service.atualizePorHashConfirmacao(obj);
 		
 		modelo.addAttribute("nomeUsuario", obj.getUsuario().getNome());
@@ -43,6 +46,9 @@ public class ContaController {
 	@RequestMapping(value="/exclusao/confirme", method=RequestMethod.GET)
 	public  String exclua(@RequestParam(value="value") String hash, Model modelo) {
 		Conta obj = service.procurePorHashConfirmacao(hash);
+		if(obj == null) {
+			return "exclusao-conta-confirmado";
+		}
 		obj = service.excluaPorHashConfirmacao(obj);
 		
 		modelo.addAttribute("nomeUsuario", obj.getUsuario().getNome());
