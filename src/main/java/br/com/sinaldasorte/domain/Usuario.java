@@ -54,7 +54,7 @@ public class Usuario implements Serializable {
 
 	private Integer genero;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "pt", timezone = "Brazil/East")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "pt")
 	private Date dataDeNascimento;
 	
 	@Column(length = 11)

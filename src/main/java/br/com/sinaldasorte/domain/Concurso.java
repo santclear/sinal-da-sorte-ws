@@ -37,7 +37,7 @@ public class Concurso implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(length = 10)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEEE, dd/MM/yyyy", locale = "pt", timezone = "Brazil/East")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "EEEE, dd/MM/yyyy", locale = "pt")
 	private Calendar dataDoSorteio;
 	
 	@Column(precision = 15, scale = 2)
