@@ -18,7 +18,7 @@ public class ConcursoService {
 		return this.repo.procureConcursosComNumeroMaiorQue(numero, idLoteria);
 	}
 	
-	public List<Concurso> procureConcursosComNumeroMenorQue(Integer numero, Long idLoteria) {
-		return this.repo.procureConcursosComNumeroMenorQue(numero, idLoteria);
-	}
+//	public List<Concurso> procureConcursosComNumeroMenorQue(Integer numero, Long idLoteria) {
+//		return this.repo.procureConcursosComNumeroMenorQue(numero, idLoteria);
+//	}
 }

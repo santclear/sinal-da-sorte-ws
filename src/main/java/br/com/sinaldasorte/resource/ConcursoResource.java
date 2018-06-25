@@ -24,8 +24,8 @@ public class ConcursoResource {
 		return this.service.procureConcursosComNumeroMaiorQue(numero, idLoteria);
 	}
 	
-	@RequestMapping(value = "procureConcursosComNumeroMenorQue/numero={numero}&idLoteria={idLoteria}", method = RequestMethod.GET)
-	public List<Concurso> procureConcursosComNumeroMenorQue(@PathVariable Integer numero, @PathVariable Long idLoteria) {
-		return this.service.procureConcursosComNumeroMenorQue(numero, idLoteria);
-	}
+//	@RequestMapping(value = "procureConcursosComNumeroMenorQue/numero={numero}&idLoteria={idLoteria}", method = RequestMethod.GET)
+//	public List<Concurso> procureConcursosComNumeroMenorQue(@PathVariable Integer numero, @PathVariable Long idLoteria) {
+//		return this.service.procureConcursosComNumeroMenorQue(numero, idLoteria);
+//	}
 }
