@@ -5,4 +5,5 @@
 *.jar
 application-prod.yaml
 application.yaml
+application-testsmpt.yaml
 target/
