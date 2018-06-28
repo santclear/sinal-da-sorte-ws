@@ -139,7 +139,7 @@ public abstract class MensagemEmail {
 		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>segue sua nova senha, conforme solicitado: <span style='font-size: 11pt;font-weight: bold'>"+ novaSenha +"</span></p>");
 		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Caso deseje trocar essa senha, siga os passos abaixo:</p>");
 		sb.append("		<ol>");
-		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Acesse o sistema Sinal da Sorte pelo aplicativo de celular ou pela URL <span style='font-size: 11pt;font-weight: bold'><a style='color: #1b5e20;text-decoration: none;' href='"+ sinalDaSorteFrontUrl +"' title='"+ www +"'>"+ www +"</a></span></li>");
+		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Acesse o sistema Sinal da Sorte pelo aplicativo de celular ou pela URL <span style='font-size: 11pt;font-weight: bold'><a style='color: #003300;text-decoration: none;' href='"+ sinalDaSorteFrontUrl +"' title='"+ www +"'>"+ www +"</a></span></li>");
 		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Digite seu email e a nova senha</li>");
 		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>No menu lateral escolha a opção: Minha conta</li>");
 		sb.append("			<li style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Digite uma nova senha no campos: Senha e Confirme a senha</li>");
@@ -154,9 +154,9 @@ public abstract class MensagemEmail {
 		sb.append("	<div style='margin: 0 auto; width: 500px; margin-bottom: 60px;'>");
 		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>");
 		if(conta.getSituacao() == Situacoes.ATIVO) {
-			sb.append("<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>para concluir o seu cadastro clique: <a style='color: #1b5e20;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
+			sb.append("<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>para concluir o seu cadastro clique: <a style='color: #003300;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
 		} else if(conta.getSituacao() == Situacoes.INATIVO) {
-			sb.append("<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>você solicitou uma nova senha, mas sua conta está inativa, para ativá-la clique: <a style='color: #1b5e20;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
+			sb.append("<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>você solicitou uma nova senha, mas sua conta está inativa, para ativá-la clique: <a style='color: #003300;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
 			sb.append("<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Após a confirmação de cadastro tente solicitar novamente uma nova senha clicando \"ESQUECI MINHA SENHA\" na tela inicial do Sinal da Sorte.</p>");
 		}
 		sb.append("		<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Estamos felizes por estares conosco. É o nosso desejo sincero que você alcance a sorte grande e que todos os seus sonhos se realizem!</p>");
@@ -168,7 +168,7 @@ public abstract class MensagemEmail {
 		StringBuilder sb = new StringBuilder();
 		sb.append("<div style='margin: 0 auto; width: 500px; margin-bottom: 60px;'>");
 		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>");
-		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>foi solicitada a atualização de e-mail da sua conta do Sinal da Sorte, se foi você quem solicitou clique: <a style='color: #1b5e20;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
+		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>foi solicitada a atualização de e-mail da sua conta do Sinal da Sorte, se foi você quem solicitou clique: <a style='color: #003300;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/cadastro/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
 		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Caso não queira atualizar, descarte esse e-mail.</p>");
 		sb.append("</div>");
 		return sb.toString();
@@ -178,7 +178,7 @@ public abstract class MensagemEmail {
 		StringBuilder sb = new StringBuilder();		
 		sb.append("<div style='margin: 0 auto; width: 500px; margin-bottom: 60px;'>");
 		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>");
-		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>solicitada a exclusão da sua conta do Sinal da Sorte, se foi você quem solicitou clique: <a style='color: #1b5e20;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/exclusao/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
+		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>solicitada a exclusão da sua conta do Sinal da Sorte, se foi você quem solicitou clique: <a style='color: #003300;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/exclusao/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
 		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Sentiremos sua falta, esteja certo dessa operação, pois ela é irreversível.</p>");
 		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Caso não queira excluir, descarte esse e-mail.</p>");
 		sb.append("</div>");
@@ -209,20 +209,20 @@ public abstract class MensagemEmail {
 		sb.append("</p>");
 		sb.append("<p>");
 		sb.append("	<span style='font-size: 11pt'>");
-		sb.append("		<a style='color: #1b5e20;text-decoration: none;' href='mailto:"+ email +"?Subject=Contato via app&From="+ conta.getEmail() +"' target='_top' title='"+ email +"'>");
+		sb.append("		<a style='color: #003300;text-decoration: none;' href='mailto:"+ email +"?Subject=Contato via app&From="+ conta.getEmail() +"' target='_top' title='"+ email +"'>");
 		sb.append("			"+ email +"");
 		sb.append("		</a>");
 		sb.append("	</span><br/>");
 		sb.append("	<span style='font-size: 11pt;'>");
-		sb.append("		<a style='color: #1b5e20;text-decoration: none;' href='"+ sinalDaSorteFrontUrl +"' target=\"_blank\" title='"+ www +"'>");
+		sb.append("		<a style='color: #003300;text-decoration: none;' href='"+ sinalDaSorteFrontUrl +"' target=\"_blank\" title='"+ www +"'>");
 		sb.append("			"+ www +"");
 		sb.append("		</a>");
 		sb.append("	</span>");
 		sb.append("</p>");
-		sb.append("	<span style='font-size: 12pt;font-weight: bold; color: #1b5e20;'>");
+		sb.append("	<span style='font-size: 12pt;font-weight: bold; color: #003300;'>");
 		sb.append("			"+ slogan +"");
-		sb.append("	</span><br/>");
-		sb.append("	<img src='"+www+"/img/logo.png' alt='Logo Sinal da Sorte' height='150' width='150'></img>");
+		sb.append("	</span><br/><br/><br/>");
+		sb.append("	<img src='"+www+"/assets/img/login-logo.png' alt='Logo Sinal da Sorte'></img>");
 		sb.append(" </div><br/>");
 		return sb.toString();
 	}
@@ -230,18 +230,16 @@ public abstract class MensagemEmail {
 	private String copyrightTexto() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("\n");
-		sb.append(copyright +" | de "+ organizacao);
+		sb.append(organizacao +" | "+ copyright);
 		return sb.toString();
 	}
 	
 	private String copyrightHtml() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("<div style='margin: 0 auto;width: 500px;overflow: hidden;'>" + 
-				"		<div style='width: 50%;float: left;background-color: #1b5e20;height: 50px;line-height: 50px;text-align: center;color: white;'>" + 
-				"			"+ copyright +"" + 
-				"		</div>" + 
-				"		<div style='margin-left: 50%;background-color: #1b5e20;height: 50px;line-height: 50px;text-align: center;color: white;'>" + 
-				"			de "+ organizacao + 
+		sb.append("<div style='margin:0 auto;width:500px'>" + 
+				"		<div style='width:100%;background-color:#003300;height:68px;text-align:center;color:white'>" + 
+				"			<p style='padding-top: 10px;font-size: 11pt;font-weight: bold;'>"+ organizacao +"</p>" +
+				"			<p style='padding-bottom: 10px;'>"+ copyright +"</p>" +
 				"		</div>" + 
 				"	</div>");
 		return sb.toString();
