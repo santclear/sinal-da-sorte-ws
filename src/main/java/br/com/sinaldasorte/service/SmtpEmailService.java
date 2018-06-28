@@ -87,8 +87,9 @@ public class SmtpEmailService extends AbstractEmailService {
 	    ((JavaMailSenderImpl)this.javaMailSender).setPassword(accessToken);
 		
 		MimeMessage message = javaMailSender.createMimeMessage();
+		
 		try {
-			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
 			helper.setFrom(simpleMailMessage.getFrom());
 			helper.setTo(simpleMailMessage.getTo());
@@ -96,9 +97,14 @@ public class SmtpEmailService extends AbstractEmailService {
 			
 			String textos[] = simpleMailMessage.getText().split("<split>");
 			String texto = textos[0];
-			String html = textos[1];
+			String html = null;
+			if(textos.length < 2) {
+				helper.setText(String.format(texto));
+			} else {
+				html = textos[1];
+				helper.setText(String.format(texto), html);
+			}
 			
-			helper.setText(String.format(texto), html);
 			
 			LOGGER.debug("Enviando email...");
 			((JavaMailSenderImpl)this.javaMailSender).send(message);
