@@ -21,6 +21,9 @@ public class ContaController {
 	@Value("${sinaldasorte.front.url}")
 	private String sinalDaSorteFrontUrl;
 	
+	@Value("${sinaldasorte.www}")
+	private String www;
+	
 	@Value("${sinaldasorte.copyright}")
 	private String copyright;
 	
@@ -37,6 +40,7 @@ public class ContaController {
 		
 		modelo.addAttribute("nomeUsuario", obj.getUsuario().getNome());
 		modelo.addAttribute("sinalDaSorteFrontUrl", sinalDaSorteFrontUrl);
+		modelo.addAttribute("www", www);
 		modelo.addAttribute("copyright", copyright);
 		modelo.addAttribute("organizacao", organizacao);
 		
@@ -53,6 +57,7 @@ public class ContaController {
 		
 		modelo.addAttribute("nomeUsuario", obj.getUsuario().getNome());
 		modelo.addAttribute("sinalDaSorteFrontUrl", sinalDaSorteFrontUrl);
+		modelo.addAttribute("www", www);
 		modelo.addAttribute("copyright", copyright);
 		modelo.addAttribute("organizacao", organizacao);
 		

@@ -106,7 +106,7 @@
 			<div class="col-1 col-sm-1 col-md-3 col-lg-4 col-xl-4"></div>
 			
 			<div class="col-10 col-sm-10 col-md-6 col-lg-4 col-xl-4">
-				<p>Seu e-mail já foi confirmado, entre com suas credenciais no sistema Sinal da Sorte: <a th:href="${sinalDaSorteFrontUrl}">www.sinaldasorte.com.br</a></p>
+				<p>Seu e-mail já foi confirmado, entre com suas credenciais no sistema Sinal da Sorte: <a th:href="${sinalDaSorteFrontUrl}"><span th:text="${www}"></span></a></p>
 			</div>
 			
 			<div class="col-1 col-sm-1 col-md-3 col-lg-4 col-xl-4"></div>
@@ -114,8 +114,8 @@
 	</div>
 	<footer class="footer">
 		<div class="container">
-			<div class="titulo">Sant'Clear</div>
-			<div class="texto">Copyright Sinal da Sorte 2018</div>
+			<div class="titulo"><span th:text="${organizacao}"></span></div>
+			<div class="texto"><span th:text="${copyright}"></span></div>
 		</div>
 	</footer>
 
