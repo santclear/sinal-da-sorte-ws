@@ -48,6 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		"/logradouros/**"
 		,"/ctrl/contas/cadastro/confirme**"
 		,"/ctrl/contas/exclusao/confirme**"
+		,"/util/dominio**"
 	};
 	
 	private static final String[] PUBLIC_MATCHERS_POST = {
@@ -70,6 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
 			.antMatchers(
+					"/actuator/**",
 					"/bootstrap/**", 
 					"/jquery/**", 
 					"/popper/**",
