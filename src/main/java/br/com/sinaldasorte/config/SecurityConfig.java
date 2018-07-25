@@ -48,13 +48,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		"/logradouros/**"
 		,"/ctrl/contas/cadastro/confirme**"
 		,"/ctrl/contas/exclusao/confirme**"
-		,"/util/dominio**"
+		,"/util/limpeCache**"
 	};
 	
 	private static final String[] PUBLIC_MATCHERS_POST = {
-		"/contas/**",
-		"/auth/forgot/**",
-		"/emails/**"
+		"/contas/**"
+		,"/auth/forgot/**"
+		,"/emails/**"
+		,"/util/reCaptchaProcessResponse/**"
 	};
 
 	@Override

@@ -178,7 +178,7 @@ public abstract class MensagemEmail {
 		StringBuilder sb = new StringBuilder();		
 		sb.append("<div style='margin: 0 auto; width: 500px; margin-bottom: 60px;'>");
 		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Olá "+ conta.getUsuario().getNome() +",</p>");
-		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>solicitada a exclusão da sua conta do Sinal da Sorte, se foi você quem solicitou clique: <a style='color: #003300;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/exclusao/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
+		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>foi solicitada a exclusão da sua conta do Sinal da Sorte, se foi você quem solicitou clique: <a style='color: #003300;text-decoration: none;font-weight: bold' href='"+ sinalDaSorteWsUrl +"ctrl/contas/exclusao/confirme?value="+ conta.getHashConfirmacao() +"' title='Confirmar cadastro de conta Sinal da Sorte'>[Confirmar]</a></p>");
 		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Sentiremos sua falta, esteja certo dessa operação, pois ela é irreversível.</p>");
 		sb.append("	<p style='color: #424242; margin-bottom: 5px;font-size: 11pt;'>Caso não queira excluir, descarte esse e-mail.</p>");
 		sb.append("</div>");

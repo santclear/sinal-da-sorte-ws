@@ -6,7 +6,7 @@
 	<groupId>br.com.sinaldasorte</groupId>
 	<artifactId>sinal-da-sorte-ws</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>sinal-da-sorte-ws</name>
 	<description>Web Services do sistema Sinal da Sorte</description>
@@ -51,6 +51,18 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>23.6.1-jre</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
 		</dependency>
 
 		<!-- O H2 pode ser acessado no browser através da URL http://localhost:8080/h2-console -->
@@ -152,6 +164,7 @@
 <!-- 			<artifactId>spring-boot-starter-log4j2</artifactId> -->
 <!-- 		</dependency> -->
 		<!-- Long4J -->
+
 	</dependencies>
 
 	<build>
