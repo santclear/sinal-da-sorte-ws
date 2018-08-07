@@ -25,12 +25,12 @@ public interface ConcursoRepository extends JpaRepository<Concurso, Long>, JpaSp
 	  + "loteria.id = ?2")
 	List<Concurso> procureConcursosComNumeroMaiorQue(Integer numero, Long idLoteria);
 	
-//	@Transactional(readOnly=true, propagation = Propagation.SUPPORTS)
-//	@Query(
-//		"SELECT concurso "
-//	  + "FROM Concurso concurso "
-//	  + "INNER JOIN concurso.loteria loteria "
-//	  + "WHERE concurso.numero < ?1 AND "
-//	  + "loteria.id = ?2")
-//	List<Concurso> procureConcursosComNumeroMenorQue(Integer numero, Long idLoteria);	
+	@Transactional(readOnly=true, propagation = Propagation.SUPPORTS)
+	@Query(
+		"SELECT concurso "
+	  + "FROM Concurso concurso "
+	  + "INNER JOIN concurso.loteria loteria "
+	  + "WHERE concurso.numero < ?1 AND "
+	  + "loteria.id = ?2")
+	List<Concurso> procureConcursosComNumeroMenorQue(Integer numero, Long idLoteria);	
 }
