@@ -15,8 +15,9 @@ public class ConcursoService {
 	private ConcursoRepository repo;
 
 	public List<Concurso> procureConcursosComNumeroMaiorQue(Integer numero, Long idLoteria) {
-		if(numero > 0) return this.repo.procureConcursosComNumeroMaiorQue(numero, idLoteria);
-		else return this.repo.procureConcursosComNumeroMenorQue(31, idLoteria);
+//		if(numero > 0) return this.repo.procureConcursosComNumeroMaiorQue(numero, idLoteria);
+//		else return this.repo.procureConcursosComNumeroMenorQue(31, idLoteria);
+		return this.repo.procureConcursosComNumeroMaiorQue(numero, idLoteria);
 	}
 	
 	public List<Concurso> procureConcursosComNumeroMenorQue(Integer numero, Long idLoteria) {

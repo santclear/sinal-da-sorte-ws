@@ -222,7 +222,7 @@ public abstract class MensagemEmail {
 		sb.append("	<span style='font-size: 12pt;font-weight: bold; color: #003300;'>");
 		sb.append("			"+ slogan +"");
 		sb.append("	</span><br/><br/><br/>");
-		sb.append("	<img src='"+www+"/assets/img/login-logo.png' alt='Logo Sinal da Sorte'></img>");
+		sb.append("	<img src='"+www+"/sistema/assets/img/login-logo.png' alt='Logo Sinal da Sorte'></img>");
 		sb.append(" </div><br/>");
 		return sb.toString();
 	}
