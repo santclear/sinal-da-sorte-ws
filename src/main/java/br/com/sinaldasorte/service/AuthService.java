@@ -26,7 +26,7 @@ public class AuthService {
 	public void sendNewPassword(String email) {
 		
 		Conta conta = repo.findByEmail(email);
-		if (conta == null) {
+		if (conta == null || "sinaldasorteanonimo@gmail.com".equals(email)) {
 			throw new ObjetoNaoEncontradoException("Email não encontrado");
 		}
 		if(conta.getSituacao() == Situacoes.ATIVO) {

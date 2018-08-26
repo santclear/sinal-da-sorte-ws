@@ -20,23 +20,33 @@ public class ProfileTestService {
 	
 	@Autowired
 	private ContaService contaService;
-	@Autowired
-	private LogradouroService logradouroService;
+//	@Autowired
+//	private LogradouroService logradouroService;
 	
 	public void instantiateTestDatabase() throws ParseException, RemoteException, ServiceException {
-		EnderecoCorreiosDto endc2 = logradouroService.procureCepCorreios("88053-310");
+//		EnderecoCorreiosDto endc = logradouroService.procureCepCorreios("88053-310");
 
-		EnderecoDto end2 = new EnderecoDto(endc2.getCep(), endc2.getLogradouro(), 
-				"1","Na frente da praia",endc2.getBairro(), endc2.getCidade(), endc2.getUf());
+//		EnderecoDto end = new EnderecoDto(endc.getCep(), endc.getLogradouro(), 
+//				"1","Na frente da praia",endc.getBairro(), endc.getCidade(), endc.getUf());
+//		
+		UsuarioDto usu = new UsuarioDto(null,
+				"Sant'Clear","Costa","27716419250",
+				"1983-01-13",1,null,
+				"48977337733", "", "");
+		ContaNewDto cdto = new ContaNewDto("s@s","12345678", usu);
+		Conta con = contaService.dtoParaEntidade(cdto);
+		con.addPerfil(Perfil.ADMIN);
+		con.addPerfil(Perfil.ASSINANTE);//qKfT37Rx9v
+		contaService.insira(con);
 		
 		UsuarioDto usu2 = new UsuarioDto(null,
-				"Sant'Clear","Costa","27716419250",
-				"1983-01-13",1,end2,
+				"Sinal da Sorte","Anônimo","27716419250",
+				"1983-01-13",1,null,
 				"48977337733", "", "");
-		ContaNewDto cdto2 = new ContaNewDto("s@s","12345678", usu2);
+		ContaNewDto cdto2 = new ContaNewDto("sinaldasorteanonimo@gmail.com","qKfT37Rx9v", usu2);
 		Conta con2 = contaService.dtoParaEntidade(cdto2);
 		con2.addPerfil(Perfil.ADMIN);
-		con2.addPerfil(Perfil.ASSINANTE);
+		con2.addPerfil(Perfil.ASSINANTE);//qKfT37Rx9v
 		contaService.insira(con2);
 	}
 }
